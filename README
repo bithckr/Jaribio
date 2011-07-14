@@ -1,2 +1,8 @@
-Jaribio is a Open Source Test Case Management tool that integrates
-with Jira.
+Jaribio is a Open Source Test Case Management tool designed to be used
+in an Agile Testing work environment.
+
+Features
+* Simple to use.
+* Manages manual and automated test cases.
+* Integrates with Jira.
+* Integrates with Selenium.
