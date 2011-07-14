@@ -1,7 +1,7 @@
 Jaribio is a Open Source Test Case Management tool designed to be used
 in an Agile Testing work environment.
 
-Features
+Features:
 * Simple to use.
 * Manages manual and automated test cases.
 * Allows test cases to be grouped into Test Suites.
