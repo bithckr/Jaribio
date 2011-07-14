@@ -5,5 +5,6 @@ Features
 * Simple to use.
 * Manages manual and automated test cases.
 * Allows test cases to be grouped into Test Suites.
+* Reports the status of the current test cycle.
 * Integrates with Jira.
 * Integrates with Selenium.
