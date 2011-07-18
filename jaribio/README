@@ -1,0 +1,52 @@
+== Business Model
+
+Test Cases - consists of steps to execute and expectations
+Test Plans - a grouping of one or more test cases
+Issues - issues represent some foreign resource for which there should be
+a test plan; so these could be new features, improvements, or bugs
+
+Additionally, we want to also store the results of executing a test plan, 
+marking a test case as pass, fail, with a default value indicating the
+test case was not executed.
+
+A test plan can be executed multiple times.
+
+Executed Test Plan - the stored results of executing a test plan
+
+== Data Model
+
+cases
+id|text|timestamps
+
+plans
+id|timestamps
+
+cases_plans - relation table for test case to/from test plan
+case_id|plan_id|status_code
+
+issues
+id|name|url
+
+issues_plans - relation table for issues to/from test plans
+issue_id|plan_id
+
+executions - record information about a particular execution of a test plan
+id|plan_id|user|timestamps|environment?
+
+cases_executions - relates executions and test cases to record status info
+execution_id|case_id|created_at|status_code
+
+users
+
+Supported queries necessary to Jaribio:
+* List of test cases
+* List of test plans
+* List of test cases within a test plan
+* List of issues related to a test plan
+* Current status of test cases within a test plan
+* Status of each test case for each time it was executed for a given test plan
+
+TODO:
+* Should probably have some means of describing environments other than
+text; discuss with team.
+
