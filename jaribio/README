@@ -16,35 +16,41 @@ Executed Test Plan - the stored results of executing a test plan
 == Data Model
 
 cases
-id|text|timestamps
+id|user_id|text|expectations|timestamps
 
 plans
-id|timestamps
+id|user_id|name|timestamps
 
 cases_plans - relation table for test case to/from test plan
-case_id|plan_id|status_code
+case_id|plan_id|user_id
 
 issues
 id|name|url
 
-issues_plans - relation table for issues to/from test plans
-issue_id|plan_id
+cases_issues - relation table for issues to/from test plans
+case_id|issue_id|user_id
 
-executions - record information about a particular execution of a test plan
-id|plan_id|user|timestamps|environment?
+executions - record information about executing cases for a plan or issue
+id|plan_id|issue_id|user_id|timestamps|environment?
 
-cases_executions - relates executions and test cases to record status info
-execution_id|case_id|created_at|status_code
+cases_executions - record the result of executing a test case
+execution_id|case_id|user_id|created_at|status_code
 
 users
+- using devise standard schema here
 
 Supported queries necessary to Jaribio:
 * List of test cases
 * List of test plans
 * List of test cases within a test plan
-* List of issues related to a test plan
-* Current status of test cases within a test plan
+* List of test cases for an issue
+* Current status of a test case
 * Status of each test case for each time it was executed for a given test plan
+
+* Who created a case
+* Who associated a case to a plan
+* Who associated a case to an issue
+* Who has executed a case
 
 TODO:
 * Should probably have some means of describing environments other than
