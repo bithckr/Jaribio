@@ -34,7 +34,7 @@ executions - record information about executing cases for a plan or issue
 id|plan_id|issue_id|user_id|timestamps|environment?
 
 cases_executions - record the result of executing a test case
-execution_id|case_id|user_id|created_at|status_code
+execution_id|case_id|user_id|created_at|status_code|results
 
 users
 - using devise standard schema here
@@ -56,3 +56,11 @@ TODO:
 * Should probably have some means of describing environments other than
 text; discuss with team.
 
+== Authentication
+
+Integration with Jira
+
+Jira includes a REST API for authentication, /auth/1/session.
+The goal here is to be able to let a user login with Jira credentials
+if they choose and for Jaribio to use the resulting session id from
+Jira to provide additional functionality.
