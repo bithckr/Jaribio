@@ -18,23 +18,40 @@ Executed Test Plan - the stored results of executing a test plan
 cases
 id|user_id|text|expectations|timestamps
 
+suites
+id|user_id|name|timestamps
+
 plans
 id|user_id|name|timestamps
 
-cases_plans - relation table for test case to/from test plan
-case_id|plan_id|user_id
+cases_suites - relation table for test case to/from test suite
+case_id|suite_id
+
+plans_suites - relation table for test suite to/from test plan
+plan_id|suite_id
 
 issues
 id|name|url
 
-cases_issues - relation table for issues to/from test plans
-case_id|issue_id|user_id
+issues_suites - relation table for issues to/from test suites
+issue_id|suite_id
 
-executions - record information about executing cases for a plan or issue
-id|plan_id|issue_id|user_id|timestamps|environment?
+executions - record information about executing a plan, suite, or case
+id|execution_id|execution_type|user_id|timestamps|status_code|environment|results
 
-cases_executions - record the result of executing a test case
-execution_id|case_id|user_id|created_at|status_code|results
+ExecutedCases,ExecutedSuites,ExecutedPlans
+
+executed_cases
+id|case_id
+has_one :execution, :as => :execution
+
+executed_suites
+id|suite_id
+has_one :execution, :as => :execution
+
+executed_plans
+id|plan_id
+has_one :execution, :as => :execution
 
 users
 - using devise standard schema here

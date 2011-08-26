@@ -1,8 +1,8 @@
 class CreateIssues < ActiveRecord::Migration
   def self.up
     create_table :issues do |t|
-      t.string :name
-      t.string :url
+      t.string :name, :null => false
+      t.string :url, :null => false
     end
   end
 

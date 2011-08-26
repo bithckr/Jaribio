@@ -1,5 +1,4 @@
 class Execution < ActiveRecord::Base
-  belongs_to :plan
-  belongs_to :issue
   belongs_to :user
+  belongs_to :execution, :polymorphic => true
 end
