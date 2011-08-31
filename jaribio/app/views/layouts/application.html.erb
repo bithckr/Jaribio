@@ -7,10 +7,25 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+  <div id="header">
+    Jaribio
+  </div>
+  <div id="nav">
+    <ul>
+      <li><%= link_to 'Login', new_user_session_url %></li>
+      <li>Cases</li>
+      <li>Suites</li>
+      <li>Plans</li>
+    </ul>
+  </div>
+  <div id="content">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
   
 <%= yield %>
 
+  </div>
+  <div id="footer">
+  </div>
 </body>
 </html>
