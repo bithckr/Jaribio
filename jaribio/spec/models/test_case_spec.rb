@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Case do
+describe TestCase do
   before(:all) do
     @suite = Factory.build :suite
-    @case = Factory.build :case, :suites => [@suite]
+    @case = Factory.build :test_case, :suites => [@suite]
     @execution = Factory.build :execution, :executable => @case
     @case.executions = [@execution]
   end

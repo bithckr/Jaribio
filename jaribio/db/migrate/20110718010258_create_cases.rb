@@ -1,6 +1,6 @@
 class CreateCases < ActiveRecord::Migration
   def self.up
-    create_table :cases do |t|
+    create_table :test_cases do |t|
       t.references :user, :null => false
       t.text :text, :null => false
       t.text :expectations, :null => false
@@ -10,6 +10,6 @@ class CreateCases < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :cases
+    drop_table :test_cases
   end
 end

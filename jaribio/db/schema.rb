@@ -12,19 +12,6 @@
 
 ActiveRecord::Schema.define(:version => 20110831152514) do
 
-  create_table "cases", :force => true do |t|
-    t.integer  "user_id",      :null => false
-    t.text     "text",         :null => false
-    t.text     "expectations", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "cases_suites", :id => false, :force => true do |t|
-    t.integer "case_id",  :null => false
-    t.integer "suite_id", :null => false
-  end
-
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -61,6 +48,19 @@ ActiveRecord::Schema.define(:version => 20110831152514) do
   create_table "suites", :force => true do |t|
     t.string   "name",       :null => false
     t.integer  "user_id",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "suites_test_cases", :id => false, :force => true do |t|
+    t.integer "test_case_id", :null => false
+    t.integer "suite_id",     :null => false
+  end
+
+  create_table "test_cases", :force => true do |t|
+    t.integer  "user_id",      :null => false
+    t.text     "text",         :null => false
+    t.text     "expectations", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
