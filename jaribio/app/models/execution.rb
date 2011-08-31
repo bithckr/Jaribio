@@ -1,4 +1,4 @@
 class Execution < ActiveRecord::Base
   belongs_to :user
-  belongs_to :execution, :polymorphic => true
+  belongs_to :executable, :polymorphic => true
 end

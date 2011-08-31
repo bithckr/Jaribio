@@ -25,31 +25,13 @@ ActiveRecord::Schema.define(:version => 20110831152514) do
     t.integer "suite_id", :null => false
   end
 
-  create_table "executed_cases", :force => true do |t|
-    t.integer  "case_id",    :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "executed_plans", :force => true do |t|
-    t.integer  "plan_id",    :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "executed_suites", :force => true do |t|
-    t.integer  "suite_id",   :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "execution_id",   :null => false
-    t.string   "execution_type", :null => false
-    t.integer  "user_id",        :null => false
-    t.integer  "status_code",    :null => false
+    t.integer  "executable_id",   :null => false
+    t.string   "executable_type", :null => false
+    t.integer  "user_id",         :null => false
+    t.integer  "status_code",     :null => false
     t.string   "environment"
     t.text     "results"
   end

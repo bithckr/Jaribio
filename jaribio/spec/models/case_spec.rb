@@ -1,18 +1,19 @@
 require 'spec_helper'
 
 describe Case do
-  subject do
+  before(:all) do
     @suite = Factory.build :suite
-    @executed_case = Factory.build :executed_case
-    Factory.build :case, :suites => [@suite], :executed_cases => [@executed_case]
+    @case = Factory.build :case, :suites => [@suite]
+    @execution = Factory.build :execution, :executable => @case
+    @case.executions = [@execution]
   end
 
   it "has many suites" do
-    subject().should have(1).suites
+    @case.should have(1).suites
   end
 
   it "has many executed cases" do
-    subject().should have(1).executed_cases
+    @case.should have(1).executions
   end
 
 end

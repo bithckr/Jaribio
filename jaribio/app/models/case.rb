@@ -1,6 +1,6 @@
 class Case < ActiveRecord::Base
   has_and_belongs_to_many :suites
-  has_many :executed_cases
+  has_many :executions, :as => :executable
 
   belongs_to :user
 end
