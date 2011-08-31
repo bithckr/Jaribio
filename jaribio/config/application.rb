@@ -44,5 +44,11 @@ module Jaribio
       g.template_engine :erb
       g.test_framework :rspec, :fixture => true
     end
+
+    # FIXME: this will need to change at some point
+    config.action_mailer.default_url_options = { 
+      :host => (Rails.env == "production") ? 'domain.com' : 'localhost:3000' 
+    }
+
   end
 end
