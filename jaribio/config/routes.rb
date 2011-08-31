@@ -1,8 +1,5 @@
 Jaribio::Application.routes.draw do
-
-  devise_for :users
-
-  # Devise requires a root assignment
+  match 'home' => 'home#index'
   root :to => "home#index"
-
+  devise_for :users
 end
