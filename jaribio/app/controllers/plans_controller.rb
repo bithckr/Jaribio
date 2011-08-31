@@ -1,4 +1,7 @@
 class PlansController < ApplicationController
+  before_filter :authenticate_user!
+  respond_to :html
+
   # GET /plans
   # GET /plans.xml
   def index
@@ -41,6 +44,7 @@ class PlansController < ApplicationController
   # POST /plans.xml
   def create
     @plan = Plan.new(params[:plan])
+    @plan.user = current_user
 
     respond_to do |format|
       if @plan.save
@@ -57,6 +61,7 @@ class PlansController < ApplicationController
   # PUT /plans/1.xml
   def update
     @plan = Plan.find(params[:id])
+    @plan.user = current_user
 
     respond_to do |format|
       if @plan.update_attributes(params[:plan])

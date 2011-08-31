@@ -1,4 +1,7 @@
 class SuitesController < ApplicationController
+  before_filter :authenticate_user!
+  respond_to :html
+
   # GET /suites
   # GET /suites.xml
   def index
@@ -41,6 +44,7 @@ class SuitesController < ApplicationController
   # POST /suites.xml
   def create
     @suite = Suite.new(params[:suite])
+    @suite.user = current_user
 
     respond_to do |format|
       if @suite.save
@@ -57,6 +61,7 @@ class SuitesController < ApplicationController
   # PUT /suites/1.xml
   def update
     @suite = Suite.find(params[:id])
+    @suite.user = current_user
 
     respond_to do |format|
       if @suite.update_attributes(params[:suite])
