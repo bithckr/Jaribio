@@ -2,8 +2,8 @@
 
 <table>
   <tr>
-    <th>Text</th>
-    <th>Expectations</th>
+    <th>Name</th>
+    <th>Created By</th>
     <th></th>
     <th></th>
     <th></th>
@@ -11,8 +11,8 @@
 
 <% @test_cases.each do |test_case| %>
   <tr>
-    <td><%= test_case.text %></td>
-    <td><%= test_case.expectations %></td>
+    <td><%= test_case.name %></td>
+    <td><%= test_case.user.email %></td>
     <td><%= link_to 'Show', test_case %></td>
     <td><%= link_to 'Edit', edit_test_case_path(test_case) %></td>
     <td><%= link_to 'Destroy', test_case, :confirm => 'Are you sure?', :method => :delete %></td>
