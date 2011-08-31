@@ -12,7 +12,11 @@
   </div>
   <div id="nav">
     <ul>
-      <li><%= link_to 'Login', new_user_session_url %></li>
+      <% if user_signed_in? %>
+        <li><%= link_to 'Logout', destroy_user_session_url, :method => :delete %></li>
+      <% else %>
+        <li><%= link_to 'Login', new_user_session_url %></li>
+      <% end %>
       <li><%= link_to 'Cases', test_cases_url %></li>
       <li><%= link_to 'Suites', suites_url %></li>
       <li><%= link_to 'Plans', plans_url %></li>
