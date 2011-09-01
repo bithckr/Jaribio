@@ -1,0 +1,7 @@
+#nav li { 
+  height: 30px;
+  padding-top: 10px;
+  width: 100px;
+  display: inline;
+  list-style-type: none;
+}
