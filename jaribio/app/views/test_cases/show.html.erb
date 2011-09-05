@@ -1,15 +1,17 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Text:</b>
-  <%= @test_case.text %>
-</p>
-
-<p>
-  <b>Expectations:</b>
-  <%= @test_case.expectations %>
-</p>
-
-
-<%= link_to 'Edit', edit_test_case_path(@test_case) %> |
-<%= link_to 'Back', test_cases_path %>
+<div class="block">
+  <%= render :partial => "navigation", :locals => { :active => nil } %>
+  <div class="content">
+    <h2 class="title">Viewing case</h2>
+    <div class="inner">
+      <div class="grouping">
+        <div class="label">Test Case Steps</div>
+        <div class="text_area"><%= @test_case.text %></div>
+      </div>
+      <div class="grouping">
+        <div class="label">Expectations</div>
+        <div class="text_area"><%= @test_case.expectations %></div>
+      </div>
+      <%= link_to 'Edit', edit_test_case_path(@test_case) %>
+    </div>
+  </div>
+</div>

@@ -3,8 +3,9 @@ class TestCasesController < ApplicationController
   respond_to :html
 
   def index
+#    @test_case_pages, @test_cases = paginate :test_cases, :order => 'name'
     @test_cases = TestCase.all
-    respond_with @products
+    respond_with @test_cases
   end
 
   def show

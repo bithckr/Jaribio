@@ -1,4 +1,4 @@
-<%= form_for(@test_case) do |f| %>
+<%= form_for(@test_case, :html => { :class => 'form' }) do |f| %>
   <% if @test_case.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@test_case.errors.count, "error") %> prohibited this case from being saved:</h2>
@@ -11,19 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <div class="group">
+    <%= f.label :name, :class => "label" %>
+    <%= f.text_field :name, :class => "text_field" %>
+    <span class="description">Enter descriptive test case name</span>
   </div>
-  <div class="field">
-    <%= f.label 'Test Case Steps' %><br />
-    <%= f.text_area :text %>
+  <div class="group">
+    <%= f.label "Test Case Steps", :class => "label" %>
+    <%= f.text_area :text, :cols => 80, :rows => 10, :class => "text_area" %>
+    <span class="description"></span>
   </div>
-  <div class="field">
-    <%= f.label :expectations %><br />
-    <%= f.text_area :expectations %>
+  <div class="group">
+    <%= f.label :expectation, :class => "label" %>
+    <%= f.text_area :expectations, :cols => 80, :rows => 10, :class => "text_area" %>
+    <span class="description"></span>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="group navform wat-cf">
+    <button class="button" type="submit">
+      <img alt="Save" src="/images/web-app-theme/icons/tick.png">
+      Save
+    </button>
+    <span class="text_button_padding">or</span>
+    <%= link_to 'Cancel', test_cases_path, :class => "text_button_padding link_button" %>
   </div>
 <% end %>

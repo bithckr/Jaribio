@@ -1,10 +1,5 @@
 <div class="block">
-  <div class="secondary-navigation">
-    <ul class="wat-cf">
-      <li class="first active"><%= link_to 'List', test_cases_path %></li>
-      <li><%= link_to 'New', new_test_case_path %></li>
-    </ul>
-  </div>
+  <%= render :partial => "navigation", :locals => { :active => 'list' } %>
   <div class="content">
     <h2 class="title">Test Cases</h2>
     <div class="inner">
