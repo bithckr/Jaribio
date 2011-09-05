@@ -98,6 +98,7 @@ GEM
     tzinfo (0.3.29)
     warden (1.0.5)
       rack (>= 1.0)
+    web-app-theme (0.7.0)
 
 PLATFORMS
   ruby
@@ -111,3 +112,4 @@ DEPENDENCIES
   rails (= 3.0.9)
   rspec
   rspec-rails
+  web-app-theme (>= 0.6.2)

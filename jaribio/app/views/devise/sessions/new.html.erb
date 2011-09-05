@@ -1,0 +1,40 @@
+<h2>Sign in</h2>
+
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form login"}) do |f| %>
+<div class="group wat-cf">
+  <div class="left">
+    <%= f.label :email, :class => "label right" %>
+  </div>
+  <div class="right">
+    <%= f.email_field :email %>
+  </div>
+</div>
+<div class="group wat-cf">
+  <div class="left">
+    <%= f.label :password, :class => "label right" %>
+  </div>
+  <div class="right">
+    <%= f.password_field :password %>
+  </div>
+</div>
+<% if devise_mapping.rememberable? -%>
+<div class="group wat-cf">
+  <div class="right">
+    <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+  </div>
+</div>
+<% end -%>
+<div class="group navform wat-cf">
+  <div class="right">
+    <button type="submit" class="button">
+      <img src="/images/web-app-theme/icons/key.png"/>Sign in 
+    </button>
+  </div>
+</div>
+<div class="group wat-cf">
+  <div class="right">
+    <%= render :partial => "devise/shared/links" %>
+  </div>
+</div>
+<% end %>
+

@@ -1,0 +1,12 @@
+/* Override here any style defined by web-app-theme */
+#footer {
+  padding-top: 20px
+}
+
+.login div.right {
+  width: 78%
+}
+
+.signup div div.right {
+  width: 78%
+}

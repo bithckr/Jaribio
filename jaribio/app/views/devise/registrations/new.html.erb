@@ -1,0 +1,42 @@
+<h2>Sign up</h2>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form signup"}) do |f| %>
+  <%= devise_error_messages! %>
+  <div class="group wat-cf">
+    <div class="left">
+      <%= f.label :email, :class => "label right" %>
+    </div>
+    <div class="right">
+      <%= f.email_field :email %>
+    </div>
+  </div>
+  <div class="group wat-cf">
+    <div class="left">
+      <%= f.label :password, :class => "label right" %>
+    </div>
+    <div class="right">
+      <%= f.password_field :password %>
+    </div>
+  </div>
+  <div class="group wat-cf">
+    <div class="left">
+      <%= f.label :password_confirmation, :class => "label right" %>
+    </div>
+    <div class="right">
+      <%= f.password_field :password_confirmation %>
+    </div>
+  </div>
+  <div class="group navform wat-cf">
+    <div class="right">
+      <button type="submit" class="button">
+        <img src="/images/web-app-theme/icons/key.png"/>Sign up
+      </button>
+    </div>
+  </div>
+  <div class="group wat-cf">
+    <div class="right">
+      <%= render :partial => "devise/shared/links" %>
+    </div>
+  </div>
+<% end %>
+
