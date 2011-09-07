@@ -1,6 +1,9 @@
-<h1>Editing case</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @test_case %> |
-<%= link_to 'Back', test_cases_path %>
+<div class="block">
+  <%= render :partial => "navigation", :locals => { :active => nil } %>
+  <div class="content">
+    <h2 class="title">Editing case</h2>
+    <div class="inner">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

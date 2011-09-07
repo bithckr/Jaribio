@@ -1,0 +1,15 @@
+<%
+  list_active,new_active = '',''
+  case (active)
+  when 'list'
+    list_active='active'
+  when 'new'
+    new_active='active'
+  end
+%>
+<div class="secondary-navigation">
+  <ul class="wat-cf">
+    <li class="first <%= list_active %>"><%= link_to 'List', test_cases_path %></li>
+    <li class="<%= new_active %>"><%= link_to 'New', new_test_case_path %></li>
+  </ul>
+</div>

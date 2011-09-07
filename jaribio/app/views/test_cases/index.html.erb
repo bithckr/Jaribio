@@ -1,25 +1,28 @@
-<h1>Listing cases</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Created By</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @test_cases.each do |test_case| %>
-  <tr>
-    <td><%= test_case.name %></td>
-    <td><%= test_case.user.email %></td>
-    <td><%= link_to 'Show', test_case %></td>
-    <td><%= link_to 'Edit', edit_test_case_path(test_case) %></td>
-    <td><%= link_to 'Destroy', test_case, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Case', new_test_case_path %>
+<div class="block">
+  <%= render :partial => "navigation", :locals => { :active => 'list' } %>
+  <div class="content">
+    <h2 class="title">Test Cases</h2>
+    <div class="inner">
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Created By</th>
+          <th class="last"></th>
+        </tr>
+        <% cnt = 0 %>
+        <% @test_cases.each do |test_case| %>
+          <% cnt += 1 %>
+          <tr class="<%= (cnt % 2 == 0) ? "even" : "odd" %>">
+            <td><%= test_case.name %></td>
+            <td><%= test_case.user.email %></td>
+            <td class="last">
+              <%= link_to 'Show', test_case %>|
+              <%= link_to 'Edit', edit_test_case_path(test_case) %>|
+              <%= link_to 'Destroy', test_case, :confirm => 'Are you sure?', :method => :delete %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
