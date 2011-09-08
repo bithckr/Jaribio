@@ -9,7 +9,7 @@
 %>
 <div class="secondary-navigation">
   <ul class="wat-cf">
-    <li class="first <%= list_active %>"><%= link_to 'List', test_cases_path %></li>
-    <li class="<%= new_active %>"><%= link_to 'New', new_test_case_path %></li>
+    <li class="first <%= list_active %>"><%= link_to 'List', url_for(:action => 'index') %></li>
+    <li class="<%= new_active %>"><%= link_to 'New', url_for(:action => 'new') %></li>
   </ul>
 </div>
