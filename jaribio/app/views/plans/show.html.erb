@@ -1,10 +1,13 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @plan.name %>
-</p>
-
-
-<%= link_to 'Edit', edit_plan_path(@plan) %> |
-<%= link_to 'Back', plans_path %>
+<div class="block">
+  <%= render :partial => "partials/navigation", :locals => { :active => nil } %>
+  <div class="content">
+    <h2 class="title">Viewing plan</h2>
+    <div class="inner">
+      <div class="grouping">
+        <div class="label">Name:</div>
+        <div class="text_area"><%= @plan.name %></div>
+      </div>
+      <%= link_to 'Edit', edit_plan_path(@plan) %>
+    </div>
+  </div>
+</div>

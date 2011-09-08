@@ -26,12 +26,5 @@
     <%= f.text_area :expectations, :cols => 80, :rows => 10, :class => "text_area" %>
     <span class="description"></span>
   </div>
-  <div class="group navform wat-cf">
-    <button class="button" type="submit">
-      <img alt="Save" src="/images/web-app-theme/icons/tick.png">
-      Save
-    </button>
-    <span class="text_button_padding">or</span>
-    <%= link_to 'Cancel', test_cases_path, :class => "text_button_padding link_button" %>
-  </div>
+  <%= render :partial => "partials/form_buttons" %>
 <% end %>

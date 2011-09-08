@@ -15,11 +15,7 @@
           <tr class="<%= (cnt % 2 == 0) ? "even" : "odd" %>">
             <td><%= test_case.name %></td>
             <td><%= test_case.user.email %></td>
-            <td class="last">
-              <%= link_to 'Show', test_case %>|
-              <%= link_to 'Edit', edit_test_case_path(test_case) %>|
-              <%= link_to 'Destroy', test_case, :confirm => 'Are you sure?', :method => :delete %>
-            </td>
+            <%= render :partial => "partials/item_menu", :locals => { :item => test_case } %>
           </tr>
         <% end %>
       </table>
