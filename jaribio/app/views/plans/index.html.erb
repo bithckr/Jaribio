@@ -1,23 +1,28 @@
-<h1>Listing plans</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @plans.each do |plan| %>
-  <tr>
-    <td><%= plan.name %></td>
-    <td><%= link_to 'Show', plan %></td>
-    <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
-    <td><%= link_to 'Destroy', plan, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Plan', new_plan_path %>
+<div class="block">
+  <%= render :partial => "partials/navigation", :locals => { :active => 'list' } %>
+  <div class="content">
+    <h2 class="title">Plans</h2>
+    <div class="inner">
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <% cnt = 0 %>
+        <% @plans.each do |plan| %>
+          <% cnt += 1 %>
+          <tr>
+            <td><%= plan.name %></td>
+            <td class="last">
+              <%= link_to 'Show', plan %>|
+              <%= link_to 'Edit', edit_plan_path(plan) %>|
+              <%= link_to 'Destroy', plan, :confirm => 'Are you sure?', :method => :delete %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
