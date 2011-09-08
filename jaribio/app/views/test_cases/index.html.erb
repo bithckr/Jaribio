@@ -1,12 +1,20 @@
 <div class="block">
   <%= render :partial => "partials/navigation", :locals => { :active => 'list' } %>
   <div class="content">
-    <h2 class="title">Test Cases</h2>
+    <div>
+    <div class="title">Test Cases</div>
+    <div class="search">
+      <%= form_tag(test_cases_url, :method => 'get') do %>
+        <%= text_field_tag(:q) %>
+        <%= submit_tag("Search") %>
+      <% end %>
+    </div>
+  </div>
     <div class="inner">
       <table class="table">
         <tr>
-          <th>Name</th>
-          <th>Created By</th>
+          <th><%= t('jaribio.cases.name', :default => 'Name') %></th>
+          <th><%= t('jaribio.cases.created_by', :default => 'Created By') %></th>
           <th class="last"></th>
         </tr>
         <% cnt = 0 %>
@@ -19,6 +27,13 @@
           </tr>
         <% end %>
       </table>
+      <div class="actions-bar wat-cf">
+        <div class="actions">
+        </div>
+        <div class="pagination">
+          <%= paginate @test_cases %>  
+        </div>
+      </div>
     </div>
   </div>
 </div>

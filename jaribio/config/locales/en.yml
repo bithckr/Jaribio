@@ -3,7 +3,22 @@
 
 en:
   jaribio:
-    cases: "Cases"
-    suites: "Suites"
-    plans: "Plans"
-
+    actions:
+      show: "Show"
+      edit: "Edit"
+      destroy: "Destroy"
+      confirm: "Are you sure?"
+      login: "Login"
+      logout: "Logout"
+    objects:
+      cases: "Cases"
+      suites: "Suites"
+      plans: "Plans"
+    cases:
+      name: "Name"
+      created_by: "Created By"
+  views:  
+    pagination:  
+      previous: "&lt; Previous"
+      next: "Next &gt;"
+      truncate: '&ellip;'

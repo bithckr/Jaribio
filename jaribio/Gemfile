@@ -4,11 +4,11 @@ gem 'rails', '3.0.9'
 gem 'mysql2', '~> 0.2.6'
 gem 'devise', '~> 1.4.2'
 gem 'jquery-rails', '>= 1.0.12'
+gem 'kaminari'
 
 group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'forgery'
-  gem 'web-app-theme', '>= 0.6.2'
 end

@@ -3,8 +3,11 @@ class TestCasesController < ApplicationController
   respond_to :html
 
   def index
-#    @test_case_pages, @test_cases = paginate :test_cases, :order => 'name'
-    @test_cases = TestCase.all
+    cases = TestCase.scoped
+    if (params[:q])
+      cases = TestCase.search(params[:q])
+    end
+    @test_cases = cases.order("updated_at").page(params[:page]).per(10)
     respond_with @test_cases
   end
 

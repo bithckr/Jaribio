@@ -1,7 +1,5 @@
-#nav li { 
-  height: 30px;
-  padding-top: 10px;
-  width: 100px;
-  display: inline;
-  list-style-type: none;
+.content .search {
+  float: right;
+  margin-top: 15px;
+  margin-right: 15px;
 }
