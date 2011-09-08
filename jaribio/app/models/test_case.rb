@@ -4,8 +4,6 @@ class TestCase < ActiveRecord::Base
 
   belongs_to :user
 
-  scope :search
-
   class << self
     # Simplistic search functionality
     def search(q)
