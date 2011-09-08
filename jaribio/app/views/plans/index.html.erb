@@ -13,13 +13,9 @@
         <% cnt = 0 %>
         <% @plans.each do |plan| %>
           <% cnt += 1 %>
-          <tr>
+          <tr class="<%= (cnt % 2 == 0) ? "even" : "odd" %>">
             <td><%= plan.name %></td>
-            <td class="last">
-              <%= link_to 'Show', plan %>|
-              <%= link_to 'Edit', edit_plan_path(plan) %>|
-              <%= link_to 'Destroy', plan, :confirm => 'Are you sure?', :method => :delete %>
-            </td>
+            <%= render :partial => "partials/item_menu", :locals => { :item => plan } %>
           </tr>
         <% end %>
       </table>
