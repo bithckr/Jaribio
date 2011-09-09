@@ -8,9 +8,7 @@ class TestCase < ActiveRecord::Base
     # Simplistic search functionality
     def search(q)
       t = TestCase.scoped
-      t.where(t.table[:name].matches("%#{q}%").
-              or(t.table[:text].matches("%#{q}%")).
-              or(t.table[:expectations].matches("%#{q}%")))
+      t.where(t.table[:name].matches("%#{q}%"))
     end
   end
 end
