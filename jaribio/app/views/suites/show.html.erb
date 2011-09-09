@@ -1,10 +1,13 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @suite.name %>
-</p>
-
-
-<%= link_to 'Edit', edit_suite_path(@suite) %> |
-<%= link_to 'Back', suites_path %>
+<div class="block">
+  <%= render :partial => "partials/navigation", :locals => { :active => nil } %>
+  <div class="content">
+    <h2 class="title">Viewing suite</h2>
+    <div class="inner">
+      <div class="grouping">
+        <div class="label">Name:</div>
+        <div class="text_area"><%= @suite.name %></div>
+      </div>
+      <%= link_to 'Edit', edit_suite_path(@suite) %>
+    </div>
+  </div>
+</div>

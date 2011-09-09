@@ -1,6 +1,9 @@
-<h1>Editing suite</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @suite %> |
-<%= link_to 'Back', suites_path %>
+<div class="block">
+  <%= render :partial => "partials/navigation", :locals => { :active => nil } %>
+  <div class="content">
+    <h2 class="title">Editing suite</h2>
+    <div class="inner">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

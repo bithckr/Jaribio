@@ -11,11 +11,10 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <div class="group">
+    <%= f.label :name, :class => "label" %><br />
+    <%= f.text_field :name, :class => "text_field" %>
+    <span class="description">Enter descriptive suite name</span>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= render :partial => "partials/form_buttons" %>
 <% end %>
