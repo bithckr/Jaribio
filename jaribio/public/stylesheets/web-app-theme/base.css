@@ -176,20 +176,20 @@ body {
 /* pagination */
 
 .pagination a, .pagination span, .pagination em {
-  padding: 2px 5px;
+#  padding: 2px 5px;
   margin-right: 5px; 
   display: block;
   float: left;
-  border-style: solid;
-  border-width: 1px;
+#  border-style: solid;
+#  border-width: 1px;
 }
 
 .pagination em {
-  font-weight: bold;  
+#  font-weight: bold;  
 }
 
 .pagination a {
-  text-decoration: none;  
+#  text-decoration: none;  
 }
 
 /* tables */

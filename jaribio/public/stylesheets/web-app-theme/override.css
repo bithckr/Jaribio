@@ -48,3 +48,9 @@
 .content .inner {
   clear: both;
 }
+
+.text_button_padding {
+  float: none;
+  display: inline;
+  margin-right: 0px;
+}
