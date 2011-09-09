@@ -4,7 +4,7 @@ Jaribio::Application.routes.draw do
 
   devise_for :users
 
-  resources :test_cases
+  resources :test_cases, :path => '/cases'
   resources :plans
   resources :suites
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110831195211) do
+ActiveRecord::Schema.define(:version => 20110909005650) do
 
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(:version => 20110831195211) do
     t.string "url",  :null => false
   end
 
+  add_index "issues", ["name"], :name => "index_issues_on_name"
+  add_index "issues", ["url"], :name => "index_issues_on_url"
+
   create_table "issues_suites", :id => false, :force => true do |t|
     t.integer "issue_id", :null => false
     t.integer "suite_id", :null => false
@@ -40,6 +43,8 @@ ActiveRecord::Schema.define(:version => 20110831195211) do
     t.datetime "updated_at"
   end
 
+  add_index "plans", ["name"], :name => "index_plans_on_name"
+
   create_table "plans_suites", :id => false, :force => true do |t|
     t.integer "plan_id",  :null => false
     t.integer "suite_id", :null => false
@@ -51,6 +56,8 @@ ActiveRecord::Schema.define(:version => 20110831195211) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "suites", ["name"], :name => "index_suites_on_name"
 
   create_table "suites_test_cases", :id => false, :force => true do |t|
     t.integer "test_case_id", :null => false
@@ -65,6 +72,8 @@ ActiveRecord::Schema.define(:version => 20110831195211) do
     t.datetime "updated_at"
     t.string   "name",         :null => false
   end
+
+  add_index "test_cases", ["name"], :name => "index_test_cases_on_name"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
