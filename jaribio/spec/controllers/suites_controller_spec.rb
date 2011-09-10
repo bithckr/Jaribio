@@ -1,17 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe SuitesController do
-
-  # This should return the minimal set of attributes required to create a valid
-  # Suite. As you add validations to Suite, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
+  login_user
 
   describe "GET index" do
     it "assigns all suites as @suites" do
-      suite = Suite.create! valid_attributes
+      suite = Factory.create(:suite)
       get :index
       assigns(:suites).should eq([suite])
     end
@@ -19,7 +13,7 @@ describe SuitesController do
 
   describe "GET show" do
     it "assigns the requested suite as @suite" do
-      suite = Suite.create! valid_attributes
+      suite = Factory.create(:suite)
       get :show, :id => suite.id.to_s
       assigns(:suite).should eq(suite)
     end
@@ -34,7 +28,7 @@ describe SuitesController do
 
   describe "GET edit" do
     it "assigns the requested suite as @suite" do
-      suite = Suite.create! valid_attributes
+      suite = Factory.create(:suite)
       get :edit, :id => suite.id.to_s
       assigns(:suite).should eq(suite)
     end
@@ -44,18 +38,18 @@ describe SuitesController do
     describe "with valid params" do
       it "creates a new Suite" do
         expect {
-          post :create, :suite => valid_attributes
+          post :create, :suite => Factory.attributes_for(:suite)
         }.to change(Suite, :count).by(1)
       end
 
       it "assigns a newly created suite as @suite" do
-        post :create, :suite => valid_attributes
+        post :create, :suite => Factory.attributes_for(:suite)
         assigns(:suite).should be_a(Suite)
         assigns(:suite).should be_persisted
       end
 
       it "redirects to the created suite" do
-        post :create, :suite => valid_attributes
+        post :create, :suite => Factory.attributes_for(:suite)
         response.should redirect_to(Suite.last)
       end
     end
@@ -80,7 +74,7 @@ describe SuitesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested suite" do
-        suite = Suite.create! valid_attributes
+        suite = Factory.create(:suite)
         # Assuming there are no other suites in the database, this
         # specifies that the Suite created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -90,21 +84,21 @@ describe SuitesController do
       end
 
       it "assigns the requested suite as @suite" do
-        suite = Suite.create! valid_attributes
-        put :update, :id => suite.id, :suite => valid_attributes
+        suite = Factory.create(:suite)
+        put :update, :id => suite.id, :suite => Factory.attributes_for(:suite)
         assigns(:suite).should eq(suite)
       end
 
       it "redirects to the suite" do
-        suite = Suite.create! valid_attributes
-        put :update, :id => suite.id, :suite => valid_attributes
+        suite = Factory.create(:suite)
+        put :update, :id => suite.id, :suite => Factory.attributes_for(:suite)
         response.should redirect_to(suite)
       end
     end
 
     describe "with invalid params" do
       it "assigns the suite as @suite" do
-        suite = Suite.create! valid_attributes
+        suite = Factory.create(:suite)
         # Trigger the behavior that occurs when invalid params are submitted
         Suite.any_instance.stub(:save).and_return(false)
         put :update, :id => suite.id.to_s, :suite => {}
@@ -112,7 +106,7 @@ describe SuitesController do
       end
 
       it "re-renders the 'edit' template" do
-        suite = Suite.create! valid_attributes
+        suite = Factory.create(:suite)
         # Trigger the behavior that occurs when invalid params are submitted
         Suite.any_instance.stub(:save).and_return(false)
         put :update, :id => suite.id.to_s, :suite => {}
@@ -123,14 +117,14 @@ describe SuitesController do
 
   describe "DELETE destroy" do
     it "destroys the requested suite" do
-      suite = Suite.create! valid_attributes
+      suite = Factory.create(:suite)
       expect {
         delete :destroy, :id => suite.id.to_s
       }.to change(Suite, :count).by(-1)
     end
 
     it "redirects to the suites list" do
-      suite = Suite.create! valid_attributes
+      suite = Factory.create(:suite)
       delete :destroy, :id => suite.id.to_s
       response.should redirect_to(suites_url)
     end
