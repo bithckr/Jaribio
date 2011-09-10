@@ -30,7 +30,7 @@ class TestCasesController < ApplicationController
     @test_case = TestCase.new(params[:test_case])
     @test_case.user = current_user
     if @test_case.save
-#      flash[:notice] = "Successfully created test case."
+      flash[:notice] = "Successfully created test case."
     end
     respond_with @test_case
   end
@@ -40,7 +40,7 @@ class TestCasesController < ApplicationController
     @test_case.user = current_user
     params[:test_case].delete(:user_id)
     if @test_case.update_attributes(params[:test_case])
-#      flash[:notice] = "Successfully updated test case."
+      flash[:notice] = "Successfully updated test case."
     end
     respond_with @test_case
   end
@@ -48,7 +48,7 @@ class TestCasesController < ApplicationController
   def destroy
     @test_case = TestCase.find(params[:id])
     @test_case.destroy
-#    flash[:notice] = "Successfully destroyed test case."
+    flash[:notice] = "Successfully destroyed test case."
     respond_with @test_case
   end
 end
