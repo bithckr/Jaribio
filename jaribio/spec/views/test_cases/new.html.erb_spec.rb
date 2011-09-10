@@ -1,11 +1,9 @@
-require 'spec_helper'
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "test_cases/new.html.erb" do
   before(:each) do
-    assign(:test_case, stub_model(TestCase,
-      :text => "MyText",
-      :expectations => "MyText"
-    ).as_new_record)
+    @suite = Factory.build :suite
+    assign(:test_case, Factory.build(:test_case, :suites => [@suite]))
   end
 
   it "renders new case form" do

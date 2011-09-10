@@ -1,14 +1,10 @@
-require 'spec_helper'
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "suites/index.html.erb" do
   before(:each) do
     assign(:suites, [
-      stub_model(Suite,
-        :name => "Name"
-      ),
-      stub_model(Suite,
-        :name => "Name"
-      )
+      Factory.create(:suite, :name => 'Name'),
+      Factory.create(:suite, :name => 'Name')
     ])
   end
 

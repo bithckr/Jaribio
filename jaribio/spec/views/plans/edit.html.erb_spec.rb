@@ -1,10 +1,8 @@
-require 'spec_helper'
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "plans/edit.html.erb" do
   before(:each) do
-    @plan = assign(:plan, stub_model(Plan,
-      :name => "MyString"
-    ))
+    @plan = assign(:plan, Factory.build(:plan))
   end
 
   it "renders the edit plan form" do

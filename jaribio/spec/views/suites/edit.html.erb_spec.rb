@@ -1,10 +1,8 @@
-require 'spec_helper'
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "suites/edit.html.erb" do
   before(:each) do
-    @suite = assign(:suite, stub_model(Suite,
-      :name => "MyString"
-    ))
+    @suite = assign(:suite, Factory.build(:suite))
   end
 
   it "renders the edit suite form" do

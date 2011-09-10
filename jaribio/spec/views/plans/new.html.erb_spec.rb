@@ -1,10 +1,8 @@
-require 'spec_helper'
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "plans/new.html.erb" do
   before(:each) do
-    assign(:plan, stub_model(Plan,
-      :name => "MyString"
-    ).as_new_record)
+    assign(:plan, Factory.build(:plan))
   end
 
   it "renders new plan form" do
