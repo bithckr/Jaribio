@@ -55,16 +55,18 @@ describe TestCasesController do
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved case as @test_case" do
+      before (:each) do 
         # Trigger the behavior that occurs when invalid params are submitted
         TestCase.any_instance.stub(:save).and_return(false)
+        TestCase.any_instance.stub(:errors).and_return({ :anything => "any value (even nil)" })
+      end
+
+      it "assigns a newly created but unsaved case as @test_case" do
         post :create, :test_case => {}
         assigns(:test_case).should be_a_new(TestCase)
       end
 
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        TestCase.any_instance.stub(:save).and_return(false)
         post :create, :test_case => {}
         response.should render_template("new")
       end
@@ -97,18 +99,20 @@ describe TestCasesController do
     end
 
     describe "with invalid params" do
-      it "assigns the case as @test_case" do
-        test_case = Factory.create(:test_case)
+      before (:each) do 
         # Trigger the behavior that occurs when invalid params are submitted
         TestCase.any_instance.stub(:save).and_return(false)
+#        TestCase.any_instance.stub(:errors).and_return({ :anything => "any value (even nil)" })
+      end
+
+      it "assigns the case as @test_case" do
+        test_case = Factory.create(:test_case)
         put :update, :id => test_case.id.to_s, :test_case => {}
         assigns(:test_case).should eq(test_case)
       end
 
       it "re-renders the 'edit' template" do
         test_case = Factory.create(:test_case)
-        # Trigger the behavior that occurs when invalid params are submitted
-        TestCase.any_instance.stub(:save).and_return(false)
         put :update, :id => test_case.id.to_s, :test_case => {}
         response.should render_template("edit")
       end
