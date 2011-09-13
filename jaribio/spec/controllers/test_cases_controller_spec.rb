@@ -99,21 +99,21 @@ describe TestCasesController do
     end
 
     describe "with invalid params" do
+
       before (:each) do 
+        @test_case = Factory.create(:test_case)
         # Trigger the behavior that occurs when invalid params are submitted
         TestCase.any_instance.stub(:save).and_return(false)
-#        TestCase.any_instance.stub(:errors).and_return({ :anything => "any value (even nil)" })
+        TestCase.any_instance.stub(:errors).and_return({ :anything => "any value (even nil)" })
       end
 
       it "assigns the case as @test_case" do
-        test_case = Factory.create(:test_case)
-        put :update, :id => test_case.id.to_s, :test_case => {}
-        assigns(:test_case).should eq(test_case)
+        put :update, :id => @test_case.id.to_s, :test_case => {}
+        assigns(:test_case).should eq(@test_case)
       end
 
       it "re-renders the 'edit' template" do
-        test_case = Factory.create(:test_case)
-        put :update, :id => test_case.id.to_s, :test_case => {}
+        put :update, :id => @test_case.id.to_s, :test_case => {}
         response.should render_template("edit")
       end
     end

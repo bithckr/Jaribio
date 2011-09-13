@@ -1,11 +1,15 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe "Plans" do
-  login_user
 
   describe "GET /plans" do
+    before(:all) do
+      @user = Factory.create(:user)
+      @user.confirm!
+    end
+
     it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
+      login @user
       get plans_path
       response.status.should be(200)
     end
