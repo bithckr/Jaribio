@@ -6,12 +6,16 @@ describe "TestCases" do
     before(:all) do
       @user = Factory.create(:user)
       @user.confirm!
+
+      @test_case = Factory.create(:test_case)
     end
 
-    it "works! (now write some real specs)" do
+    it "lists test cases" do
       login @user
       get test_cases_path
       response.status.should be(200)
+      page.should have_content(@test_case.name)  
+      page.should have_content(@test_case.user.email)  
     end
   end
 end
