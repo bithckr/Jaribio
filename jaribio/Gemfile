@@ -12,4 +12,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'forgery'
   gem 'rcov'
+  # requires libffi on osx (sudo port install libffi)
+  gem 'capybara'
 end
