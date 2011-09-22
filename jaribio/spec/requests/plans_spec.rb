@@ -3,15 +3,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe "Plans" do
 
   describe "GET /plans" do
-    before(:all) do
-      @user = Factory.create(:user)
-      @user.confirm!
+    before(:each) do
+      @user = login_any_user
     end
 
     it "works! (now write some real specs)" do
-      login @user
-      get plans_path
-      response.status.should be(200)
+      visit plans_path
+      current_path.should == plans_path
     end
   end
 end

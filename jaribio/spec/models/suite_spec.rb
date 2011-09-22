@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Suite do
-  before(:all) do
+  before(:each) do
     @case = Factory.build :test_case
     @issue = Factory.build :issue
     @plan = Factory.build :plan

@@ -1,7 +1,7 @@
 <div class="block">
   <%= render :partial => "partials/navigation", :locals => { :active => nil } %>
   <div class="content">
-    <h2 class="title">Viewing case</h2>
+    <h2 class="title"><%= @test_case.name %></h2>
     <div class="inner">
       <div class="grouping">
         <div class="label">Test Case Steps</div>
