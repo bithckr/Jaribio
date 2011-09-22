@@ -17,8 +17,8 @@ describe TestCase do
   end
 
   it "can be searched" do
-    @case.save
-    @cases = TestCase.search('ipsum')
+    @case.save!
+    @cases = TestCase.search(@case.name)
     @cases.size.should eq(1)
   end
 end
