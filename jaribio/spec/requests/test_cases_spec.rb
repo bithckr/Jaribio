@@ -8,10 +8,53 @@ describe "TestCases" do
       @test_case = Factory.create(:test_case)
     end
 
-    it "lists test cases" do
-      visit test_cases_path
-      page.should have_content(@test_case.name)  
-      page.should have_content(@test_case.user.email)  
+    describe "secondary navigation" do
+      before(:each) do
+        visit test_cases_path
+      end
+
+      it "exists" do
+        page.should have_xpath("//div[@class='secondary-navigation']")
+      end
+
+      it "secondary navigation contains 'List'" do
+        page.should have_content('List')  
+      end
+
+      it "secondary navigation contains 'New'" do
+        page.should have_content('New')  
+      end
+
+      it "lists test cases" do
+        page.should have_content(@test_case.name)  
+        page.should have_content(@test_case.user.email)  
+      end
+    end
+
+    describe "search" do
+      before(:each) do
+        visit test_cases_path
+      end
+
+      it "is supported" do
+        page.should have_xpath("//div[@class='search']")
+      end
+
+      it "with results does include list of cases" do
+        fill_in('q', :with => @test_case.name)
+        click_button('Search')
+        page.should have_content('Show')
+        page.should have_content('Edit')
+        page.should have_content('Destroy')
+      end
+
+      it "with no results does not include list of cases" do
+        fill_in('q', :with => 'asdf')
+        click_button('Search')
+        page.should have_no_content('Show')
+        page.should have_no_content('Edit')
+        page.should have_no_content('Destroy')
+      end
     end
   end
 end
