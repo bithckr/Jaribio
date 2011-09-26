@@ -1,15 +1,8 @@
 <div class="block">
   <%= render :partial => "partials/navigation", :locals => { :active => 'list' } %>
   <div class="content">
-    <div>
     <div class="title"><%= t('jaribio.objects.cases', :default => 'Cases') %></div>
-    <div class="search">
-      <%= form_tag(test_cases_url, :method => 'get') do %>
-        <%= text_field_tag(:q) %>
-        <%= submit_tag("Search") %>
-      <% end %>
-    </div>
-  </div>
+    <%= render :partial => "partials/search" %>
     <div class="inner">
       <table class="table">
         <tr>

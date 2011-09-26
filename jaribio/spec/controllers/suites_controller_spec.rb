@@ -55,16 +55,18 @@ describe SuitesController do
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved suite as @suite" do
+      before(:each) do
         # Trigger the behavior that occurs when invalid params are submitted
         Suite.any_instance.stub(:save).and_return(false)
+        Suite.any_instance.stub(:errors).and_return({ :anything => "any value (even nil)" })
+      end
+
+      it "assigns a newly created but unsaved suite as @suite" do
         post :create, :suite => {}
         assigns(:suite).should be_a_new(Suite)
       end
 
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Suite.any_instance.stub(:save).and_return(false)
         post :create, :suite => {}
         response.should render_template("new")
       end
@@ -97,19 +99,20 @@ describe SuitesController do
     end
 
     describe "with invalid params" do
-      it "assigns the suite as @suite" do
-        suite = Factory.create(:suite)
+      before(:each) do
+        @suite = Factory.create(:suite)
         # Trigger the behavior that occurs when invalid params are submitted
         Suite.any_instance.stub(:save).and_return(false)
-        put :update, :id => suite.id.to_s, :suite => {}
-        assigns(:suite).should eq(suite)
+        Suite.any_instance.stub(:errors).and_return({ :anything => "any value (even nil)" })
+      end
+
+      it "assigns the suite as @suite" do
+        put :update, :id => @suite.id.to_s, :suite => {}
+        assigns(:suite).should eq(@suite)
       end
 
       it "re-renders the 'edit' template" do
-        suite = Factory.create(:suite)
-        # Trigger the behavior that occurs when invalid params are submitted
-        Suite.any_instance.stub(:save).and_return(false)
-        put :update, :id => suite.id.to_s, :suite => {}
+        put :update, :id => @suite.id.to_s, :suite => {}
         response.should render_template("edit")
       end
     end

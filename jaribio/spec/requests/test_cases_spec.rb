@@ -24,11 +24,6 @@ describe "TestCases" do
       it "secondary navigation contains 'New'" do
         page.should have_content('New')  
       end
-
-      it "lists test cases" do
-        page.should have_content(@test_case.name)  
-        page.should have_content(@test_case.user.email)  
-      end
     end
 
     describe "search" do
@@ -54,6 +49,20 @@ describe "TestCases" do
         page.should have_no_content('Show')
         page.should have_no_content('Edit')
         page.should have_no_content('Destroy')
+      end
+    end
+
+    describe "list" do
+      before(:each) do
+        visit test_cases_path
+      end
+
+      it "of test cases" do
+        page.should have_content(@test_case.name)  
+        page.should have_content(@test_case.user.email)  
+        page.should have_content('Show')
+        page.should have_content('Edit')
+        page.should have_content('Destroy')
       end
     end
   end
