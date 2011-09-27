@@ -4,4 +4,13 @@ class Plan < ActiveRecord::Base
   belongs_to :user
 
   validates_presence_of :name
+
+  class << self
+    # Simplistic search functionality
+    def search(q)
+      t = Plan.scoped
+      t.where(t.table[:name].matches("%#{q}%"))
+    end
+  end
+
 end

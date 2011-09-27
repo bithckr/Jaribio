@@ -1,22 +1,32 @@
 <div class="block">
   <%= render :partial => "partials/navigation", :locals => { :active => 'list' } %>
   <div class="content">
-    <h2 class="title">Plans</h2>
+    <div class="title"><%= t('jaribio.objects.plans', :default => 'Plans') %></div>
+    <%= render :partial => 'partials/search' %>
     <div class="inner">
       <table class="table">
         <tr>
-          <th>Name</th>
-          <th></th>
+          <th><%= t('jaribio.plans.name', :default => 'Name') %></th>
+          <th><%= t('jaribio.plans.created_by', :default => 'Created By') %></th>
+          <th class="last"></th>
         </tr>
         <% cnt = 0 %>
         <% @plans.each do |plan| %>
           <% cnt += 1 %>
           <tr class="<%= (cnt % 2 == 0) ? "even" : "odd" %>">
             <td><%= plan.name %></td>
+            <td><%= plan.user.email %></td>
             <%= render :partial => "partials/item_menu", :locals => { :item => plan } %>
           </tr>
         <% end %>
       </table>
+      <div class="actions-bar wat-cf">
+        <div class="actions">
+        </div>
+        <div class="pagination">
+          <%= paginate @plans %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

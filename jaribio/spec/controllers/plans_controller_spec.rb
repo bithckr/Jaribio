@@ -59,16 +59,18 @@ describe PlansController do
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved plan as @plan" do
+      before(:each) do
         # Trigger the behavior that occurs when invalid params are submitted
         Plan.any_instance.stub(:save).and_return(false)
+        Plan.any_instance.stub(:errors).and_return({ :anything => "any value (even nil)" })
+      end
+
+      it "assigns a newly created but unsaved plan as @plan" do
         post :create, :plan => {}
         assigns(:plan).should be_a_new(Plan)
       end
 
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Plan.any_instance.stub(:save).and_return(false)
         post :create, :plan => {}
         response.should render_template("new")
       end
@@ -101,19 +103,20 @@ describe PlansController do
     end
 
     describe "with invalid params" do
-      it "assigns the plan as @plan" do
-        plan = Factory.create(:plan)
+      before(:each) do
+        @plan = Factory.create(:plan)
         # Trigger the behavior that occurs when invalid params are submitted
         Plan.any_instance.stub(:save).and_return(false)
-        put :update, :id => plan.id.to_s, :plan => {}
-        assigns(:plan).should eq(plan)
+        Plan.any_instance.stub(:errors).and_return({ :anything => "any value (even nil)" })
+      end
+
+      it "assigns the plan as @plan" do
+        put :update, :id => @plan.id.to_s, :plan => {}
+        assigns(:plan).should eq(@plan)
       end
 
       it "re-renders the 'edit' template" do
-        plan = Factory.create(:plan)
-        # Trigger the behavior that occurs when invalid params are submitted
-        Plan.any_instance.stub(:save).and_return(false)
-        put :update, :id => plan.id.to_s, :plan => {}
+        put :update, :id => @plan.id.to_s, :plan => {}
         response.should render_template("edit")
       end
     end

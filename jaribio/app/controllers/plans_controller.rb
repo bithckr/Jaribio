@@ -2,87 +2,53 @@ class PlansController < ApplicationController
   before_filter :authenticate_user!
   respond_to :html
 
-  # GET /plans
-  # GET /plans.xml
   def index
-    @plans = Plan.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @plans }
+    plans = Plan.scoped
+    if (params[:q])
+      plans = Plan.search(params[:q])
     end
+    @plans = plans.order("updated_at").page(params[:page]).per(10)
+    respond_with @plans
   end
 
-  # GET /plans/1
-  # GET /plans/1.xml
   def show
     @plan = Plan.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @plan }
-    end
+    respond_with @plan
   end
 
-  # GET /plans/new
-  # GET /plans/new.xml
   def new
     @plan = Plan.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @plan }
-    end
+    respond_with @plan
   end
 
-  # GET /plans/1/edit
   def edit
     @plan = Plan.find(params[:id])
+    respond_with @plan
   end
 
-  # POST /plans
-  # POST /plans.xml
   def create
     @plan = Plan.new(params[:plan])
     @plan.user = current_user
-
-    respond_to do |format|
-      if @plan.save
-        format.html { redirect_to(@plan, :notice => 'Plan was successfully created.') }
-        format.xml  { render :xml => @plan, :status => :created, :location => @plan }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @plan.errors, :status => :unprocessable_entity }
-      end
+    if @plan.save
+      flash[:notice] = "Successfully created plan."
     end
+    respond_with @plan
   end
 
-  # PUT /plans/1
-  # PUT /plans/1.xml
   def update
     @plan = Plan.find(params[:id])
     @plan.user = current_user
-
-    respond_to do |format|
-      if @plan.update_attributes(params[:plan])
-        format.html { redirect_to(@plan, :notice => 'Plan was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @plan.errors, :status => :unprocessable_entity }
-      end
+    params[:plan].delete(:user_id)
+    if @plan.update_attributes(params[:plan])
+      flash[:notice] = 'Successfully updated plan.'
     end
+    respond_with @plan
   end
 
-  # DELETE /plans/1
-  # DELETE /plans/1.xml
   def destroy
     @plan = Plan.find(params[:id])
     @plan.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(plans_url) }
-      format.xml  { head :ok }
-    end
+    flash[:notice] = 'Successfully destroyed plan.'
+    respond_with @plan
   end
 end
