@@ -1,72 +1,9 @@
-== Business Model
+== Purpose
 
-Test Cases - consists of steps to execute and expectations
-Test Plans - a grouping of one or more test cases
-Issues - issues represent some foreign resource for which there should be
-a test plan; so these could be new features, improvements, or bugs
+This is a simple Rails application with the goal to produce an intuitive 
+and easy to use interface for the creation of test cases, test suites, 
+and test plans.
 
-Additionally, we want to also store the results of executing a test plan, 
-marking a test case as pass, fail, with a default value indicating the
-test case was not executed.
+It will be possible for a person to execute tests, but also it will
+be possible for unit testing frameworks to publish test results as well.
 
-A test plan can be executed multiple times.
-
-Executed Test Plan - the stored results of executing a test plan
-
-== Data Model
-
-test_cases
-id|user_id|text|expectations|timestamps
-has_many :executions, :as => :executable
-
-suites
-id|user_id|name|timestamps
-has_many :executions, :as => :executable
-
-plans
-id|user_id|name|timestamps
-has_many :executions, :as => :executable
-
-test_cases_suites - relation table for test case to/from test suite
-test_case_id|suite_id
-
-plans_suites - relation table for test suite to/from test plan
-plan_id|suite_id
-
-issues
-id|name|url
-
-issues_suites - relation table for issues to/from test suites
-issue_id|suite_id
-
-executions - record information about executing a plan, suite, or test case
-id|executable_id|executable_type|user_id|timestamps|status_code|environment|results
-
-users
-- using devise standard schema here
-
-Supported queries necessary to Jaribio:
-* List of test cases
-* List of test plans
-* List of test cases within a test plan
-* List of test cases for an issue
-* Current status of a test case
-* Status of each test case for each time it was executed for a given test plan
-
-* Who created a case
-* Who associated a case to a plan
-* Who associated a case to an issue
-* Who has executed a case
-
-TODO:
-* Should probably have some means of describing environments other than
-text; discuss with team.
-
-== Authentication
-
-Integration with Jira
-
-Jira includes a REST API for authentication, /auth/1/session.
-The goal here is to be able to let a user login with Jira credentials
-if they choose and for Jaribio to use the resulting session id from
-Jira to provide additional functionality.
