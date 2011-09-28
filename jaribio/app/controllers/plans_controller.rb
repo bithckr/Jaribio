@@ -18,17 +18,22 @@ class PlansController < ApplicationController
 
   def new
     @plan = Plan.new
+    @suites = Suite.all
     respond_with @plan
   end
 
   def edit
     @plan = Plan.find(params[:id])
+    @suites = Suite.all
     respond_with @plan
   end
 
   def create
+    @suites = Suite.all
+    suite_ids = params[:plan].delete('suites')
     @plan = Plan.new(params[:plan])
     @plan.user = current_user
+    @plan.suites = Suite.find_all_by_id(suite_ids)
     if @plan.save
       flash[:notice] = "Successfully created plan."
     end
@@ -36,8 +41,11 @@ class PlansController < ApplicationController
   end
 
   def update
+    @suites = Suite.all
+    suite_ids = params[:plan].delete('suites')
     @plan = Plan.find(params[:id])
     @plan.user = current_user
+    @plan.suites = Suite.find_all_by_id(suite_ids)
     params[:plan].delete(:user_id)
     if @plan.update_attributes(params[:plan])
       flash[:notice] = 'Successfully updated plan.'
