@@ -25,9 +25,7 @@ class SuitesController < ApplicationController
     @suite = Suite.find(params[:id])
     cases = TestCase.scoped
     @new_cases = cases.order("updated_at").page(params[:page]).per(10)
-    # TODO: Need to scope this to this suite
-    current_test_cases = TestCase.scoped
-    @current_test_cases = current_test_cases.order("name")
+    @current_test_cases = @suite.test_cases
     respond_with @suite
   end
 
