@@ -4,5 +4,5 @@
           <th><%= t('jaribio.cases.created_by', :default => 'Created By') %></th>
           <th class="last"></th>
         </tr>
-        <%= render :partial => 'test_case', :collection => @test_cases %>
+        <%= render :partial => 'test_cases/test_case', :collection => @test_cases %>
       </table>
