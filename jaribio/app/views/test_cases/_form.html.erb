@@ -14,7 +14,10 @@
         $( '.ui-selected', '#suite_list' ).each(
             function(index, element) {
                 var suite_id = $(element).attr('value');
-                result += suite_id + ",";
+                if (suite_id != undefined)
+                {
+                    result += suite_id + ",";
+                }
             }
         );
         $('#test_case_suites').attr('value', result);
@@ -42,19 +45,18 @@
     <span class="description">Enter descriptive test case name</span>
   </div>
   <div>
-    <%= f.label :Suites, :class => "label" %>
-    <table border="0">
-        <tr>
-            <td>
-            <ul id="suite_list">
-            <% @suites.each do |suite| %>
-                <% selected = (@test_case.suites.include?(suite)) ? 'ui-selected' : '' %>
-                <li class="ui-widget-content <%= selected %>" value="<%= suite.id %>"><%= suite.name %></li>
-            <% end %>
-            </ul>
-            </td>
-        </tr>
-    </table>
+    <%= f.label 'Choose Suites', :class => "label" %>
+    <div id="suite_list">
+    <% suites_per_line = 8; suite_count = 0; %>
+    <% @suites.sort {|a,b| a.name <=> b.name }.each do |suite| %>
+        <% selected = (@test_case.suites.include?(suite)) ? 'ui-selected' : '' %>
+        <span class="ui-widget-content <%= selected %>" value="<%= suite.id %>"><%= suite.name %></span>
+        <% suite_count = suite_count + 1 %>
+        <% if suite_count % suites_per_line == 0 %>
+            <p></p>
+        <% end %>
+    <% end %>
+    </div>
     <span class="description">Select the Suites this test case belongs to.</span>
   </div>
   <br>
