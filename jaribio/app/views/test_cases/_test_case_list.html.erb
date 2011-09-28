@@ -1,0 +1,8 @@
+      <table class="table">
+        <tr>
+          <th><%= t('jaribio.cases.name', :default => 'Name') %></th>
+          <th><%= t('jaribio.cases.created_by', :default => 'Created By') %></th>
+          <th class="last"></th>
+        </tr>
+        <%= render :partial => 'test_cases/test_case', :collection => test_cases %>
+      </table>

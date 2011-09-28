@@ -4,15 +4,20 @@
 en:
   jaribio:
     actions:
+      associate: "Associate"
       show: "Show"
       edit: "Edit"
+      editing: "Editing"
       destroy: "Destroy"
       confirm: "Are you sure?"
       login: "Login"
       logout: "Logout"
     objects:
+      case: "Case"
       cases: "Cases"
+      suite: "Suite"
       suites: "Suites"
+      plan: "Plan"
       plans: "Plans"
     cases:
       name: "Name"
