@@ -1,4 +1,27 @@
-<%= form_for(@test_case, :html => { :class => 'form' }) do |f| %>
+<style>
+	#suite_list .ui-selecting { background: #dadada; }
+	#suite_list .ui-selected { background: #dadada; color: #212121; }
+	#suite_list { list-style-type: none; }
+</style>
+<script>
+	$(function() {
+		$( "#suite_list" ).selectable();
+	});
+    
+    function suite_list_helper()
+    {
+        var result = '';
+        $( '.ui-selected', '#suite_list' ).each(
+            function(index, element) {
+                var suite_id = $(element).attr('value');
+                result += suite_id + ",";
+            }
+        );
+        $('#test_case_suites').attr('value', result);
+    }
+</script>
+
+<%= form_for(@test_case, :html => { :class => 'form', :onSubmit => 'suite_list_helper()' }) do |f| %>
   <% if @test_case.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@test_case.errors.count, "error") %> prohibited this case from being saved:</h2>
@@ -10,12 +33,31 @@
       </ul>
     </div>
   <% end %>
-
+  
+  <input type="hidden" id="test_case_suites" name="test_case_suites">
+    
   <div class="group">
     <%= f.label :name, :class => "label" %>
     <%= f.text_field :name, :class => "text_field" %>
     <span class="description">Enter descriptive test case name</span>
   </div>
+  <div>
+    <%= f.label :Suites, :class => "label" %>
+    <table border="0">
+        <tr>
+            <td>
+            <ul id="suite_list">
+            <% @suites.each do |suite| %>
+                <% selected = (@test_case.suites.include?(suite)) ? 'ui-selected' : '' %>
+                <li class="ui-widget-content <%= selected %>" value="<%= suite.id %>"><%= suite.name %></li>
+            <% end %>
+            </ul>
+            </td>
+        </tr>
+    </table>
+    <span class="description">Select the Suites this test case belongs to.</span>
+  </div>
+  <br>
   <div class="group">
     <%= f.label "Test Case Steps", :class => "label" %>
     <%= f.text_area :text, :cols => 80, :rows => 10, :class => "text_area" %>

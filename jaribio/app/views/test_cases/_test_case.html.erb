@@ -1,0 +1,5 @@
+<tr class="<%= (test_case_counter % 2 == 0) ? "even" : "odd" %>">
+  <td><%= test_case.name %></td>
+  <td><%= test_case.user.email %></td>
+  <%= render :partial => "partials/item_menu", :locals => { :item => test_case } %>
+</tr>
