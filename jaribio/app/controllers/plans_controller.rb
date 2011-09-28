@@ -13,6 +13,7 @@ class PlansController < ApplicationController
 
   def show
     @plan = Plan.find(params[:id])
+    @current_suites = @plan.suites
     respond_with @plan
   end
 

@@ -11,17 +11,14 @@
     </div>
   <% end %>
 
-  <div class="group">
+  <div class="grouping">
     <%= f.label :name, :class => "label" %>
     <%= f.text_field :name, :class => "text_field" %>
     <span class="description">Enter descriptive plan name</span>
   </div>
-  <div class="group">
-    <h3>Suites:</h3>
-    <% @suites.each do |s| %>
-      <%= check_box_tag 'plan[suites][]', s.id, @plan.suites.include?(s) %>
-      <span><%= s.name %></span><br />
-    <% end %>
+  <div class="grouping">
+    <div class="label">Suites:</div>
+    <%= render :partial => 'suites/suite_list', :locals => { :suites => @suites, :plan => @plan } %>
   </div>
   <%= render :partial => "partials/form_buttons" %>
 <% end %>
