@@ -4,7 +4,7 @@
     <div class="title"><%= t('jaribio.objects.cases', :default => 'Cases') %></div>
     <%= render :partial => "partials/search" %>
     <div class="inner">
-      <%= render :partial => 'test_case_list' %>
+      <%= render :partial => 'test_case_list', :locals => { :test_cases => @test_cases } %>
       <div class="actions-bar wat-cf">
         <div class="actions">
         </div>
