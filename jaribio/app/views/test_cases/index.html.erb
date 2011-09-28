@@ -10,15 +10,7 @@
           <th><%= t('jaribio.cases.created_by', :default => 'Created By') %></th>
           <th class="last"></th>
         </tr>
-        <% cnt = 0 %>
-        <% @test_cases.each do |test_case| %>
-          <% cnt += 1 %>
-          <tr class="<%= (cnt % 2 == 0) ? "even" : "odd" %>">
-            <td><%= test_case.name %></td>
-            <td><%= test_case.user.email %></td>
-            <%= render :partial => "partials/item_menu", :locals => { :item => test_case } %>
-          </tr>
-        <% end %>
+        <%= render :partial => 'test_case', :collection => @test_cases %>
       </table>
       <div class="actions-bar wat-cf">
         <div class="actions">
