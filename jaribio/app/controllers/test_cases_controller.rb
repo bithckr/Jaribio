@@ -18,17 +18,21 @@ class TestCasesController < ApplicationController
 
   def new
     @test_case = TestCase.new
+    @suites = Suite.find(:all);
+
     respond_with @test_case
   end
 
   def edit
     @test_case = TestCase.find(params[:id])
+    @suites = Suite.find(:all);
     respond_with @test_case
   end
 
   def create
     @test_case = TestCase.new(params[:test_case])
     @test_case.user = current_user
+    @test_case.suite_ids=params[:test_case_suites].split(',');
     if @test_case.save
       flash[:notice] = "Successfully created test case."
     end
@@ -39,6 +43,7 @@ class TestCasesController < ApplicationController
     @test_case = TestCase.find(params[:id])
     @test_case.user = current_user
     params[:test_case].delete(:user_id)
+    @test_case.suite_ids=params[:test_case_suites].split(',');
     if @test_case.update_attributes(params[:test_case])
       flash[:notice] = "Successfully updated test case."
     end

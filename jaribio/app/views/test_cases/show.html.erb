@@ -11,6 +11,12 @@
         <div class="label">Expectations</div>
         <div class="text_area"><%= @test_case.expectations %></div>
       </div>
+      <div class="grouping">
+        <div class="label">Suites</div>
+        <% @test_case.suites.each do |suite| %>
+            <span class="ui-state-default"><%=h suite.name %></span>
+        <% end %>
+      </div>
       <%= link_to 'Edit', edit_test_case_path(@test_case) %>
     </div>
   </div>
