@@ -14,4 +14,11 @@ class Suite < ActiveRecord::Base
       t.where(t.table[:name].matches("%#{q}%"))
     end
   end
+
+  def available_test_cases
+    test_cases = Arel::Table.new(:test_cases)
+    suites_test_cases = Arel::Table.new(:suites_test_cases)
+    related_test_cases = test_cases.project(test_cases[:id]).join(suites_test_cases).on(test_cases[:id].eq(suites_test_cases[:test_case_id])).where(suites_test_cases[:suite_id].eq(self.id))
+    TestCase.scoped.where(test_cases[:id].not_in(related_test_cases))
+  end
 end

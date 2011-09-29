@@ -23,7 +23,7 @@ class SuitesController < ApplicationController
 
   def edit
     @suite = Suite.find(params[:id])
-    cases = TestCase.scoped
+    cases = @suite.available_test_cases
     @new_cases = cases.order("updated_at").page(params[:page]).per(10)
     @current_test_cases = @suite.test_cases
     respond_with @suite
