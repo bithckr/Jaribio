@@ -4,5 +4,6 @@
           <th><%= t('jaribio.cases.created_by', :default => 'Created By') %></th>
           <th class="last"></th>
         </tr>
-        <%= render :partial => 'test_cases/test_case', :collection => test_cases %>
+        <% partial_name = defined?(menu) ? menu : 'partials/item_menu' %>
+        <%= render :partial => 'test_cases/test_case', :collection => test_cases, :locals => { :menu => partial_name } %>
       </table>

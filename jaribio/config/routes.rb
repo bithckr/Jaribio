@@ -8,4 +8,6 @@ Jaribio::Application.routes.draw do
   resources :plans
   resources :suites
 
+  match 'suites/:id/cases/:test_case_id' => "suites#unassociate", :via => 'delete', :as => :unassociate
+
 end
