@@ -12,12 +12,12 @@
         </tr>
         <% cnt = 0 %>
         <% @plans.each do |plan| %>
-          <% cnt += 1 %>
           <tr class="<%= (cnt % 2 == 0) ? "even" : "odd" %>">
             <td><%= plan.name %></td>
             <td><%= plan.user.email %></td>
             <%= render :partial => "partials/item_menu", :locals => { :item => plan } %>
           </tr>
+          <% cnt += 1 %>
         <% end %>
       </table>
       <div class="actions-bar wat-cf">

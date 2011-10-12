@@ -9,7 +9,6 @@
         </tr>
         <% cnt = 0 %>
         <% suites.each do |suite| %>
-          <% cnt += 1 %>
           <tr class="<%= (cnt % 2 == 0) ? "even" : "odd" %>">
             <% if plan %>
               <td class="checkbox"><%= check_box_tag 'plan[suites][]', suite.id, plan.suites.include?(suite) %></td>
@@ -18,5 +17,6 @@
             <td><%= suite.user.email %></td>
             <%= render :partial => "partials/item_menu", :locals => { :item => suite } %>
           </tr>
+          <% cnt += 1 %>
         <% end %>
       </table>
