@@ -32,7 +32,10 @@ class TestCasesController < ApplicationController
   def create
     @test_case = TestCase.new(params[:test_case])
     @test_case.user = current_user
-    @test_case.suite_ids=params[:test_case_suites].split(',');
+
+    if params.has_key? :test_case_suites
+      @test_case.suite_ids=params[:test_case_suites].split(',');
+    end
     if @test_case.save
       flash[:notice] = "Successfully created test case."
     end
@@ -43,7 +46,9 @@ class TestCasesController < ApplicationController
     @test_case = TestCase.find(params[:id])
     @test_case.user = current_user
     params[:test_case].delete(:user_id)
-    @test_case.suite_ids=params[:test_case_suites].split(',');
+    if params.has_key? :test_case_suites
+      @test_case.suite_ids=params[:test_case_suites].split(',');
+    end
     if @test_case.update_attributes(params[:test_case])
       flash[:notice] = "Successfully updated test case."
     end
