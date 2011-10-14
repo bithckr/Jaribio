@@ -1,0 +1,12 @@
+<div class="title">Current Cases</div>
+<%= render :partial => "partials/search" %>
+<div class="inner">
+  <%= render :partial => "test_cases/test_case_list", :locals => { :test_cases => @current_test_cases, :menu => 'suites/item_menu' } %>
+  <div class="actions-bar wat-cf">
+    <div class="actions">
+    </div>
+    <div class="pagination">
+      <%= paginate @current_test_cases %>
+    </div>
+  </div>
+</div>

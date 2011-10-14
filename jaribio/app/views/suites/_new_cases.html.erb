@@ -2,4 +2,11 @@
 <%= render :partial => "partials/search" %>
 <div class="inner">
   <%= render :partial => "test_cases/test_case_list", :locals => { :test_cases => @new_cases } %>
+  <div class="actions-bar wat-cf">
+    <div class="actions">
+    </div>
+    <div class="pagination">
+      <%= paginate @new_cases %>
+    </div>
+  </div>
 </div>

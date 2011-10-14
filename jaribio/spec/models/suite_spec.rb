@@ -25,4 +25,7 @@ describe Suite do
   it "has many executions" do
     @suite.should have(1).executions
   end
+
+  it "can list unrelated test cases"
+
 end
