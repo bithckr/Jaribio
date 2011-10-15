@@ -15,6 +15,11 @@ class Suite < ActiveRecord::Base
     end
   end
 
+  def search_test_cases(q)
+    t = TestCase.scoped
+    test_cases.scoped.where(t.table[:name].matches("%#{q}%"))
+  end
+
   def available_test_cases
     test_cases = Arel::Table.new(:test_cases)
     suites_test_cases = Arel::Table.new(:suites_test_cases)

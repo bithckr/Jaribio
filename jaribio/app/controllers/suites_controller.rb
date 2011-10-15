@@ -23,8 +23,12 @@ class SuitesController < ApplicationController
 
   def edit
     @suite = Suite.find(params[:id])
-    @current_cases = @suite.test_cases
-    @current_cases = Kaminari.paginate_array(@current_cases).page(params[:page]).per(10)
+    if (params[:q])
+      cases = @suite.search_test_cases(params[:q])
+    else
+      cases = @suite.test_cases.scoped
+    end
+    @current_cases = cases.order("name").page(params[:page]).per(10)
     respond_with @suite
   end
 
