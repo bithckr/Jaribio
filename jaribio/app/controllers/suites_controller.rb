@@ -30,7 +30,12 @@ class SuitesController < ApplicationController
 
   def add_cases
     @suite = Suite.find(params[:id])
-    cases = @suite.available_test_cases
+    cases = TestCase.scoped
+    if (params[:q])
+      cases = @suite.search_available_test_cases(params[:q])
+    else
+      cases = @suite.available_test_cases
+    end
     @new_cases = cases.order("updated_at").page(params[:page]).per(10)
     respond_with @suite
   end

@@ -1,5 +1,5 @@
 <div class="search">
-  <%= form_tag(url_for(:action => 'index'), :method => 'get') do %>
+  <%= form_tag(url_for(:action => (defined? action) ? action : 'index'), :method => 'get') do %>
     <%= text_field_tag(:q) %>
     <%= submit_tag("Search") %>
   <% end %>
