@@ -6,8 +6,12 @@ Jaribio::Application.routes.draw do
 
   resources :test_cases, :path => '/cases'
   resources :plans
-  resources :suites
+  resources :suites do
+    member do
+      get 'add_cases'
+    end
+  end
 
-  match 'suites/:id/cases/:test_case_id' => "suites#unassociate", :via => 'delete', :as => :unassociate
-
+  match 'suites/:id/cases/:case_id' => "suites#associate",   :via => 'post',   :as => :associate_suite_case
+  match 'suites/:id/cases/:case_id' => "suites#unassociate", :via => 'delete', :as => :unassociate_suite_case
 end

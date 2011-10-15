@@ -1,5 +1,8 @@
 <td class="last">
   <%= link_to t('jaribio.views.actions.show', :default => 'Show'), item %>|
   <%= link_to t('jaribio.views.actions.edit', :default => 'Edit'), url_for([:edit, item])  %>|
+  <% if (item.class == Suite) %>
+  <%= link_to t('jaribio.views.actions.add_cases', :default => 'Add Cases'), url_for([:add_cases, item]) %>|
+  <% end %>
   <%= link_to t('jaribio.views.actions.destroy', :default => 'Destroy'), item, :confirm => t('jaribio.views.actions.confirm', :default => 'Are you sure?'), :method => :delete %>
 </td>

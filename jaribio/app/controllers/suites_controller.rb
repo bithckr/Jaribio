@@ -23,10 +23,15 @@ class SuitesController < ApplicationController
 
   def edit
     @suite = Suite.find(params[:id])
+    @current_cases = @suite.test_cases
+    @current_cases = Kaminari.paginate_array(@current_cases).page(params[:page]).per(10)
+    respond_with @suite
+  end
+
+  def add_cases
+    @suite = Suite.find(params[:id])
     cases = @suite.available_test_cases
-    @new_cases = cases.order("updated_at").page(params[:npage]).per(10)
-    @current_test_cases = @suite.test_cases
-    @current_test_cases = Kaminari.paginate_array(@current_test_cases).page(params[:cpage]).per(10)
+    @new_cases = cases.order("updated_at").page(params[:page]).per(10)
     respond_with @suite
   end
 
@@ -55,7 +60,15 @@ class SuitesController < ApplicationController
     flash[:notice] = 'Successfully destroyed suite.'
     respond_with @suite
   end
-  
+
+  def associate
+    suite = Suite.find(params[:id])
+    test_case = TestCase.find(params[:case_id])
+    suite.test_cases << test_case
+
+    redirect_to add_cases_suite_path(suite)
+  end
+
   def unassociate
     suite = Suite.find(params[:id])
     test_case = TestCase.find(params[:test_case_id])
