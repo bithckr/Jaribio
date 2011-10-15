@@ -25,7 +25,6 @@ class TestCasesController < ApplicationController
 
   def edit
     @test_case = TestCase.find(params[:id])
-    @suites = Suite.find(:all);
     respond_with @test_case
   end
 
@@ -46,9 +45,6 @@ class TestCasesController < ApplicationController
     @test_case = TestCase.find(params[:id])
     @test_case.user = current_user
     params[:test_case].delete(:user_id)
-    if params.has_key? :test_case_suites
-      @test_case.suite_ids=params[:test_case_suites].split(',');
-    end
     if @test_case.update_attributes(params[:test_case])
       flash[:notice] = "Successfully updated test case."
     end
