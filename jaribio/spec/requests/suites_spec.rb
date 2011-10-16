@@ -63,4 +63,24 @@ describe "Suites" do
       end
     end
   end
+
+  describe "GET /suites/1/add_cases" do
+    before(:each) do
+      @user = login_any_user
+      @suite = Factory.create(:suite)
+    end
+
+    it "with no associated test cases" do
+      visit url_for([:add_cases, @suite])
+      page.should have_content('Associate Cases')
+      page.should have_no_link('Associate')
+    end
+
+    it "with existing associated test cases" do
+      @new_cases = [Factory.create(:test_case)]
+      visit url_for([:add_cases, @suite])
+      page.should have_content('Associate Cases')
+      page.should have_link('Associate')
+    end
+  end
 end

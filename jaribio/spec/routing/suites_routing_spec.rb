@@ -27,5 +27,17 @@ describe SuitesController do
       delete("/suites/1").should route_to("suites#destroy", :id => "1")
     end
 
+    it "routes to #add_cases" do
+      get("/suites/1/add_cases").should route_to("suites#add_cases", :id => "1")
+    end
+
+    it "routes to #associate" do
+      post("/suites/1/cases/1").should route_to("suites#associate", :id => "1", :case_id => "1")
+    end
+
+    it "routes to #unassociate" do
+      delete("/suites/1/cases/1").should route_to("suites#unassociate", :id => "1", :case_id => "1")
+    end
+
   end
 end
