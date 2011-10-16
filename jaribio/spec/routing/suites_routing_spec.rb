@@ -11,10 +11,6 @@ describe SuitesController do
       get("/suites/new").should route_to("suites#new")
     end
 
-    it "routes to #show" do
-      get("/suites/1").should route_to("suites#show", :id => "1")
-    end
-
     it "routes to #edit" do
       get("/suites/1/edit").should route_to("suites#edit", :id => "1")
     end

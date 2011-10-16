@@ -15,14 +15,6 @@ describe PlansController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested plan as @plan" do
-      plan = Factory.create :plan
-      get :show, :id => plan.id.to_s
-      assigns(:plan).should eq(plan)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new plan as @plan" do
       get :new

@@ -11,14 +11,6 @@ describe SuitesController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested suite as @suite" do
-      suite = Factory.create(:suite)
-      get :show, :id => suite.id.to_s
-      assigns(:suite).should eq(suite)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new suite as @suite" do
       get :new

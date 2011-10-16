@@ -4,9 +4,9 @@ Jaribio::Application.routes.draw do
 
   devise_for :users
 
-  resources :test_cases, :path => '/cases'
-  resources :plans
-  resources :suites do
+  resources :test_cases, :path => '/cases', :except => :show
+  resources :plans, :except => :show
+  resources :suites, :except => :show  do
     member do
       get 'add_cases'
     end

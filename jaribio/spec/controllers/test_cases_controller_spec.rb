@@ -11,14 +11,6 @@ describe TestCasesController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested case as @test_case" do
-      test_case = Factory.create(:test_case)
-      get :show, :id => test_case.id.to_s
-      assigns(:test_case).should eq(test_case)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new case as @test_case" do
       get :new

@@ -38,7 +38,6 @@ describe "Suites" do
       it "with results does include list of suites" do
         fill_in('q', :with => @suite.name)
         click_button('Search')
-        page.should have_content('Show')
         page.should have_content('Edit')
         page.should have_content('Destroy')
       end
@@ -46,7 +45,6 @@ describe "Suites" do
       it "with no results does not include list of suites" do
         fill_in('q', :with => 'asdf')
         click_button('Search')
-        page.should have_no_content('Show')
         page.should have_no_content('Edit')
         page.should have_no_content('Destroy')
       end
@@ -60,7 +58,6 @@ describe "Suites" do
       it "of suites" do
         page.should have_content(@suite.name)  
         page.should have_content(@suite.user.email)  
-        page.should have_content('Show')
         page.should have_content('Edit')
         page.should have_content('Destroy')
       end
