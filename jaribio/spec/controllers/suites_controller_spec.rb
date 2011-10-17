@@ -26,6 +26,28 @@ describe SuitesController do
     end
   end
 
+  describe "GET add_cases" do
+    before(:each) do
+      @suite = Factory.create(:suite)
+      @test_case = Factory.create(:test_case)
+    end
+
+    it "assigns all cases to @new_cases" do
+      get :add_cases, :id => @suite.id.to_s, :case_id => @test_case.id.to_s
+      assigns(:new_cases).should eq([@test_case])
+    end
+
+    it "assigns no cases to @new_cases with invalid query" do
+      get :add_cases, :id => @suite.id.to_s, :case_id => @test_case.id.to_s, :q => 'abcdef'
+      assigns(:new_cases).should eq([])
+    end
+
+    it "assigns matching cases to @new_cases with valid query" do
+      get :add_cases, :id => @suite.id.to_s, :case_id => @test_case.id.to_s, :q => @test_case.name
+      assigns(:new_cases).should eq([@test_case])
+    end
+  end
+
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Suite" do
