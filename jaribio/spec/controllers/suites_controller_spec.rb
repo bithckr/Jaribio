@@ -87,6 +87,15 @@ describe SuitesController do
     end
   end
 
+  describe "POST associate" do
+    it "will add test case to suite" do
+      suite = Factory.create(:suite)
+      test_case = Factory.create(:test_case)
+      post :associate, :id => suite.id.to_s, :case_id => test_case.id.to_s
+      suite.test_cases.should eq([test_case])
+    end
+  end
+
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested suite" do
