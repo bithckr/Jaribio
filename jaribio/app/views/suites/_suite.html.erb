@@ -1,0 +1,5 @@
+<tr class="<%= (suite_counter % 2 == 0) ? "even" : "odd" %>">
+  <td><%= suite.name %></td>
+  <td><%= suite.user.email %></td>
+  <%= render :partial => menu, :locals => { :item => suite } %>
+</tr>

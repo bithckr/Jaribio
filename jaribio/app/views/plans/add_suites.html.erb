@@ -1,0 +1,20 @@
+<div class="block">
+  <%= render :partial => "partials/navigation", :locals => { :active => nil } %>
+  <div class="content">
+    <div class="title"><%= t('jaribio.actions.editing', :default => 'Editing') %> <%= t('jaribio.objects.plan', :default => 'Plan') %></div>
+    <div class="inner">
+      <div class="title"><%= t('jaribio.actions.associate', :default => 'Associate') %> <%= t('jaribio.objects.suites', :default => 'Suites') %></div>
+      <%= render :partial => "partials/search", :locals => { :action => 'add_suites' } %>
+      <div class="inner">
+        <%= render :partial => "suites/suite_list", :locals => { :suites => @new_suites, :menu => 'plans/new_suites_item_menu' } %>
+        <div class="actions-bar wat-cf">
+          <div class="actions">
+          </div>
+          <div class="pagination">
+            <%= paginate @new_suites %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

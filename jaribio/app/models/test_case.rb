@@ -7,9 +7,9 @@ class TestCase < ActiveRecord::Base
 
   class << self
     # Simplistic search functionality
-    def search(q)
+    def search(q, relation = TestCase.scoped)
       t = TestCase.scoped
-      t.where(t.table[:name].matches("%#{q}%"))
+      relation.where(t.table[:name].matches("%#{q}%"))
     end
   end
 end

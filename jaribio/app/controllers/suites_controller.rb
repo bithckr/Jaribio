@@ -23,10 +23,9 @@ class SuitesController < ApplicationController
 
   def edit
     @suite = Suite.find(params[:id])
+    cases = @suite.test_cases.scoped
     if (params[:q])
-      cases = @suite.search_test_cases(params[:q])
-    else
-      cases = @suite.test_cases.scoped
+      cases = TestCase.search(params[:q], cases)
     end
     @current_cases = cases.order("name").page(params[:page]).per(10)
     respond_with @suite
@@ -34,11 +33,9 @@ class SuitesController < ApplicationController
 
   def add_cases
     @suite = Suite.find(params[:id])
-    cases = TestCase.scoped
+    cases = @suite.available_test_cases
     if (params[:q])
-      cases = @suite.search_available_test_cases(params[:q])
-    else
-      cases = @suite.available_test_cases
+      cases = TestCase.search(params[:q], cases)
     end
     @new_cases = cases.order("updated_at").page(params[:page]).per(10)
     respond_with @suite

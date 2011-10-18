@@ -13,28 +13,37 @@ class PlansController < ApplicationController
 
   def show
     @plan = Plan.find(params[:id])
-    @current_suites = @plan.suites
     respond_with @plan
   end
 
   def new
     @plan = Plan.new
-    @suites = Suite.all
     respond_with @plan
   end
 
   def edit
     @plan = Plan.find(params[:id])
-    @suites = Suite.all
+    suites = @plan.suites.scoped
+    if (params[:q])
+      suites = Suite.search(params[:q], suites)
+    end
+    @current_suites = suites.order("name").page(params[:page]).per(10)
+    respond_with @plan
+  end
+
+  def add_suites
+    @plan = Plan.find(params[:id])
+    suites = @plan.available_suites
+    if (params[:q])
+      suites = Suite.search(params[:q], suites)
+    end
+    @new_suites = suites.order("updated_at").page(params[:page]).per(10)
     respond_with @plan
   end
 
   def create
-    @suites = Suite.all
-    suite_ids = params[:plan].delete('suites')
     @plan = Plan.new(params[:plan])
     @plan.user = current_user
-    @plan.suites = Suite.find_all_by_id(suite_ids)
     if @plan.save
       flash[:notice] = "Successfully created plan."
     end
@@ -42,11 +51,8 @@ class PlansController < ApplicationController
   end
 
   def update
-    @suites = Suite.all
-    suite_ids = params[:plan].delete('suites')
     @plan = Plan.find(params[:id])
     @plan.user = current_user
-    @plan.suites = Suite.find_all_by_id(suite_ids)
     params[:plan].delete(:user_id)
     if @plan.update_attributes(params[:plan])
       flash[:notice] = 'Successfully updated plan.'
@@ -59,5 +65,21 @@ class PlansController < ApplicationController
     @plan.destroy
     flash[:notice] = 'Successfully destroyed plan.'
     respond_with @plan
+  end
+
+  def associate
+    plan = Plan.find(params[:id])
+    suite = Suite.find(params[:suite_id])
+    plan.suites << suite
+    
+    redirect_to add_suites_plan_path(plan)
+  end
+
+  def unassociate
+    plan = Plan.find(params[:id])
+    suite = Suite.find(params[:suite_id])
+    plan.suites.delete(suite)
+
+    redirect_to edit_plan_path(plan)
   end
 end

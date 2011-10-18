@@ -1,4 +1,4 @@
-<%= form_for(@test_case, :html => { :class => 'form', :onSubmit => 'suite_list_helper()' }) do |f| %>
+<%= form_for(@test_case, :html => { :class => 'form' }) do |f| %>
   <% if @test_case.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@test_case.errors.count, "error") %> prohibited this case from being saved:</h2>

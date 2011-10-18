@@ -5,5 +5,16 @@
     <div class="inner">
       <%= render 'form' %>
     </div>
+    <div class="title">Current Suites</div>
+    <%= render :partial => "partials/search", :locals => { :action => 'edit' } %>
+    <div class="inner">
+      <%= render :partial => "suites/suite_list", :locals => { :suites => @current_suites, :menu => 'plans/current_suites_item_menu' } %>
+      <div class="actions-bar wat-cf">
+        <div class="actions"></div>
+        <div class="pagination">
+          <%= paginate @current_suites %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -9,15 +9,10 @@ class Suite < ActiveRecord::Base
 
   class << self
     # Simplistic search functionality
-    def search(q)
+    def search(q, relation = Suite.scoped)
       t = Suite.scoped
-      t.where(t.table[:name].matches("%#{q}%"))
+      relation.where(t.table[:name].matches("%#{q}%"))
     end
-  end
-
-  def search_test_cases(q)
-    t = TestCase.scoped
-    test_cases.scoped.where(t.table[:name].matches("%#{q}%"))
   end
 
   def available_test_cases
@@ -25,11 +20,6 @@ class Suite < ActiveRecord::Base
     suites_test_cases = Arel::Table.new(:suites_test_cases)
     related_test_cases = test_cases.project(test_cases[:id]).join(suites_test_cases).on(test_cases[:id].eq(suites_test_cases[:test_case_id])).where(suites_test_cases[:suite_id].eq(self.id))
     TestCase.scoped.where(test_cases[:id].not_in(related_test_cases))
-  end
-
-  def search_available_test_cases(q)
-    t = TestCase.scoped
-    available_test_cases.where(t.table[:name].matches("%#{q}%"))
   end
 
 end

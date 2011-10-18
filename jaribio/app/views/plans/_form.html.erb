@@ -16,9 +16,5 @@
     <%= f.text_field :name, :class => "text_field" %>
     <span class="description">Enter descriptive plan name</span>
   </div>
-  <div class="grouping">
-    <div class="label">Suites:</div>
-    <%= render :partial => 'suites/suite_list', :locals => { :suites => @suites, :plan => @plan } %>
-  </div>
   <%= render :partial => "partials/form_buttons" %>
 <% end %>

@@ -7,10 +7,17 @@ class Plan < ActiveRecord::Base
 
   class << self
     # Simplistic search functionality
-    def search(q)
+    def search(q, relation = Plan.scoped)
       t = Plan.scoped
-      t.where(t.table[:name].matches("%#{q}%"))
+      relation.where(t.table[:name].matches("%#{q}%"))
     end
+  end
+
+  def available_suites
+    suites = Arel::Table.new(:suites)
+    plans_suites = Arel::Table.new(:plans_suites)
+    related_suites = suites.project(suites[:id]).join(plans_suites).on(suites[:id].eq(plans_suites[:suite_id])).where(plans_suites[:plan_id].eq(self.id))
+    Suite.scoped.where(suites[:id].not_in(related_suites))
   end
 
 end

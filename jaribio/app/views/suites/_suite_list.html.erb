@@ -1,22 +1,9 @@
-      <table class="table">
-        <tr>
-          <% if plan %>
-            <th></th>
-          <% end %>
-          <th><%= t('jaribio.suites.name', :default => 'Name') %></th>
-          <th><%= t('jaribio.suites.created_by', :default => 'Created By') %></th>
-          <th class="last"></th>
-        </tr>
-        <% cnt = 0 %>
-        <% suites.each do |suite| %>
-          <tr class="<%= (cnt % 2 == 0) ? "even" : "odd" %>">
-            <% if plan %>
-              <td class="checkbox"><%= check_box_tag 'plan[suites][]', suite.id, plan.suites.include?(suite) %></td>
-            <% end %>
-            <td><%= suite.name %></td>
-            <td><%= suite.user.email %></td>
-            <%= render :partial => "partials/item_menu", :locals => { :item => suite } %>
-          </tr>
-          <% cnt += 1 %>
-        <% end %>
-      </table>
+<table class="table">
+  <tr>
+    <th><%= t('jaribio.suites.name', :default => 'Name') %></th>
+    <th><%= t('jaribio.suites.created_by', :default => 'Created By') %></th>
+    <th class="last"></th>
+  </tr>
+  <% partial_name = defined?(menu) ? menu : 'partials/item_menu' %>
+  <%= render :partial => 'suites/suite', :collection => suites, :locals => { :menu => partial_name } %>
+</table>
