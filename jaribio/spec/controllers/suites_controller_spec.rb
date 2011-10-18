@@ -88,11 +88,20 @@ describe SuitesController do
   end
 
   describe "POST associate" do
-    it "will add test case to suite" do
-      suite = Factory.create(:suite)
-      test_case = Factory.create(:test_case)
-      post :associate, :id => suite.id.to_s, :case_id => test_case.id.to_s
-      suite.test_cases.should eq([test_case])
+    before(:each) do
+      @suite = Factory.create(:suite)
+      @test_case = Factory.create(:test_case)
+    end
+
+    it "adds test case to suite" do
+      expect {
+      	post :associate, :id => @suite.id.to_s, :case_id => @test_case.id.to_s
+      }.to change(@suite.test_cases, :count).by(+1)
+    end
+
+    it "redirects to the suites add_cases" do
+      	post :associate, :id => @suite.id.to_s, :case_id => @test_case.id.to_s
+        response.should redirect_to(add_cases_suite_path)
     end
   end
 
@@ -138,6 +147,25 @@ describe SuitesController do
         put :update, :id => @suite.id.to_s, :suite => {}
         response.should render_template("edit")
       end
+    end
+  end
+
+  describe "DELETE unassociate" do
+    before(:each) do
+      @suite = Factory.create(:suite)
+      @test_case = Factory.create(:test_case)
+      @suite.test_cases << @test_case
+    end
+
+    it "removes test case from suite" do
+      expect {
+      	delete :unassociate, :id => @suite.id.to_s, :case_id => @test_case.id.to_s
+      }.to change(@suite.test_cases, :count).by(-1)
+    end
+
+    it "redirects to the suites edit" do
+      	delete :unassociate, :id => @suite.id.to_s, :case_id => @test_case.id.to_s
+        response.should redirect_to(edit_suite_path)
     end
   end
 

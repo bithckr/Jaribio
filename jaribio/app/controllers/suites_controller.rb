@@ -80,7 +80,7 @@ class SuitesController < ApplicationController
 
   def unassociate
     suite = Suite.find(params[:id])
-    test_case = TestCase.find(params[:test_case_id])
+    test_case = TestCase.find(params[:case_id])
     suite.test_cases.delete(test_case) 
 
     redirect_to edit_suite_path(suite)
