@@ -10,17 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110909005650) do
+ActiveRecord::Schema.define(:version => 20111019194528) do
 
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "executable_id",   :null => false
-    t.string   "executable_type", :null => false
-    t.integer  "user_id",         :null => false
-    t.integer  "status_code",     :null => false
+    t.integer  "user_id",      :null => false
+    t.integer  "status_code",  :null => false
     t.string   "environment"
     t.text     "results"
+    t.integer  "test_case_id", :null => false
+    t.integer  "plan_id",      :null => false
   end
 
   create_table "issues", :force => true do |t|

@@ -4,7 +4,7 @@ describe Plan do
   before(:each) do
     @suite = Factory.build :suite
     @plan = Factory.build :plan, :suites => [@suite]
-    @execution = Factory.build :execution, :executable => @plan
+    @execution = Factory.build :execution, :plan => @plan
     @plan.executions = [@execution]
     @user = Factory.build :user
     @plan.user = @user

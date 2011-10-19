@@ -37,8 +37,8 @@ id|name|url
 issues_suites - relation table for issues to/from test suites
 issue_id|suite_id
 
-executions - record information about executing a plan, suite, or test case
-id|executable_id|executable_type|user_id|timestamps|status_code|environment|results
+executions - record information about executing a test case within a plan
+id|test_case_id|plan_id|user_id|timestamps|status_code|environment|results
 
 users
 - using devise standard schema here

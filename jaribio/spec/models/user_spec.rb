@@ -6,7 +6,7 @@ describe User do
     @plan = Factory.build :plan
     @suite = Factory.build :suite
     @user = Factory.build :user, :suites => [@suite], :plans => [@plan], :test_cases => [@case]
-    @execution = Factory.build :execution, :executable => @plan
+    @execution = Factory.build :execution, :plan => @plan
     @user.executions = [@execution]
   end
 

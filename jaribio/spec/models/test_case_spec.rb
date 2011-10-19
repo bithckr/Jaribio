@@ -4,7 +4,8 @@ describe TestCase do
   before(:each) do
     @suite = Factory.build :suite
     @case = Factory.build :test_case, :suites => [@suite]
-    @execution = Factory.build :execution, :executable => @case
+    @plan = Factory.build :plan
+    @execution = Factory.build :execution, :test_case => @case, :plan => @plan
     @case.executions = [@execution]
   end
 
