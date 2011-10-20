@@ -9,6 +9,7 @@ Jaribio::Application.routes.draw do
     member do
       get 'add_suites'
     end
+    resources :executions
   end
 
   resources :suites, :except => :show do

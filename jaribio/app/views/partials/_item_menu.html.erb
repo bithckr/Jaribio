@@ -4,6 +4,7 @@
     <%= link_to t('jaribio.views.actions.add_cases', :default => 'Add Cases'), url_for([:add_cases, item]) %>|
   <% elsif (item.class == Plan) %>
     <%= link_to t('jaribio.views.actions.add_suites', :default => 'Add Suites'), url_for([:add_suites, item]) %>|
+    <%= link_to t('jaribio.views.actions.execute', :default => 'Execute'), new_plan_execution_path(item) %>|
   <% end %>
   <%= link_to t('jaribio.views.actions.destroy', :default => 'Destroy'), item, :confirm => t('jaribio.views.actions.confirm', :default => 'Are you sure?'), :method => :delete %>
 </td>
