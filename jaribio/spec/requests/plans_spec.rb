@@ -63,4 +63,24 @@ describe "Plans" do
       end
     end
   end
+
+  describe "GET /plans/1/add_suites" do
+    before(:each) do
+      @user = login_any_user
+      @plan = Factory.create(:plan)
+    end
+
+    it "with no associated suites" do
+      visit url_for([:add_suites, @plan])
+      page.should have_content('Associate Suites')
+      page.should have_no_link('Associate')
+    end
+
+    it "with existing associated suites" do
+      @new_suites = [Factory.create(:suite)]
+      visit url_for([:add_suites, @plan])
+      page.should have_content('Associate Suites')
+      page.should have_link('Associate')
+    end
+  end
 end

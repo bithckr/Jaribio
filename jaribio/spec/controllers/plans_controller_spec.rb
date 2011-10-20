@@ -69,6 +69,24 @@ describe PlansController do
     end
   end
 
+  describe "POST associate" do
+    before(:each) do
+      @plan = Factory.create(:plan)
+      @suite = Factory.create(:suite)
+    end
+
+    it "adds suite to plan" do
+      expect {
+        post :associate, :id => @plan.id.to_s, :suite_id => @suite.id.to_s
+      }.to change(@plan.suites, :count).by(+1)
+    end
+
+    it "redirects to the plans suites" do
+      post :associate, :id => @plan.id.to_s, :suite_id => @suite.id.to_s
+      response.should redirect_to(add_suites_plan_path)
+    end
+  end
+
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested plan" do
@@ -111,6 +129,25 @@ describe PlansController do
         put :update, :id => @plan.id.to_s, :plan => {}
         response.should render_template("edit")
       end
+    end
+  end
+
+  describe "DELETE unassociate" do
+    before(:each) do
+      @plan = Factory.create(:plan)
+      @suite = Factory.create(:suite)
+      @plan.suites << @suite
+    end
+
+    it "removes suite from plan" do
+      expect {
+        delete :unassociate, :id => @plan.id.to_s, :suite_id => @suite.id.to_s
+      }.to change(@plan.suites, :count).by(-1)
+    end
+
+    it "redirects to the plans edit" do
+      delete :unassociate, :id => @plan.id.to_s, :suite_id => @suite.id.to_s
+      response.should redirect_to(edit_plan_path)
     end
   end
 

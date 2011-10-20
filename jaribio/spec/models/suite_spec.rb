@@ -20,7 +20,27 @@ describe Suite do
     @suite.should have(1).plans
   end
 
-  it "can list unrelated test cases"
+  it "can be searched" do
+    @suite.save!
+    suites = Suite.search(@suite.name)
+    suites.size.should eq(1)
+  end
+
+  it "search accepts a relation" do
+    @suite.save!
+    suites = Suite.search(@suite.name, Suite.scoped)
+    suites.size.should eq(1)
+  end
+
+  it "can list unrelated test cases" do
+    @suite.save!
+    cases = @suite.available_test_cases
+    cases.size.should eq(0)
+
+    Factory.create :test_case
+    cases = @suite.available_test_cases
+    cases.size.should eq(1)
+  end
 
   it "has a status"
 end

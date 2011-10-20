@@ -23,5 +23,11 @@ describe TestCase do
     @cases.size.should eq(1)
   end
 
+  it "search accepts a relation" do
+    @case.save!
+    @cases = TestCase.search(@case.name, TestCase.scoped)
+    @cases.size.should eq(1)
+  end
+
   it "has a status"
 end
