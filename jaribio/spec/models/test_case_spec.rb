@@ -22,4 +22,6 @@ describe TestCase do
     @cases = TestCase.search(@case.name)
     @cases.size.should eq(1)
   end
+
+  it "has a status"
 end

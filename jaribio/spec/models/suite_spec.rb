@@ -22,4 +22,5 @@ describe Suite do
 
   it "can list unrelated test cases"
 
+  it "has a status"
 end

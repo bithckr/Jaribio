@@ -21,4 +21,14 @@ class Suite < ActiveRecord::Base
     TestCase.scoped.where(test_cases[:id].not_in(related_test_cases))
   end
 
+  def status
+    case rand(3)
+    when 0
+      Status::UNKNOWN
+    when 1
+      Status::PASS
+    when 2
+      Status::FAIL
+    end
+  end
 end

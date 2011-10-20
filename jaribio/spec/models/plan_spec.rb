@@ -21,4 +21,6 @@ describe Plan do
   it "has a user" do
     @plan.user.should eq(@user)
   end
+
+  it "has a status"
 end

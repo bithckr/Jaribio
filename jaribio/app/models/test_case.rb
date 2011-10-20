@@ -12,4 +12,16 @@ class TestCase < ActiveRecord::Base
       relation.where(t.table[:name].matches("%#{q}%"))
     end
   end
+
+  def status
+    case rand(3)
+    when 0
+      Status::UNKNOWN
+    when 1
+      Status::PASS
+    when 2
+      Status::FAIL
+    end
+  end
+
 end

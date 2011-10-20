@@ -20,4 +20,14 @@ class Plan < ActiveRecord::Base
     Suite.scoped.where(suites[:id].not_in(related_suites))
   end
 
+  def status
+    case rand(3)
+    when 0
+      Status::UNKNOWN
+    when 1
+      Status::PASS
+    when 2
+      Status::FAIL
+    end
+  end
 end
