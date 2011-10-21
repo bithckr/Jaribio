@@ -21,13 +21,19 @@ class Plan < ActiveRecord::Base
   end
 
   def status
-    case rand(3)
-    when 0
-      Status::UNKNOWN
-    when 1
-      Status::PASS
-    when 2
-      Status::FAIL
+    status = Status::UNKNOWN
+    # Here we select the last execution per test_case per plan, then we order the
+    # result set by status code because we can determine if a plan is failing by
+    # inspecting only one record. If we have not recorded any executions for the
+    # given plan, then we return Status::UNKNOWN.
+    execution = Execution.find_by_sql(["select LEFT(GROUP_CONCAT(status_code order by " +
+                                      "created_at desc), 1) as status_code from executions " +
+                                      "where plan_id = ? group by test_case_id order by " +
+                                      "status_code desc limit 1", self.id])
+    unless execution.nil? or execution.empty?
+      status = execution[0].status_code
     end
+    
+    return status
   end
 end

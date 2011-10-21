@@ -44,5 +44,55 @@ describe Plan do
     suites.size.should eq(1)
   end
 
-  it "has a status"
+  describe "with one execution per test case" do
+
+    it "that passed should have a passing status" do
+      @plan.save!
+      @plan.status.should eq(Status::PASS)
+    end
+
+    it "that failed should have a failing status" do
+      fail_exec = Factory.build(:execution, :plan => @plan, :status_code => Status::FAIL)
+      @plan.executions << fail_exec
+      @plan.save!
+      @plan.status.should eq(Status::FAIL)
+      @plan.executions.size.should eq(2)
+    end
+  end
+
+  describe "with multiple executions per test case" do
+    before(:each) do
+      @plan = Factory.build(:plan)
+      @test_case = Factory.build(:test_case)
+      @pass_execution = Factory.build(:execution, :plan => @plan, :test_case => @test_case)
+      @fail_execution = Factory.build(:execution, :status_code => Status::FAIL, :plan => @plan, :test_case => @test_case)
+    end
+
+    it "where test case passed then fails" do
+      @plan.save!
+      @test_case.save!
+      @pass_execution.save!
+      sleep(2)
+      @fail_execution.save!
+      @plan.status.should eq(Status::FAIL)
+      @plan.executions.size.should eq(2)
+    end
+
+    it "where test case failed then passes" do
+      @plan.save!
+      @test_case.save!
+      @fail_execution.save!
+      sleep(2)
+      @pass_execution.save!
+      @plan.status.should eq(Status::PASS)
+      @plan.executions.size.should eq(2)
+    end
+  end
+
+  describe "with no executed test case" do
+
+    it "should have a unknown status" do
+      @plan.status.should eq(Status::UNKNOWN)
+    end
+  end
 end
