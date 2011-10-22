@@ -21,14 +21,33 @@ class Suite < ActiveRecord::Base
     TestCase.scoped.where(test_cases[:id].not_in(related_test_cases))
   end
 
-  def status
-    case rand(3)
-    when 0
-      Status::UNKNOWN
-    when 1
-      Status::PASS
-    when 2
-      Status::FAIL
+  # NOTE: The status method is not portable and will work on MySQL only. This was
+  # done for performance reasons.
+  def status(plan_id = nil) 
+    status = Status::UNKNOWN
+    plan_context = ''
+
+    # If a plan_id is provided, then we restrict the suite status to this plan
+    # else the suite status will rely on the last executions for its test cases.
+    unless plan_id.nil?
+        plan_context = "and plan_id = #{plan_id}"
     end
+
+    # Here we select the last execution per test_case in the suite, then we order the
+    # result set by status code because we can determine if a suite is failing by
+    # inspecting only one record. If we have not recorded any executions for the
+    # given suite, then we return Status::UNKNOWN.
+    execution = Execution.find_by_sql(["select LEFT(GROUP_CONCAT(status_code order by " +
+                                       "created_at desc), 1) as status_code from executions " +
+                                       "inner join suites_test_cases on " +
+                                       "executions.test_case_id=suites_test_cases.test_case_id " +
+                                       "where suites_test_cases.suite_id=? #{plan_context} " +
+                                       "group by executions.test_case_id " +
+                                       "order by status_code desc limit 1", self.id])
+    unless execution.nil? or execution.empty?
+      status = execution[0].status_code
+    end
+
+    return status
   end
 end

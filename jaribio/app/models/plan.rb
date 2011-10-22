@@ -20,6 +20,8 @@ class Plan < ActiveRecord::Base
     Suite.scoped.where(suites[:id].not_in(related_suites))
   end
 
+  # NOTE: The status method is not portable and will work on MySQL only. This was
+  # done for performance reasons.
   def status
     status = Status::UNKNOWN
     # Here we select the last execution per test_case per plan, then we order the
