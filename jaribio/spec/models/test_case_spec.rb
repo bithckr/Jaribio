@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../support/logger_macros')
 
 describe TestCase do
   before(:each) do
@@ -29,5 +30,25 @@ describe TestCase do
     @cases.size.should eq(1)
   end
 
-  it "has a status"
+  it "has a passing status when the last execution passed" do
+    @plan.save!
+    @case.save!
+    @execution.save!
+    @case.status(@plan.id).should eq(Status::PASS)
+  end
+
+  it "has a failing status when the last execution failed" do
+    @plan.save!
+    @case.save!
+    @execution.status_code = Status::FAIL
+    @execution.save!
+    @case.status(@plan.id).should eq(Status::FAIL)
+  end
+
+  it "has a UNKNOWN status when no executions are found" do
+    @plan.save!
+    @case.executions = []
+    @case.save!
+    @case.status(@plan.id).should eq(Status::UNKNOWN)
+  end
 end
