@@ -91,7 +91,7 @@ describe Suite do
       @fail_execution.save!
       sleep(2)
       @pass_execution.save!
-      @suite.status(@plan_id).should eq(Status::PASS)
+      @suite.status(@plan.id).should eq(Status::PASS)
       @plan.executions.size.should eq(2)
     end
   end

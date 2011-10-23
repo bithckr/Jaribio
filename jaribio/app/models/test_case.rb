@@ -32,6 +32,8 @@ class TestCase < ActiveRecord::Base
 
   private
 
+  # Making this private because it is subject to change along with status(), and
+  # I don't want this part of the public API for TestCase.
   def last_execution
     self.executions.order("created_at desc").limit(1)
   end
