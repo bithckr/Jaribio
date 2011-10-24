@@ -38,7 +38,6 @@ describe "Plans" do
       it "with results does include list of plans" do
         fill_in('q', :with => @plan.name)
         click_button('Search')
-        page.should have_content('Edit')
         page.should have_content('Destroy')
       end
 
@@ -58,9 +57,8 @@ describe "Plans" do
       it "of plans" do
         page.should have_content(@plan.name)  
         page.should have_content(@plan.user.email)  
-        page.should have_link('Edit')
         page.should have_link('Destroy')
-        page.should have_link('Execute')
+        page.should have_link('View')
       end
     end
   end
