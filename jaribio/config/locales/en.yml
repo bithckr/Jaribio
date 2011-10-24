@@ -5,6 +5,7 @@ en:
   jaribio:
     actions:
       associate: "Associate"
+      view: "View"
       show: "Show"
       edit: "Edit"
       editing: "Editing"

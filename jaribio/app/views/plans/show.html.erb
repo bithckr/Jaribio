@@ -1,12 +1,19 @@
 <div class="block">
   <%= render :partial => "partials/navigation", :locals => { :active => nil } %>
   <div class="content">
-    <h2 class="title">Viewing plan</h2>
+    <h2 class="title">Viewing Plan <%= @plan.name %></h2>
     <div class="inner">
-      <div class="grouping">
-        <div class="label">Name:</div>
-        <div class="text_area"><%= @plan.name %></div>
-      </div>
+      <form class="form" method="get" action="#">
+        <div class="columns wat-cf">
+          <div class="column left status-list">
+            <%= render :partial => 'plans/suite', :collection => @plan.suites %>
+          </div>
+          <div class="column right">
+            <%= render :partial => 'plans/test_case', :collection => @suite.test_cases %>
+          </div>
+        </div>
+        <%= render :partial => "partials/form_buttons" %>
+      </form>
       <%= link_to 'Edit', edit_plan_path(@plan) %>
     </div>
   </div>

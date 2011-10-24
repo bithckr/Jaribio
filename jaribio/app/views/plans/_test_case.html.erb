@@ -1,0 +1,8 @@
+<div class="group">
+  <%= label_tag "test_case_#{test_case.id}_label", test_case.name, :class => "label" %>
+  <%= radio_button_tag "test_case_#{test_case.id}", "pass" %>
+  <%= label_tag :pass, "Pass" %>
+  <%= radio_button_tag "test_case_#{test_case.id}", "fail" %>
+  <%= label_tag :fail, "Fail" %>
+</div>
+

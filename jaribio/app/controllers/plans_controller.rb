@@ -12,7 +12,13 @@ class PlansController < ApplicationController
   end
 
   def show
-    @plan = Plan.find(params[:id])
+    @plan = Plan.find(params[:id], :include => [:suites])
+    @suite = nil
+    if (params[:suite_id])
+      @suite = Suite.find(params[:suite_id], :include => [:test_cases])
+    else
+      @suite = @plan.suites.first
+    end
     respond_with @plan
   end
 

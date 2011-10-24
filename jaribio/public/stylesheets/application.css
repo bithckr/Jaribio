@@ -6,3 +6,21 @@
 td.checkbox {
   width: 20px;
 }
+.status-list {
+  display: table;
+}
+.status {
+  display: table-cell;
+  height: 30px;
+  padding-left: 10px;
+  vertical-align: middle;
+}
+.status.pass {
+  background-color: #adffad;
+}
+.status.fail {
+  background-color: #ffadff;
+}
+.status.unknown {
+  background-color: #ffffff;
+}
