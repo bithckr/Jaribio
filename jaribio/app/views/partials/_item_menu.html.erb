@@ -1,13 +1,13 @@
 <td class="last">
   <% if (item.class == Plan) %>
-  <%= link_to t('jaribio.views.actions.view', :default => 'View'), item  %>|
+  <%= link_to t('jaribio.actions.view', :default => 'View'), item  %>|
   <% else %>
-  <%= link_to t('jaribio.views.actions.edit', :default => 'Edit'), url_for([:edit, item])  %>|
+  <%= link_to t('jaribio.actions.edit', :default => 'Edit'), url_for([:edit, item])  %>|
   <% end %>
   <% if (item.class == Suite) %>
-    <%= link_to t('jaribio.views.actions.add_cases', :default => 'Add Cases'), url_for([:add_cases, item]) %>|
+    <%= link_to t('jaribio.actions.add_cases', :default => 'Add Cases'), url_for([:add_cases, item]) %>|
   <% elsif (item.class == Plan) %>
-    <%= link_to t('jaribio.views.actions.add_suites', :default => 'Add Suites'), url_for([:add_suites, item]) %>|
+    <%= link_to t('jaribio.actions.add_suites', :default => 'Add Suites'), url_for([:add_suites, item]) %>|
   <% end %>
-  <%= link_to t('jaribio.views.actions.destroy', :default => 'Destroy'), item, :confirm => t('jaribio.views.actions.confirm', :default => 'Are you sure?'), :method => :delete %>
+  <%= link_to t('jaribio.actions.destroy', :default => 'Destroy'), item, :confirm => t('jaribio.actions.confirm', :default => 'Are you sure?'), :method => :delete %>
 </td>

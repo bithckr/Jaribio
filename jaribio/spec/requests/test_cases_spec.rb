@@ -39,14 +39,14 @@ describe "TestCases" do
         fill_in('q', :with => @test_case.name)
         click_button('Search')
         page.should have_content('Edit')
-        page.should have_content('Destroy')
+        page.should have_content('Delete')
       end
 
       it "with no results does not include list of cases" do
         fill_in('q', :with => 'asdf')
         click_button('Search')
         page.should have_no_content('Edit')
-        page.should have_no_content('Destroy')
+        page.should have_no_content('Delete')
       end
     end
 
@@ -59,7 +59,7 @@ describe "TestCases" do
         page.should have_content(@test_case.name)  
         page.should have_content(@test_case.user.email)  
         page.should have_content('Edit')
-        page.should have_content('Destroy')
+        page.should have_content('Delete')
       end
     end
   end

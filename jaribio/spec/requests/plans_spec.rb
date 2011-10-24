@@ -38,14 +38,14 @@ describe "Plans" do
       it "with results does include list of plans" do
         fill_in('q', :with => @plan.name)
         click_button('Search')
-        page.should have_content('Destroy')
+        page.should have_content('Delete')
       end
 
       it "with no results does not include list of plans" do
         fill_in('q', :with => 'asdf')
         click_button('Search')
         page.should have_no_content('Edit')
-        page.should have_no_content('Destroy')
+        page.should have_no_content('Delete')
       end
     end
 
@@ -57,7 +57,7 @@ describe "Plans" do
       it "of plans" do
         page.should have_content(@plan.name)  
         page.should have_content(@plan.user.email)  
-        page.should have_link('Destroy')
+        page.should have_link('Delete')
         page.should have_link('View')
       end
     end

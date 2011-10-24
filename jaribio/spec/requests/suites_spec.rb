@@ -39,14 +39,14 @@ describe "Suites" do
         fill_in('q', :with => @suite.name)
         click_button('Search')
         page.should have_content('Edit')
-        page.should have_content('Destroy')
+        page.should have_content('Delete')
       end
 
       it "with no results does not include list of suites" do
         fill_in('q', :with => 'asdf')
         click_button('Search')
         page.should have_no_content('Edit')
-        page.should have_no_content('Destroy')
+        page.should have_no_content('Delete')
       end
     end
 
@@ -59,7 +59,7 @@ describe "Suites" do
         page.should have_content(@suite.name)  
         page.should have_content(@suite.user.email)  
         page.should have_content('Edit')
-        page.should have_content('Destroy')
+        page.should have_content('Delete')
       end
     end
   end

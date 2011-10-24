@@ -9,10 +9,12 @@ en:
       show: "Show"
       edit: "Edit"
       editing: "Editing"
-      destroy: "Destroy"
+      destroy: "Delete"
       confirm: "Are you sure?"
       login: "Login"
       logout: "Logout"
+      add_suites: "Add Suites"
+      add_cases: "Add Cases"
     objects:
       case: "Case"
       cases: "Cases"
