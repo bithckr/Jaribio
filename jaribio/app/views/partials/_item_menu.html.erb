@@ -9,5 +9,8 @@
   <% elsif (item.class == Plan) %>
     <%= link_to t('jaribio.actions.add_suites', :default => 'Add Suites'), url_for([:add_suites, item]) %>|
   <% end %>
+  <% if (item.class.to_s == 'TestCase') %>
+    <%= link_to t('jaribio.action.history', :default => 'History'), url_for([:executions, item]) %>|
+  <% end %>
   <%= link_to t('jaribio.actions.destroy', :default => 'Destroy'), item, :confirm => t('jaribio.actions.confirm', :default => 'Are you sure?'), :method => :delete %>
 </td>

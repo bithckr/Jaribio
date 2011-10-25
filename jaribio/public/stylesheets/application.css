@@ -13,6 +13,7 @@ td.checkbox {
   display: table-cell;
   height: 30px;
   padding-left: 10px;
+  padding-right: 10px;
   vertical-align: middle;
 }
 .status.pass {
@@ -23,4 +24,10 @@ td.checkbox {
 }
 .status.unknown {
   background-color: #ffffff;
+}
+.table tr.fail {
+  background: #ffadff;
+}
+.table tr.pass {
+  background: #adffad;
 }

@@ -1,0 +1,17 @@
+<div class="block">
+  <%= render :partial => "partials/navigation", :locals => { :active => nil } %>
+  <div class="content">
+    <h2 class="title"><%= @test_case.name %></h2>
+    <div class="inner">
+    <table class="table">
+      <tr>
+        <th><%= t('jaribio.executions.executed_at', :default => 'Date') %></th>
+        <th><%= t('jaribio.executions.executed_by', :default => 'Executed By') %></th>
+        <th><%= t('jaribio.executions.status', :default => 'Status') %></th>
+        <th class="last"></th>
+      </tr>
+      <%= render :partial => 'test_cases/execution', :collection => @test_case.executions %>
+    </table>
+    </div>
+  </div>
+</div>

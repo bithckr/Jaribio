@@ -1,0 +1,8 @@
+<tr class="<%= (execution.status_code == 1) ? "pass" : "fail" %>">
+  <td class="<%= (execution.status_code == 1) ? "pass" : "fail" %>"><%= execution.created_at %></td>
+  <td><%= execution.user.email %></td>
+  <td><%= (execution.status_code == 1) ? "PASS" : "FAIL" %></td>
+  <td class="last">
+  <%= link_to "View", :controller => "executions", :action => "show", :id => execution %>
+  </td>
+</tr>

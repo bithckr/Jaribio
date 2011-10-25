@@ -1,0 +1,26 @@
+<div class="block">
+  <div class="content">
+    <h2 class="title">Viewing Execution for: <%= @execution.test_case.name %></h2>
+    <div class="inner">
+      <div class="grouping">
+        <div class="label">Date</div>
+        <div class="text"><%= @execution.created_at %></div>
+      </div>
+      <div class="grouping">
+        <div class="label">Executed By</div>
+        <div class="text"><%= @execution.user.email %></div>
+      </div>
+      <div class="grouping">
+        <div class="label">Status</div>
+        <div class="text status <%= (@execution.status_code == 1) ? "pass" : "fail"%>"><%= (@execution.status_code == 1) ? "PASS" : "FAIL" %></div>
+      </div>
+      <div class="grouping">
+        <div class="label">Results</div>
+        <div class="text_area"><%= @execution.results %></div>
+      </div>
+      <div class="group navform wat-cf">
+        <%= link_to t('jaribio.action.back', :default => '<<Back'), url_for([:executions, @execution.test_case]), :class => "text_button_padding link_button" %>
+      </div>
+    </div>
+  </div>
+</div>

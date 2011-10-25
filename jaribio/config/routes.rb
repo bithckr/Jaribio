@@ -4,7 +4,12 @@ Jaribio::Application.routes.draw do
 
   devise_for :users
 
-  resources :test_cases, :path => '/cases', :except => :show
+  resources :test_cases, :path => '/cases', :except => :show do
+    member do
+      get 'executions'
+    end 
+  end
+
   resources :plans do
     member do
       get 'add_suites'
@@ -17,6 +22,8 @@ Jaribio::Application.routes.draw do
       get 'add_cases'
     end
   end
+
+  resources :executions
 
   match 'suites/:id/cases/:case_id' => "suites#associate",   :via => 'post',   :as => :associate_suite_case
   match 'suites/:id/cases/:case_id' => "suites#unassociate", :via => 'delete', :as => :unassociate_suite_case

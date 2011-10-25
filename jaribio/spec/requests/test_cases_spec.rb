@@ -59,8 +59,22 @@ describe "TestCases" do
         page.should have_content(@test_case.name)  
         page.should have_content(@test_case.user.email)  
         page.should have_content('Edit')
+        page.should have_content('History')
         page.should have_content('Delete')
       end
     end
+
+    describe "history" do
+      before(:each) do
+        visit test_cases_path
+      end
+
+      it "has History" do
+        click_link('History')
+        page.should have_content(@test_case.name)
+        page.should have_content('View')
+      end
+    end
+
   end
 end

@@ -15,6 +15,7 @@ en:
       logout: "Logout"
       add_suites: "Add Suites"
       add_cases: "Add Cases"
+      history: "History"
     objects:
       case: "Case"
       cases: "Cases"

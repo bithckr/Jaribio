@@ -15,6 +15,10 @@ describe TestCasesController do
       get("/cases/1/edit").should route_to("test_cases#edit", :id => "1")
     end
 
+    it "routes to #executions" do
+      get("/cases/1/executions").should route_to("test_cases#executions", :id => "1")
+    end
+
     it "routes to #create" do
       post("/cases").should route_to("test_cases#create")
     end

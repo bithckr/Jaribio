@@ -57,4 +57,9 @@ class TestCasesController < ApplicationController
     flash[:notice] = "Successfully destroyed test case."
     respond_with @test_case
   end
+
+  def executions
+    @test_case = TestCase.find(params[:id])
+    respond_with @test_case
+  end
 end

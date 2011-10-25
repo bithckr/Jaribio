@@ -26,6 +26,14 @@ describe TestCasesController do
     end
   end
 
+  describe "GET executions" do
+    it "assigns the requested case as @test_case" do
+      test_case = Factory.create(:test_case)
+      get :executions, :id => test_case.id.to_s
+      assigns(:test_case).should eq(test_case)
+    end
+  end
+
   describe "POST create" do
     describe "with valid params" do
       it "creates a new TestCase" do
