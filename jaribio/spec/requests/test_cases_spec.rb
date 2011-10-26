@@ -65,14 +65,20 @@ describe "TestCases" do
     end
 
     describe "history" do
-      before(:each) do
-        visit test_cases_path
+      it "has passing executions" do
+        execution = Factory.build(:execution, :test_case => @test_case)
+        @test_case.executions << execution
+        visit url_for([:executions, @test_case])
+        page.should have_content(@test_case.name)
+        page.should have_content('PASS')
+        page.should have_content('View')
       end
 
-      it "has History" do
-        click_link('History')
-        page.should have_content(@test_case.name)
-        page.should have_content('View')
+      it "has failing executions" do
+        execution = Factory.build(:execution, :test_case => @test_case, :status_code => Status::FAIL)
+        @test_case.executions << execution
+        visit url_for([:executions, @test_case])
+        page.should have_content('FAIL')
       end
     end
 
