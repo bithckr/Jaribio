@@ -10,7 +10,7 @@ td.checkbox {
   display: table;
 }
 .status {
-  display: table-cell;
+  display: table-row;
   height: 30px;
   padding-left: 10px;
   padding-right: 10px;
@@ -24,6 +24,22 @@ td.checkbox {
 }
 .status.unknown {
   background-color: #ffffff;
+}
+.status-element {
+  display: table-cell;
+  padding-left: 5px;
+  vertical-align: middle;
+}
+.group input[type="radio"] {
+  margin-top: 8px;
+  margin-left: 10px;
+}
+.case-label {
+  width: 70%
+}
+.group button {
+  margin-top: 5px;
+  margin-left: 10px;
 }
 .table tr.fail {
   background: #ffadff;

@@ -1,4 +1,6 @@
-<div class="group <%= status_helper(suite.status(@plan.id)) %>">
-  <%= link_to suite.name, plan_path(@plan, :suite_id => suite.id) %>
+<div class="group <%= status_class_helper(suite.status(@plan.id)) %>">
+  <div class="status-element">
+    <%= link_to suite.name, plan_path(@plan, :suite_id => suite.id) %>
+  </div>
 </div>
 
