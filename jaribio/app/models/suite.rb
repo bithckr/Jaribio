@@ -44,8 +44,20 @@ class Suite < ActiveRecord::Base
                                        "where suites_test_cases.suite_id=? #{plan_context} " +
                                        "group by executions.test_case_id " +
                                        "order by status_code desc limit 1", self.id])
+
     unless execution.nil? or execution.empty?
-      status = execution[0].status_code
+      if execution[0].status_code == Status::FAIL
+        status = Status::FAIL
+      elsif execution[0].status_code == Status::PASS
+        execution = Execution.find_by_sql(["select count(executions.test_case_id) from executions " +
+                                           "inner join suites_test_cases on " +
+                                           "executions.test_case_id=suites_test_cases.test_case_id " +
+                                           "where suites_test_cases.suite_id=? #{plan_context} " +
+                                           "group by executions.test_case_id order by status_code desc", self.id])
+
+        # A suite can not have a PASS status unless ALL test cases are passing
+        status = Status::PASS if(execution.count == self.test_cases.size)
+      end
     end
 
     return status

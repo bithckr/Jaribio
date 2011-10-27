@@ -64,7 +64,7 @@ describe SuitesController do
 
       it "redirects to the created suite" do
         post :create, :suite => Factory.attributes_for(:suite)
-        response.should redirect_to(Suite.last)
+        response.should redirect_to(suites_url)
       end
     end
 
@@ -126,7 +126,7 @@ describe SuitesController do
       it "redirects to the suite" do
         suite = Factory.create(:suite)
         put :update, :id => suite.id, :suite => Factory.attributes_for(:suite)
-        response.should redirect_to(suite)
+        response.should redirect_to(suites_url)
       end
     end
 

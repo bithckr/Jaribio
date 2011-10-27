@@ -50,7 +50,7 @@ describe TestCasesController do
 
       it "redirects to the created test_case" do
         post :create, :test_case => Factory.attributes_for(:test_case)
-        response.should redirect_to(TestCase.last)
+        response.should redirect_to(test_cases_url)
       end
     end
 
@@ -94,7 +94,7 @@ describe TestCasesController do
       it "redirects to the case" do
         test_case = Factory.create(:test_case)
         put :update, :id => test_case.id, :test_case => Factory.attributes_for(:test_case)
-        response.should redirect_to(test_case)
+        response.should redirect_to(test_cases_url)
       end
     end
 

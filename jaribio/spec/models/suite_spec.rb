@@ -96,10 +96,95 @@ describe Suite do
     end
   end
 
-  describe "with no executed test case" do
+  describe "with some test cases not executed" do
+    before(:all) do
+      @suite = Factory.build(:suite)
+      @plan = Factory.build(:plan, :suites => [@suite])
+      @test_case = Factory.build(:test_case, :suites => [@suite])
+    end
 
-    it "should have a unknown status" do
+    it "should have a unknown status when any test case is unknown" do
+      pass_execution = Factory.build(:execution, :plan => @plan, :test_case => @test_case)
+      test_case2 = Factory.build(:test_case, :suites => [@suite])
+      @suite.save!
+      @plan.save!
+      @test_case.save!
+      pass_execution.save!
+      test_case2.save!
+      @suite.test_cases = [@test_case, test_case2]
       @suite.status.should eq(Status::UNKNOWN)
+    end
+    
+    it "should have a unknown status when all test cases are unknown" do
+      test_case2 = Factory.build(:test_case, :suites => [@suite])
+      @suite.save!
+      @plan.save!
+      @test_case.save!
+      test_case2.save!
+      @suite.test_cases = [@test_case, test_case2]
+      @suite.status.should eq(Status::UNKNOWN)
+    end 
+
+    it "should have a fail status when atleast one test case is failing" do
+      fail_execution = Factory.build(:execution, :status_code => Status::FAIL, :plan => @plan, :test_case => @test_case)
+      test_case2 = Factory.build(:test_case, :suites => [@suite])
+      @suite.save!
+      @plan.save!
+      @test_case.save!
+      fail_execution.save!
+      test_case2.save! 
+      @suite.test_cases = [@test_case, test_case2]
+      @suite.status.should eq(Status::FAIL)
+    end
+  end
+
+  describe "with multiple test cases per suite" do
+    before(:all) do
+      @suite = Factory.build(:suite)
+      @plan = Factory.build(:plan, :suites => [@suite])
+      @test_case = Factory.build(:test_case, :suites => [@suite])
+    end
+
+    it "has a failing status if all are failing" do
+      fail_execution = Factory.build(:execution, :status_code => Status::FAIL, :plan => @plan, :test_case => @test_case)
+      test_case2 = Factory.build(:test_case, :suites => [@suite])
+      fail_execution2 = Factory.build(:execution, :status_code => Status::FAIL, :plan => @plan, :test_case => test_case2)
+      @suite.save!
+      @plan.save!
+      @test_case.save!
+      fail_execution.save!
+      fail_execution2.save!
+      test_case2.save! 
+      @suite.test_cases = [@test_case, test_case2]
+      @suite.status.should eq(Status::FAIL)
+    end
+
+    it "has a passing status if all are passing" do
+      pass_execution = Factory.build(:execution, :plan => @plan, :test_case => @test_case)
+      test_case2 = Factory.build(:test_case, :suites => [@suite])
+      pass_execution2 = Factory.build(:execution, :plan => @plan, :test_case => test_case2)
+      @suite.save!
+      @plan.save!
+      @test_case.save!
+      pass_execution.save!
+      pass_execution2.save!
+      test_case2.save! 
+      @suite.test_cases = [@test_case, test_case2]
+      @suite.status.should eq(Status::PASS)
+    end
+
+    it "has a failing status if one is passing and one is failing" do
+      fail_execution = Factory.build(:execution, :status_code => Status::FAIL, :plan => @plan, :test_case => @test_case)
+      test_case2 = Factory.build(:test_case, :suites => [@suite])
+      pass_execution2 = Factory.build(:execution, :plan => @plan, :test_case => test_case2)
+      @suite.save!
+      @plan.save!
+      @test_case.save!
+      fail_execution.save!
+      pass_execution2.save!
+      test_case2.save! 
+      @suite.test_cases = [@test_case, test_case2]
+      @suite.status.should eq(Status::FAIL)
     end
   end
 end
