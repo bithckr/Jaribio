@@ -60,6 +60,7 @@ class TestCasesController < ApplicationController
 
   def executions
     @test_case = TestCase.find(params[:id])
+    @executions = @test_case.executions.order("created_at").page(params[:page]).per(10)
     respond_with @test_case
   end
 end

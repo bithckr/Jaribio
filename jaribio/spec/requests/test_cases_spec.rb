@@ -51,16 +51,21 @@ describe "TestCases" do
     end
 
     describe "list" do
-      before(:each) do
-        visit test_cases_path
-      end
-
       it "of test cases" do
+        visit test_cases_path
         page.should have_content(@test_case.name)  
         page.should have_content(@test_case.user.email)  
         page.should have_content('Edit')
         page.should have_content('History')
         page.should have_content('Delete')
+      end
+
+      it "supports pagination" do
+        11.times do 
+          Factory.create(:test_case)
+        end
+        visit test_cases_path
+        page.should have_xpath("//nav")
       end
     end
 
@@ -75,13 +80,28 @@ describe "TestCases" do
       end
 
       it "has failing executions" do
-        execution = Factory.build(:execution, :test_case => @test_case, :status_code => Status::FAIL)
+        execution = Factory.build(:execution, 
+                                  :test_case => @test_case, 
+                                  :status_code => Status::FAIL)
         @test_case.executions << execution
         visit url_for([:executions, @test_case])
         page.should have_content('FAIL')
       end
-    end
 
+      it "supports pagination" do
+        plan = Factory.build(:plan)
+        11.times do
+          execution = Factory.build(:execution, 
+                                    :test_case => @test_case, 
+                                    :plan => plan, 
+                                    :status_code => Status::PASS)
+          @test_case.executions << execution
+        end
+        visit url_for([:executions, @test_case])
+        page.should have_xpath("//nav")
+      end
+
+    end
   end
 
   describe "POST /cases" do
