@@ -83,4 +83,40 @@ describe "TestCases" do
     end
 
   end
+
+  describe "POST /cases" do
+    before(:each) do
+      @user = login_any_user
+    end
+
+    it "redirects to cases#index" do
+      @test_case = Factory.build(:test_case)
+      visit url_for(:action => 'new', :controller => :test_cases)
+      fill_in('test_case[name]', :with => @test_case.name)
+      fill_in('test_case[text]', :with => @test_case.text)
+      fill_in('test_case[expectations]', :with => @test_case.expectations)
+      click_button('Save')
+
+      page.status_code.should eql(200)
+      page.current_url.should eql(url_for(:action => 'index', :controller => 'test_cases'))
+      page.should have_content('Successfully created test case.')
+    end
+  end
+
+  describe "PUT /cases" do
+    before(:each) do
+      @user = login_any_user
+    end
+
+    it "redirects to cases#index" do
+      @test_case = Factory.create(:test_case)
+      visit url_for([:edit, @test_case])
+      fill_in(:name, :with => 'Example Test Name')
+      click_button('Save')
+
+      page.status_code.should eql(200)
+      page.current_url.should eql(url_for(:action => 'index', :controller => 'test_cases'))
+      page.should have_content('Successfully updated test case.')
+    end
+  end
 end

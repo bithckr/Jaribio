@@ -47,7 +47,7 @@ class SuitesController < ApplicationController
     if @suite.save
       flash[:notice] = "Successfully created suite."
     end
-    respond_with @suite
+    redirect_to :action => 'index'
   end
 
   def update
@@ -57,7 +57,7 @@ class SuitesController < ApplicationController
     if @suite.update_attributes(params[:suite])
       flash[:notice] = 'Successfully updated suite.'
     end
-    respond_with @suite
+    redirect_to :action => 'index'
   end
 
   def destroy

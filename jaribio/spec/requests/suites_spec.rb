@@ -83,4 +83,38 @@ describe "Suites" do
       page.should have_link('Associate')
     end
   end
+  
+  describe "POST /suites" do
+    before(:each) do
+      @user = login_any_user
+    end
+
+    it "redirects to suites#index" do
+      @suite = Factory.build(:suite)
+      visit url_for(:action => 'new', :controller => :suites)
+      fill_in(:name, :with => @suite.name)
+      click_button('Save')
+
+      page.status_code.should eql(200)
+      page.current_url.should eql(url_for(:action => 'index', :controller => 'suites'))
+      page.should have_content('Successfully created suite.')
+    end
+  end
+
+  describe "PUT /suites" do
+    before(:each) do
+      @user = login_any_user
+    end
+
+    it "redirects to suites#index" do
+      @suite = Factory.create(:suite)
+      visit url_for([:edit, @suite])
+      fill_in(:name, :with => 'Example Test Name')
+      click_button('Save')
+
+      page.status_code.should eql(200)
+      page.current_url.should eql(url_for(:action => 'index', :controller => 'suites'))
+      page.should have_content('Successfully updated suite.')
+    end
+  end
 end

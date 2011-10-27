@@ -38,7 +38,7 @@ class TestCasesController < ApplicationController
     if @test_case.save
       flash[:notice] = "Successfully created test case."
     end
-    respond_with @test_case
+    redirect_to :action => 'index'
   end
 
   def update
@@ -48,7 +48,7 @@ class TestCasesController < ApplicationController
     if @test_case.update_attributes(params[:test_case])
       flash[:notice] = "Successfully updated test case."
     end
-    respond_with @test_case
+    redirect_to :action => 'index'
   end
 
   def destroy
