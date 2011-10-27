@@ -2,11 +2,22 @@ module ApplicationHelper
   def status_class_helper(status)
     case status
     when Status::PASS
-      "status pass"
+      "pass"
     when Status::FAIL
-      "status fail"
+      "fail"
     else
-      "status unknown"
+      "unknown"
+    end
+  end
+
+  def status_text(status)
+    case status
+    when Status::PASS
+      "PASS"
+    when Status::FAIL
+      "FAIL"
+    else
+      "UNKNOWN"
     end
   end
 

@@ -1,6 +1,6 @@
 <% status = test_case.status(@plan.id) %>
 <% disabled = status_disabled_helper(status) %>
-<div class="group <%= status_class_helper(status) %>">
+<div class="group status <%= status_class_helper(status) %>">
   <%= label_tag "test_case_#{test_case.id}_label", test_case.name, :class => "status-element case-label" %>
   <%= radio_button_tag "test_case_#{test_case.id}", "pass", status_checked_helper(status, Status::PASS), :class => "status-element", :disabled => disabled %>
   <%= label_tag :pass, "Pass", :class => "status-element" %>

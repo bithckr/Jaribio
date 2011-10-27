@@ -14,25 +14,34 @@ td.checkbox {
   height: 30px;
   padding-left: 10px;
   padding-right: 10px;
-  vertical-align: middle;
 }
 .status.pass {
-  background-color: #adffad;
+  color: green;
 }
 .status.fail {
-  background-color: #ffadff;
+  color: red;
+}
+.status .pass {
+  color: green;
+}
+.status .fail {
+  color: red;
 }
 .status.unknown {
-  background-color: #ffffff;
 }
 .status-element {
   display: table-cell;
   padding-left: 5px;
+  padding-top: 5px;
   vertical-align: middle;
+  float: left;
 }
 .group input[type="radio"] {
   margin-top: 8px;
   margin-left: 10px;
+}
+.suite-label {
+  width: 70%
 }
 .case-label {
   width: 70%
@@ -41,9 +50,17 @@ td.checkbox {
   margin-top: 5px;
   margin-left: 10px;
 }
-.table tr.fail {
-  background: #ffadff;
+.table td.fail {
+  color: red;
 }
-.table tr.pass {
-  background: #adffad;
+.table td.pass {
+  color: green;
+}
+.status.selected {
+  border: 1px black solid;
+}
+.status.suite {
+  float: left;
+  width: 100%;
+  margin-bottom: 0px;
 }
