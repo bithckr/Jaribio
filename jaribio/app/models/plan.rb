@@ -33,7 +33,20 @@ class Plan < ActiveRecord::Base
                                       "where plan_id = ? group by test_case_id order by " +
                                       "status_code desc limit 1", self.id])
     unless execution.nil? or execution.empty?
-      status = execution[0].status_code
+      if execution[0].status_code == Status::FAIL
+        status = Status::FAIL
+      elsif execution[0].status_code == Status::PASS
+        execution = Execution.find_by_sql(["select count(executions.test_case_id) from executions " +
+                                           "where plan_id = ? group by test_case_id", self.id])
+
+        case_count = 0
+        self.suites.each do |suite|
+          case_count += suite.test_cases.size
+        end
+
+        # A plan can not have a PASS status unless ALL test cases are passing
+        status = Status::PASS if(execution.count == case_count)
+      end
     end
     
     return status
