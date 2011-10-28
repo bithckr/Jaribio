@@ -37,8 +37,10 @@ class TestCasesController < ApplicationController
     end
     if @test_case.save
       flash[:notice] = "Successfully created test case."
+      redirect_to :action => 'index'
+    else
+      respond_with @test_case
     end
-    redirect_to :action => 'index'
   end
 
   def update
@@ -47,8 +49,10 @@ class TestCasesController < ApplicationController
     params[:test_case].delete(:user_id)
     if @test_case.update_attributes(params[:test_case])
       flash[:notice] = "Successfully updated test case."
+      redirect_to :action => 'index'
+    else
+      respond_with @test_case
     end
-    redirect_to :action => 'index'
   end
 
   def destroy

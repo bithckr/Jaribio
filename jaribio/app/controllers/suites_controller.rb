@@ -46,8 +46,10 @@ class SuitesController < ApplicationController
     @suite.user = current_user
     if @suite.save
       flash[:notice] = "Successfully created suite."
+      redirect_to :action => 'index'
+    else
+      respond_with @suite
     end
-    redirect_to :action => 'index'
   end
 
   def update
@@ -56,8 +58,10 @@ class SuitesController < ApplicationController
     params[:suite].delete(:user_id)
     if @suite.update_attributes(params[:suite])
       flash[:notice] = 'Successfully updated suite.'
+      redirect_to :action => 'index'
+    else
+      respond_with @suite
     end
-    redirect_to :action => 'index'
   end
 
   def destroy

@@ -5,9 +5,10 @@
     <div class="inner">
       <table class="table">
         <tr>
-          <th><%= t('jaribio.executions.executed_at', :default => 'Date') %></th>
-          <th><%= t('jaribio.executions.executed_by', :default => 'Executed By') %></th>
-          <th><%= t('jaribio.executions.status', :default => 'Status') %></th>
+          <th><%= t('jaribio.misc.executed_at', :default => 'Date') %></th>
+          <th><%= t('jaribio.misc.executed_by', :default => 'Executed By') %></th>
+          <th><%= t('jaribio.objects.plan', :default => 'Plan') %></th>
+          <th><%= t('jaribio.misc.status', :default => 'Status') %></th>
           <th class="last"></th>
         </tr>
         <%= render :partial => 'test_cases/execution', :collection => @executions %>

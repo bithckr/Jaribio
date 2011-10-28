@@ -1,6 +1,7 @@
 <tr>
   <td><%= execution.created_at %></td>
   <td><%= execution.user.email %></td>
+  <td><%= execution.plan.name %></td>
   <td class="<%= (execution.status_code == Status::PASS) ? "pass" : "fail" %>"><%= (execution.status_code == Status::PASS) ? "PASS" : "FAIL" %></td>
   <td class="last">
   <%= link_to "View", :controller => "executions", :action => "show", :id => execution %>

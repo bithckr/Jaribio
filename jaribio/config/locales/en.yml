@@ -28,6 +28,8 @@ en:
       name: "Name"
       status: "Status"
       created_by: "Created By"
+      executed_by: "Executed By"
+      executed_at: "Date"
   views:  
     pagination:  
       previous: "&lt; Previous"
