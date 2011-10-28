@@ -1,10 +1,18 @@
 <% status = test_case.status(@plan.id) %>
 <% disabled = status_disabled_helper(status) %>
-<div class="group status <%= status_class_helper(status) %>">
-  <%= label_tag "test_case_#{test_case.id}_label", test_case.name, :class => "status-element case-label" %>
-  <%= radio_button_tag "test_case_#{test_case.id}", "pass", status_checked_helper(status, Status::PASS), :class => "status-element", :disabled => disabled %>
-  <%= label_tag :pass, "Pass", :class => "status-element" %>
-  <%= radio_button_tag "test_case_#{test_case.id}", "fail", status_checked_helper(status, Status::FAIL), :class => "status-element", :disabled => disabled %>
-  <%= label_tag :fail, "Fail", :class => "status-element" %>
-  <%= button_tag 'Re-Test', :type => 'button', :confirm => 'Are you sure you want to execute this test again?', :disabled => !disabled, :class => "status-element" %>
-</div>
+<%= form_for(@execution, :html => { :class => 'form' }) do |f| %>
+  <tr class="<%= (test_case_counter % 2 == 0) ? "even" : "odd" %>">
+    <td class="<%= status_class_helper(status) %>">
+      <%= f.label test_case.name, :class => "label" %>
+    </td>
+    <td>
+      <%= f.radio_button :status_code, Status::PASS, :disabled => disabled %>
+      <%= f.label :status_code, "Pass", :value => Status::PASS %>
+      <%= f.radio_button :status_code, Status::FAIL, :disabled => disabled %>
+      <%= f.label :status_code, "Fail", :value => Status::FAIL %>
+      <%= button_tag 'Re-Test', :type => 'button', :confirm => 'Are you sure you want to execute this test again?', :disabled => !disabled %>
+    </td>
+  </tr>
+  <% if test_case.errors.any? %>
+  <% end %>
+<% end %>

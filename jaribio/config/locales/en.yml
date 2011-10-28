@@ -4,6 +4,7 @@
 en:
   jaribio:
     actions:
+      actions: "Actions"
       associate: "Associate"
       view: "View"
       show: "Show"
@@ -23,8 +24,9 @@ en:
       suites: "Suites"
       plan: "Plan"
       plans: "Plans"
-    cases:
+    misc:
       name: "Name"
+      status: "Status"
       created_by: "Created By"
   views:  
     pagination:  
