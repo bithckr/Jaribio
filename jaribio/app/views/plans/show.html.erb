@@ -3,29 +3,29 @@
   <div class="content">
     <h2 class="title">Viewing Plan: <%= @plan.name %></h2>
     <div class="inner">
-      <form class="form" method="get" action="#">
-        <div class="columns wat-cf">
-          <div class="column left status-list">
-            <table class="table">
-              <tr>
-                <th><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= t('jaribio.misc.name', :default => 'Name') %></th>
-                <th><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= t('jaribio.misc.status', :default => 'Status') %></th>
-              </tr>
-              <%= render :partial => 'plans/suite', :collection => @plan.suites %>
-            </table>
-          </div>
-          <div class="column right status-list">
-            <table class="table">
-              <tr>
-                <th><%= t('jaribio.objects.case', :default => 'Case') %> <%= t('jaribio.misc.name', :default => 'Name') %></th>
-                <th><%= t('jaribio.actions.actions', :default => 'Actions') %></th>
-              </tr>
-              <%= render :partial => 'plans/test_case', :collection => @suite.test_cases %>
-            </table>
-          </div>
+      <div class="columns wat-cf">
+        <div class="column left status-list">
+          <table class="table">
+            <tr>
+              <th><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= t('jaribio.misc.name', :default => 'Name') %></th>
+              <th><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= t('jaribio.misc.status', :default => 'Status') %></th>
+            </tr>
+            <%= render :partial => 'plans/suite', :collection => @plan.suites %>
+          </table>
         </div>
-        <%= render :partial => "partials/form_buttons" %>
-      </form>
+        <div class="column right status-list">
+          <table class="table">
+            <tr>
+              <th colspan="2"><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= @suite.name %></th>
+            </tr>
+            <tr>
+              <th><%= t('jaribio.objects.case', :default => 'Case') %> <%= t('jaribio.misc.name', :default => 'Name') %></th>
+              <th><%= t('jaribio.actions.actions', :default => 'Actions') %></th>
+            </tr>
+            <%= render :partial => 'plans/test_case', :collection => @suite.test_cases %>
+          </table>
+        </div>
+      </div>
       <%= link_to 'Edit', edit_plan_path(@plan) %>
     </div>
   </div>
