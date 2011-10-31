@@ -5,25 +5,35 @@
     <div class="inner">
       <div class="columns wat-cf">
         <div class="column left status-list">
-          <table class="table">
-            <tr>
-              <th><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= t('jaribio.misc.name', :default => 'Name') %></th>
-              <th><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= t('jaribio.misc.status', :default => 'Status') %></th>
-            </tr>
+          <!-- table -->
+          <div class="table">
+            <!-- tr -->
+            <div>
+              <!-- th -->
+              <div><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= t('jaribio.misc.name', :default => 'Name') %></div>
+              <!-- th -->
+              <div><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= t('jaribio.misc.status', :default => 'Status') %></div>
+            </div>
             <%= render :partial => 'plans/suite', :collection => @plan.suites %>
-          </table>
+          </div>
         </div>
         <div class="column right status-list">
-          <table class="table">
-            <tr>
-              <th colspan="2"><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= @suite.name %></th>
-            </tr>
-            <tr>
-              <th><%= t('jaribio.objects.case', :default => 'Case') %> <%= t('jaribio.misc.name', :default => 'Name') %></th>
-              <th><%= t('jaribio.actions.actions', :default => 'Actions') %></th>
-            </tr>
+          <!-- table -->
+          <div class="table">
+            <!-- tr -->
+            <div>
+              <!-- th -->
+              <div><h3><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= @suite.name %></h3></div>
+            </div>
+            <!-- tr -->
+            <div>
+              <!-- th -->
+              <div><%= t('jaribio.objects.case', :default => 'Case') %> <%= t('jaribio.misc.name', :default => 'Name') %></div>
+              <!-- th -->
+              <div><%= t('jaribio.actions.actions', :default => 'Actions') %></div>
+            </div>
             <%= render :partial => 'plans/test_case', :collection => @suite.test_cases %>
-          </table>
+          </div>
         </div>
       </div>
       <%= link_to 'Edit', edit_plan_path(@plan) %>

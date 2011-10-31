@@ -1,10 +1,13 @@
 <% selected = "selected" if suite.id == @suite.id %>
 <% status = suite.status(@plan.id) %>
-<tr class="<%= (suite_counter % 2 == 0) ? "even" : "odd" %> <%= selected %>">
-  <td>
+<!-- tr -->
+<div class="<%= (suite_counter % 2 == 0) ? "even" : "odd" %> <%= selected %>">
+<!-- td -->
+  <div>
     <%= link_to suite.name, plan_path(@plan, :suite_id => suite.id) %>
-  </td>
-  <td class="<%= status_class_helper(status) %>">
+  </div>
+<!-- td -->
+  <div class="<%= status_class_helper(status) %>">
     <%= status_text(suite.status) %>
-  </td>
-</tr>
+  </div>
+</div>

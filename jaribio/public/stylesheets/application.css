@@ -41,10 +41,13 @@ td.checkbox {
   margin-left: 10px;
 }
 .suite-label {
-  width: 70%
+  width: 70%;
 }
 .case-label {
-  width: 70%
+  width: 70%;
+}
+.case-details {
+  display: none;
 }
 .group button {
   margin-top: 5px;

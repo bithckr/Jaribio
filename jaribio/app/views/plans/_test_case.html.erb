@@ -1,18 +1,43 @@
 <% status = test_case.status(@plan.id) %>
 <% disabled = status_disabled_helper(status) %>
-<%= form_for(@execution, :html => { :class => 'form' }) do |f| %>
-  <tr class="<%= (test_case_counter % 2 == 0) ? "even" : "odd" %>">
-    <td class="<%= status_class_helper(status) %>">
-      <%= f.label test_case.name, :class => "label" %>
-    </td>
-    <td>
-      <%= f.radio_button :status_code, Status::PASS, :disabled => disabled %>
-      <%= f.label :status_code, "Pass", :value => Status::PASS %>
-      <%= f.radio_button :status_code, Status::FAIL, :disabled => disabled %>
-      <%= f.label :status_code, "Fail", :value => Status::FAIL %>
-      <%= button_tag 'Re-Test', :type => 'button', :confirm => 'Are you sure you want to execute this test again?', :disabled => !disabled %>
-    </td>
-  </tr>
-  <% if test_case.errors.any? %>
+<div id="case_<%= test_case.id %>" class="<%= (test_case_counter % 2 == 0) ? "even" : "odd" %>">
+  <%= form_for([@plan, @execution], :html => { :class => 'form' }) do |f| %>
+    <div>
+      <div class="<%= status_class_helper(status) %>">
+        <a href="#" onclick="toggle_case_details(<%= test_case.id %>);"><%= test_case.name %></a>
+      </div>
+      <div>
+        <%= f.radio_button :status_code, Status::PASS, :disabled => disabled, :checked => status_checked_helper(status, Status::PASS) %>
+        <%= f.label :status_code, "Pass", :value => Status::PASS %>
+        <%= f.radio_button :status_code, Status::FAIL, :disabled => disabled, :checked => status_checked_helper(status, Status::FAIL) %>
+        <%= f.label :status_code, "Fail", :value => Status::FAIL %>
+        <%= button_tag 'Re-Test', :type => 'button', :confirm => 'Are you sure you want to execute this test again?', :disabled => !disabled, :onclick => "enable_execution_for_case(#{test_case.id});" %>
+      </div>
+    </div>
+    <div class="case-details">
+      <div>
+        <div>
+          <%= f.label "Test Case Steps", :class => "label" %>
+          <%= test_case.text %>
+        </div>
+      </div>
+      <div>
+        <div>
+          <%= f.label :expectations, :class => "label" %>
+          <%= test_case.expectations %>
+        </div>
+      </div>
+      <div>
+        <div>
+          <%= f.label :results, :class => "label" %>
+          <%= f.text_area :results, :rows => 3, :cols => 60 %>
+        </div>
+      </div>
+      <div class="group navform wat-cf">
+        <%= submit_tag "Save" %>
+      </div>
+      <% if test_case.errors.any? %>
+      <% end %>
+    </div>
   <% end %>
-<% end %>
+</div>
