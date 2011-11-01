@@ -51,4 +51,8 @@ class Plan < ActiveRecord::Base
     
     return status
   end
+
+  def test_cases
+    TestCase.in_plan(self)
+  end
 end

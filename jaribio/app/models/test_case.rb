@@ -29,6 +29,15 @@ class TestCase < ActiveRecord::Base
     return status
   end
 
+  named_scope :in_plan, lambda{ |plan|
+    {
+      :joins      => ",plans_suites, suites_test_cases",
+      :conditions => "plans_suites.plan_id = #{plan.id} and
+                      plans_suites.suite_id = suites_test_cases.suite_id and
+                      test_cases.id = suites_test_cases.test_case_id",
+      :select     => "DISTINCT `test_cases`.*" # kill duplicates
+    }
+  }
 
   private
 

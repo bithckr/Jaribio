@@ -1,7 +1,7 @@
 <% status = test_case.status(@plan.id) %>
 <% disabled = status_disabled_helper(status) %>
 <div id="case_<%= test_case.id %>" class="<%= (test_case_counter % 2 == 0) ? "even" : "odd" %>">
-  <%= form_for([@plan, @execution], :html => { :class => 'form' }) do |f| %>
+  <%= form_for([@plan, test_case, @execution], :remote => true, :html => { :class => 'form' }) do |f| %>
     <div>
       <div class="<%= status_class_helper(status) %>">
         <a href="#" onclick="toggle_case_details(<%= test_case.id %>);"><%= test_case.name %></a>

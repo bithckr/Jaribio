@@ -25,8 +25,11 @@ class ExecutionsController < ApplicationController
 
   def create
     @plan = Plan.find(params[:plan_id])
+    @test_case = @plan.test_cases.find(params[:test_case_id])
     @execution = @plan.executions.build(params[:execution])
+    @execution.test_case = @test_case
     @execution.user = current_user
+    
     if @execution.save
       flash[:notice] = "Successfully created execution."
     end
