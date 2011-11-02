@@ -97,7 +97,7 @@ describe Suite do
   end
 
   describe "with some test cases not executed" do
-    before(:all) do
+    before(:each) do
       @suite = Factory.build(:suite)
       @plan = Factory.build(:plan, :suites => [@suite])
       @test_case = Factory.build(:test_case, :suites => [@suite])
@@ -139,7 +139,7 @@ describe Suite do
   end
 
   describe "with multiple test cases per suite" do
-    before(:all) do
+    before(:each) do
       @suite = Factory.build(:suite)
       @plan = Factory.build(:plan, :suites => [@suite])
       @test_case = Factory.build(:test_case, :suites => [@suite])
