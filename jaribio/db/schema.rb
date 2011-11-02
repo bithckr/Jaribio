@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111023181223) do
+ActiveRecord::Schema.define(:version => 20111101205010) do
 
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(:version => 20111023181223) do
   end
 
   add_index "executions", ["plan_id", "test_case_id"], :name => "index_executions_on_plan_id_and_test_case_id"
+  add_index "executions", ["test_case_id"], :name => "executions_test_case_id_fk"
+  add_index "executions", ["user_id"], :name => "executions_user_id_fk"
 
   create_table "issues", :force => true do |t|
     t.string "name", :null => false
@@ -46,11 +48,15 @@ ActiveRecord::Schema.define(:version => 20111023181223) do
   end
 
   add_index "plans", ["name"], :name => "index_plans_on_name"
+  add_index "plans", ["user_id"], :name => "plans_user_id_fk"
 
   create_table "plans_suites", :id => false, :force => true do |t|
     t.integer "plan_id",  :null => false
     t.integer "suite_id", :null => false
   end
+
+  add_index "plans_suites", ["plan_id"], :name => "plans_suites_plan_id_fk"
+  add_index "plans_suites", ["suite_id"], :name => "plans_suites_suite_id_fk"
 
   create_table "suites", :force => true do |t|
     t.string   "name",       :null => false
@@ -60,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20111023181223) do
   end
 
   add_index "suites", ["name"], :name => "index_suites_on_name"
+  add_index "suites", ["user_id"], :name => "suites_user_id_fk"
 
   create_table "suites_test_cases", :id => false, :force => true do |t|
     t.integer "test_case_id", :null => false
@@ -67,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20111023181223) do
   end
 
   add_index "suites_test_cases", ["suite_id", "test_case_id"], :name => "index_suites_test_cases_on_suite_id_and_test_case_id"
+  add_index "suites_test_cases", ["test_case_id"], :name => "suites_test_cases_test_case_id_fk"
 
   create_table "test_cases", :force => true do |t|
     t.integer  "user_id",      :null => false
@@ -78,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20111023181223) do
   end
 
   add_index "test_cases", ["name"], :name => "index_test_cases_on_name"
+  add_index "test_cases", ["user_id"], :name => "test_cases_user_id_fk"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -100,5 +109,21 @@ ActiveRecord::Schema.define(:version => 20111023181223) do
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  add_foreign_key "executions", "plans", :name => "executions_plan_id_fk", :dependent => :delete
+  add_foreign_key "executions", "test_cases", :name => "executions_test_case_id_fk", :dependent => :delete
+  add_foreign_key "executions", "users", :name => "executions_user_id_fk"
+
+  add_foreign_key "plans", "users", :name => "plans_user_id_fk"
+
+  add_foreign_key "plans_suites", "plans", :name => "plans_suites_plan_id_fk", :dependent => :delete
+  add_foreign_key "plans_suites", "suites", :name => "plans_suites_suite_id_fk", :dependent => :delete
+
+  add_foreign_key "suites", "users", :name => "suites_user_id_fk"
+
+  add_foreign_key "suites_test_cases", "suites", :name => "suites_test_cases_suite_id_fk", :dependent => :delete
+  add_foreign_key "suites_test_cases", "test_cases", :name => "suites_test_cases_test_case_id_fk", :dependent => :delete
+
+  add_foreign_key "test_cases", "users", :name => "test_cases_user_id_fk"
 
 end
