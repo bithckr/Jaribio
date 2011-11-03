@@ -9,3 +9,8 @@ Features:
 * Reports the status of the current iteration.
 * Integrates with Jira.
 * Integrates with Selenium.
+
+Requirements:
+* MySQL 5.1
+* Ruby 1.9
+* Rails 3.0
