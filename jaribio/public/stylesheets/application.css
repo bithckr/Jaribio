@@ -6,35 +6,32 @@
 td.checkbox {
   width: 20px;
 }
-.status-list {
+.table {
   display: table;
 }
-.status {
+.tr {
   display: table-row;
-  height: 30px;
+}
+.th {
+  display: table-cell;
+}
+.td {
+  display: table-cell;
+  border-bottom-color: #EAEAEA;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  padding-bottom: 10px;
   padding-left: 10px;
   padding-right: 10px;
+  padding-top: 10px;
 }
-.status.pass {
+.pass {
   color: green;
 }
-.status.fail {
+.fail {
   color: red;
 }
-.status .pass {
-  color: green;
-}
-.status .fail {
-  color: red;
-}
-.status.unknown {
-}
-.status-element {
-  display: table-cell;
-  padding-left: 5px;
-  padding-top: 5px;
-  vertical-align: middle;
-  float: left;
+.unknown {
 }
 .group input[type="radio"] {
   margin-top: 8px;
@@ -45,6 +42,14 @@ td.checkbox {
 }
 .case-label {
   width: 70%;
+  border-left-style: solid;
+  border-left-width: 10px;
+}
+.case-label.fail {
+  border-left-color: red;
+}
+.case-label.pass {
+  border-left-color: green;
 }
 .case-details {
   display: none;
@@ -59,11 +64,14 @@ td.checkbox {
 .table td.pass {
   color: green;
 }
-.status.selected {
+.tr.selected {
   border: 1px black solid;
 }
-.status.suite {
-  float: left;
-  width: 100%;
-  margin-bottom: 0px;
+.tr.even {
+  background-color: #F8F8F8;
+}
+.tr.odd {
+}
+.table.even {
+  background-color: #F8F8F8;
 }

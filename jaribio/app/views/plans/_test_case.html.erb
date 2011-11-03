@@ -1,12 +1,12 @@
 <% status = test_case.status(@plan.id) %>
 <% disabled = status_disabled_helper(status) %>
-<div id="case_<%= test_case.id %>" class="<%= (test_case_counter % 2 == 0) ? "even" : "odd" %>">
-  <%= form_for([@plan, test_case, @execution], :remote => true, :html => { :class => 'form' }) do |f| %>
-    <div>
-      <div class="<%= status_class_helper(status) %>">
+<%= form_for([@plan, test_case, @execution], :remote => true, :html => { :class => 'form' }) do |f| %>
+  <div id="case_<%= test_case.id %>" class="table <%= (test_case_counter % 2 == 0) ? "even" : "odd" %>">
+    <div class="tr">
+      <div class="td case-label <%= status_class_helper(status) %>">
         <a href="#" onclick="toggle_case_details(<%= test_case.id %>);"><%= test_case.name %></a>
       </div>
-      <div>
+      <div class="td">
         <%= f.radio_button :status_code, Status::PASS, :disabled => disabled, :checked => status_checked_helper(status, Status::PASS) %>
         <%= f.label :status_code, "Pass", :value => Status::PASS %>
         <%= f.radio_button :status_code, Status::FAIL, :disabled => disabled, :checked => status_checked_helper(status, Status::FAIL) %>
@@ -15,22 +15,22 @@
       </div>
     </div>
     <div class="case-details">
-      <div>
-        <div>
+      <div class="tr">
+        <div class="td">
           <%= f.label "Test Case Steps", :class => "label" %>
           <%= test_case.text %>
         </div>
       </div>
-      <div>
-        <div>
+      <div class="tr">
+        <div class="td">
           <%= f.label :expectations, :class => "label" %>
           <%= test_case.expectations %>
         </div>
       </div>
-      <div>
-        <div>
+      <div class="tr">
+        <div class="td">
           <%= f.label :results, :class => "label" %>
-          <%= f.text_area :results, :rows => 3, :cols => 60 %>
+          <%= f.text_area :results, :rows => 3, :cols => 40 %>
         </div>
       </div>
       <div class="group navform wat-cf">
@@ -39,5 +39,5 @@
       <% if test_case.errors.any? %>
       <% end %>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>
