@@ -57,6 +57,9 @@ td.checkbox {
 .case-label.pass {
   border-left-color: green;
 }
+.case-label.unknown {
+  border-left-color: yellow;
+}
 .case-details {
   display: none;
 }
@@ -71,7 +74,9 @@ td.checkbox {
   color: green;
 }
 .tr.selected {
-  border: 1px black solid;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
 }
 .tr.even {
   background-color: #F8F8F8;
