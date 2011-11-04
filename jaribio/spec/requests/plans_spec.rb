@@ -61,6 +61,16 @@ describe "Plans" do
         page.should have_link('View')
       end
     end
+
+    describe "show" do
+      before(:each) do
+        visit plan_path(@plan)
+      end
+
+      it "should display without associated suites" do
+        page.should have_content(@plan.name)
+      end
+    end
   end
 
   describe "GET /plans/1/add_suites" do
