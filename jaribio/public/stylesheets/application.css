@@ -86,3 +86,6 @@ td.checkbox {
 .table.even {
   background-color: #F8F8F8;
 }
+#main {
+  width: 100%;
+}
