@@ -19,7 +19,7 @@
           <% if (@suite and @suite.test_cases.size > 0) %>
             <div class="table">
               <div class="tr">
-                <div><h3><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= @suite.name %></h3></div>
+                <div><h3><%= t('jaribio.objects.suite', :default => 'Suite') %>: <%= @suite.name %></h3></div>
               </div>
               <div class="tr">
                 <div class="th"><%= t('jaribio.objects.case', :default => 'Case') %> <%= t('jaribio.misc.name', :default => 'Name') %></div>
