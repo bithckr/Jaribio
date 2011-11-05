@@ -1,6 +1,6 @@
 class ExecutionsController < ApplicationController
   before_filter :authenticate_user!
-  respond_to :html
+  respond_to :js, :html
 
   def index
     @executions = Execution.scoped.order("updated_at").page(params[:page]).per(10)
