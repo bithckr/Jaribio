@@ -1,9 +1,10 @@
 <% status = test_case.status(@plan.id) %>
 <% disabled = status_disabled_helper(status) %>
 <% last_execution = test_case.last_execution(@plan.id) || @execution %>
-<%= form_for([@plan, test_case, @execution], :remote => true, :html => { :class => 'form' }) do |f| %>
-  <%= hidden_field_tag 'test_case_counter', test_case_counter %>
   <div id="case_<%= test_case.id %>" class="table <%= (test_case_counter % 2 == 0) ? "even" : "odd" %>">
+  <%= form_for([@plan, test_case, @execution], :remote => true, :html => { :class => 'form' }) do |f| %>
+  <%= hidden_field_tag 'test_case_counter', test_case_counter %>
+  <%= hidden_field_tag 'suite_id', @suite.id %>
     <div class="tr">
       <div class="td case-label <%= status_class_helper(status) %>">
         <a href="#" onclick="toggle_case_details(<%= test_case.id %>);"><%= test_case.name %></a>
@@ -32,7 +33,7 @@
       <div class="tr">
         <div class="td">
           <%= f.label :results, :class => "label" %>
-          <%= fields_for :exeuction, last_execution do |execution_fields| %>
+          <%= fields_for :execution, last_execution do |execution_fields| %>
             <%= execution_fields.text_area :results, :rows => 3, :cols => 40 %>
           <% end %>
         </div>

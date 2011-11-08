@@ -30,6 +30,9 @@ class ExecutionsController < ApplicationController
     @execution.test_case = @test_case
     @execution.user = current_user
     @test_case_counter = params[:test_case_counter]
+    if (params[:suite_id])
+      @suite = Suite.find(params[:suite_id])
+    end
     
     if @execution.save
       flash[:notice] = "Successfully created execution."
