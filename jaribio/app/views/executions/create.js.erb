@@ -1,0 +1,1 @@
+$("#case_<%= @test_case.id %>").html("<%= escape_javascript(render(:partial => 'plans/test_case', :collection => [@test_case], :locals => {:@execution => Execution.new} )) %>");

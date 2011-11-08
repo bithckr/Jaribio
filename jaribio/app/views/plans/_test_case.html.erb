@@ -3,6 +3,7 @@
 <% last_execution = test_case.last_execution(@plan.id) %>
 <% last_execution_results = last_execution.nil? ? '' : last_execution.results %>
 <%= form_for([@plan, test_case, @execution], :remote => true, :html => { :class => 'form' }) do |f| %>
+<%= hidden_field_tag 'test_case_id', test_case.id %>
   <div id="case_<%= test_case.id %>" class="table <%= (test_case_counter % 2 == 0) ? "even" : "odd" %>">
     <div class="tr">
       <div class="td case-label <%= status_class_helper(status) %>">
@@ -36,7 +37,7 @@
         </div>
       </div>
       <div class="group navform wat-cf">
-        <%= submit_tag "Save" %>
+        <%= submit_tag "Save", :id => "submit_#{test_case.id}" %>
       </div>
       <% if test_case.errors.any? %>
       <% end %>
