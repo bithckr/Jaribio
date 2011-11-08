@@ -34,12 +34,12 @@
         <div class="td">
           <%= f.label :results, :class => "label" %>
           <%= fields_for :execution, last_execution do |execution_fields| %>
-            <%= execution_fields.text_area :results, :rows => 3, :cols => 40 %>
+            <%= execution_fields.text_area :results, :rows => 3, :cols => 40, :disabled => disabled %>
           <% end %>
         </div>
       </div>
       <div class="group navform wat-cf">
-        <%= submit_tag "Save", :id => "submit_#{test_case.id}" %>
+        <%= submit_tag "Save", :id => "submit_#{test_case.id}", :disabled => disabled %>
       </div>
       <% if test_case.errors.any? %>
       <% end %>

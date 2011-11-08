@@ -1,3 +1,5 @@
 $("#case_<%= @test_case.id %>").replaceWith("<%= escape_javascript(render(:partial => 'plans/test_case', :locals => {:test_case => @test_case, :@execution => Execution.new, :test_case_counter => @test_case_counter} )) %>");
 
 $("#suite_<%= @suite.id %>").replaceWith("<%= escape_javascript(render(:partial => 'plans/suite', :locals => {:suite => @suite, :suite_counter => 0})) %>");
+
+$("div[class='flash']").html("<%= escape_javascript(render(:partial => 'partials/flash', :locals => { :flash => flash })) %>");
