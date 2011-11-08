@@ -3,7 +3,7 @@
 <% last_execution = test_case.last_execution(@plan.id) %>
 <% last_execution_results = last_execution.nil? ? '' : last_execution.results %>
 <%= form_for([@plan, test_case, @execution], :remote => true, :html => { :class => 'form' }) do |f| %>
-<%= hidden_field_tag 'test_case_id', test_case.id %>
+<%= hidden_field_tag 'test_case_counter', test_case_counter %>
   <div id="case_<%= test_case.id %>" class="table <%= (test_case_counter % 2 == 0) ? "even" : "odd" %>">
     <div class="tr">
       <div class="td case-label <%= status_class_helper(status) %>">

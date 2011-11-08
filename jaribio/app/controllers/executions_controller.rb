@@ -29,6 +29,7 @@ class ExecutionsController < ApplicationController
     @execution = @plan.executions.build(params[:execution])
     @execution.test_case = @test_case
     @execution.user = current_user
+    @test_case_counter = params[:test_case_counter]
     
     if @execution.save
       flash[:notice] = "Successfully created execution."

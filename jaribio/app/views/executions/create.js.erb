@@ -1,1 +1,1 @@
-$("#case_<%= @test_case.id %>").html("<%= escape_javascript(render(:partial => 'plans/test_case', :collection => [@test_case], :locals => {:@execution => Execution.new} )) %>");
+$("#case_<%= @test_case.id %>").html("<%= escape_javascript(render(:partial => 'plans/test_case', :locals => {:test_case => @test_case, :@execution => Execution.new, :test_case_counter => @test_case_counter} )) %>");
