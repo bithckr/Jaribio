@@ -7,14 +7,16 @@ and test plans.
 It will be possible for a person to execute tests, but also it will
 be possible for unit testing frameworks to publish test results as well.
 
-== Rails 3.1
+== Developers
+Some instructions on setting up a development environment that works
+with the latest code in master.
 
 rvm get latest
 rvm install ruby-1.9.3
 rvm --default use ruby-1.9.3-p0
-# here decide whether you want to use gemsets per application, then continue
+rvm ruby-1.9.3-p0@jaribio --create
 gem update --system
-gem update rake
+cd Jaribio/jaribio
 bundle install
 
 bin/* are scripts that ensure the bundle'd version of the executable will
