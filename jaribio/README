@@ -7,3 +7,35 @@ and test plans.
 It will be possible for a person to execute tests, but also it will
 be possible for unit testing frameworks to publish test results as well.
 
+== Rails 3.1
+
+rvm get latest
+rvm install ruby-1.9.3
+rvm --default use ruby-1.9.3-p0
+# here decide whether you want to use gemsets per application, then continue
+gem update --system
+gem update rake
+bundle install
+
+bin/* are scripts that ensure the bundle'd version of the executable will
+run rather than the latest version (rubygems default modus operandi)
+
+JavaScript Runtime for Ubuntu
+
+For Rails 3.1, a JavaScript runtime is needed for development on Linux Ubuntu. 
+It is not needed for Mac OS X or Windows.
+
+For development on Linux Ubuntu, it’s best to install the Node.js 
+server-side JavaScript environment:
+
+sudo apt-get install nodejs
+
+and set it in your $PATH.
+
+If you don’t install Node.js, you’ll need to add this to the Gemfile for each Rails application you build:
+
+gem 'therubyracer'
+
+There is a similar gem for jruby.
+
+
