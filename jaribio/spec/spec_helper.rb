@@ -1,5 +1,8 @@
-require 'simplecov'
-SimpleCov.start 'rails'
+begin
+  require 'simplecov'
+  SimpleCov.start 'rails'
+rescue LoadError
+end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
