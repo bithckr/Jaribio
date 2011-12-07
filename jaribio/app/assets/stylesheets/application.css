@@ -99,7 +99,8 @@ td.checkbox {
 }
 #plan_status {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 .ps_passes {
   color: white;

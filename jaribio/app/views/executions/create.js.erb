@@ -3,3 +3,6 @@ $("#case_<%= @test_case.id %>").replaceWith("<%= escape_javascript(render(:parti
 $("#suite_<%= @suite.id %>").replaceWith("<%= escape_javascript(render(:partial => 'plans/suite', :locals => {:suite => @suite, :suite_counter => 0})) %>");
 
 $("div[class='flash']").html("<%= escape_javascript(render(:partial => 'partials/flash', :locals => { :flash => flash })) %>");
+
+$("#plan_status").replaceWith("<%= escape_javascript(render(:partial => 'plans/status', :locals => { :plan => @plan } )) %>");
+

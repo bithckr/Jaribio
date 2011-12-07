@@ -1,6 +1,7 @@
 <table class="table">
   <tr>
     <th><%= t('jaribio.plans.name', :default => 'Name') %></th>
+    <th><%= t('jaribio.plans.status', :default => 'Status') %></th>
     <th><%= t('jaribio.plans.created_by', :default => 'Created By') %></th>
     <th class="last"></th>
   </tr>
@@ -8,6 +9,10 @@
   <% plans.each do |plan| %>
     <tr class="<%= (cnt % 2 == 0) ? "even" : "odd" %>">
       <td><%= plan.name %></td>
+      <% status = plan.status[0] %>
+      <td class="<%= status_class_helper(status) %>">
+        <%= status_text(status) %>
+      </td>
       <td><%= plan.user.email %></td>
       <%= render :partial => "partials/item_menu", :locals => { :item => plan } %>
     </tr>

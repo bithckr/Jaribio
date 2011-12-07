@@ -4,6 +4,7 @@ passes = status[1]
 fails = status[2]
 unknowns = status[3]
 total = passes + fails + unknowns
+if total != 0
 %>
 <div id="plan_status" class="table">
   <div id="plan_status" class="tr">
@@ -27,3 +28,4 @@ total = passes + fails + unknowns
     <% end %>
   </div>
 </div>
+<% end %>
