@@ -20,7 +20,13 @@ describe TestCase do
 
   it "can be searched" do
     @case.save!
+
+    # Use default search field
     @cases = TestCase.search(@case.name)
+    @cases.size.should eq(1)
+    
+    # Specify search field
+    @cases = TestCase.search("name:#{@case.name}");
     @cases.size.should eq(1)
   end
 

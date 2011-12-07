@@ -8,9 +8,16 @@ class TestCase < ActiveRecord::Base
   
   class << self
     # Simplistic search functionality
-    def search(q, relation = TestCase.scoped)
+    def search(query, relation = TestCase.scoped)
+      #'field:value' for example: 'name:my test case'
+      if (query.to_s =~ /:/)
+        q = query.to_s.split(/:/, 2);
+      else
+        q = ['name', query];
+      end
+
       t = TestCase.scoped
-      relation.where(t.table[:name].matches("%#{q}%"))
+      relation.where(t.table[q[0].to_sym].matches("%#{q[1]}%"))
     end
   end
 
