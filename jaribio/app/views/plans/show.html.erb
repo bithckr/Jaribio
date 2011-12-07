@@ -13,6 +13,7 @@
             <% if (@plan.suites.size > 0) %>
               <%= render :partial => 'plans/suite', :collection => @plan.suites %>
             <% end %>
+            <%= render :partial => 'plans/status' %>
           </div>
         </div>
         <div class="column right status-list">
