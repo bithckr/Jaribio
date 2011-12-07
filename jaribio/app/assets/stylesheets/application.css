@@ -97,3 +97,22 @@ td.checkbox {
 #main {
   width: 100%;
 }
+#plan_status {
+  width: 100%;
+  margin-top: 10px;
+}
+.ps_passes {
+  color: white;
+  background-color: green;
+  text-align: center;
+}
+.ps_fails {
+  color: white;
+  background-color: red;
+  text-align: center;
+}
+.ps_unknowns {
+  color: black;
+  background-color: yellow;
+  text-align: center;
+}

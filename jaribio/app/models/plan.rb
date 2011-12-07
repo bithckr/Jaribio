@@ -52,8 +52,8 @@ class Plan < ActiveRecord::Base
       end
     end
 
-    passes = results.count(Status::PASS)
-    fails  = results.count(Status::FAIL)
+    passes = results.count{|r| r.status_code == Status::PASS}
+    fails  = results.count{|r| r.status_code == Status::FAIL}
     unknowns = case_count - (passes + fails)
     
     return [ status, passes, fails, unknowns ]
