@@ -3,8 +3,9 @@ class TestCase < ActiveRecord::Base
   has_many :executions
   belongs_to :user
 
-  validates_presence_of :name, :text, :expectations
-
+  validates_presence_of :name, :unique_key, :text, :expectations
+  validates_uniqueness_of :unique_key
+  
   class << self
     # Simplistic search functionality
     def search(q, relation = TestCase.scoped)
@@ -19,6 +20,16 @@ class TestCase < ActiveRecord::Base
     select("DISTINCT `test_cases`.*") # kill duplicates
   }
 
+  def unique_key
+    ukey = read_attribute(:unique_key);
+    if (ukey.to_s.empty?)
+        ukey = "TC-#{Time.now.hash.abs}";
+        write_attribute(:unique_key, ukey)
+    end
+
+    return ukey;
+  end
+  
   def status(plan_id = nil)
     status = Status::UNKNOWN
 
