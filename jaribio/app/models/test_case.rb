@@ -1,5 +1,6 @@
 class TestCase < ActiveRecord::Base
-  has_and_belongs_to_many :suites
+  has_many :suite_test_cases
+  has_many :suites, :through => :suite_test_cases
   has_many :executions
   belongs_to :user
 
