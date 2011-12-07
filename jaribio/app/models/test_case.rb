@@ -1,15 +1,24 @@
 class TestCase < ActiveRecord::Base
-  has_and_belongs_to_many :suites
+  has_many :suite_test_cases
+  has_many :suites, :through => :suite_test_cases
   has_many :executions
   belongs_to :user
 
-  validates_presence_of :name, :text, :expectations
-
+  validates_presence_of :name, :unique_key, :text, :expectations
+  validates_uniqueness_of :unique_key
+  
   class << self
     # Simplistic search functionality
-    def search(q, relation = TestCase.scoped)
+    def search(query, relation = TestCase.scoped)
+      #'field:value' for example: 'name:my test case'
+      if (query.to_s =~ /:/)
+        q = query.to_s.split(/:/, 2);
+      else
+        q = ['name', query];
+      end
+
       t = TestCase.scoped
-      relation.where(t.table[:name].matches("%#{q}%"))
+      relation.where(t.table[q[0].to_sym].matches("%#{q[1]}%"))
     end
   end
 
@@ -19,6 +28,16 @@ class TestCase < ActiveRecord::Base
     select("DISTINCT `test_cases`.*") # kill duplicates
   }
 
+  def unique_key
+    ukey = read_attribute(:unique_key);
+    if (ukey.to_s.empty?)
+        ukey = "TC-#{Time.now.hash.abs}";
+        write_attribute(:unique_key, ukey)
+    end
+
+    return ukey;
+  end
+  
   def status(plan_id = nil)
     status = Status::UNKNOWN
 

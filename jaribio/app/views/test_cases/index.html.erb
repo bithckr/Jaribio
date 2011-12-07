@@ -1,7 +1,14 @@
 <div class="block">
   <%= render :partial => "partials/navigation", :locals => { :active => 'list' } %>
   <div class="content">
-    <div class="title"><%= t('jaribio.objects.cases', :default => 'Cases') %></div>
+    <div class="title">
+        <%= t('jaribio.objects.cases', :default => 'Cases') %>
+        (
+            <%= link_to 'All', :controller => 'test_cases', :action => 'index' %> |
+            <%= link_to 'Automated', :controller => 'test_cases', :action => 'index', :q => 'automated:1' %> |
+            <%= link_to 'Manual', :controller => 'test_cases', :action => 'index',  :q => 'automated:0' %>
+        )
+    </div>
     <%= render :partial => "partials/search" %>
     <div class="inner">
       <%= render :partial => 'test_case_list', :locals => { :test_cases => @test_cases } %>

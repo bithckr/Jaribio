@@ -8,9 +8,15 @@
         <li><%= msg %></li>
       <% end %>
       </ul>
+      <p>
     </div>
   <% end %>
   
+  <div class="group">
+    <%= f.label :unique_key, :class => "label" %>
+    <%= f.text_field :unique_key, :class => "text_field" %>
+    <span class="description">Enter unique key or leave blank to auto-generate.</span>
+  </div>
   <div class="group">
     <%= f.label :name, :class => "label" %>
     <%= f.text_field :name, :class => "text_field" %>
@@ -25,6 +31,11 @@
     <%= f.label :expectation, :class => "label" %>
     <%= f.text_area :expectations, :cols => 80, :rows => 10, :class => "text_area" %>
     <span class="description"></span>
+  </div>
+  <div class="group">
+    <%= f.label :automated, :class => "label" %>
+    <%= f.check_box :automated %>
+    <span class="description">Has this test case been automated?</span>
   </div>
   <%= render :partial => "partials/form_buttons" %>
 <% end %>

@@ -20,7 +20,13 @@ describe TestCase do
 
   it "can be searched" do
     @case.save!
+
+    # Use default search field
     @cases = TestCase.search(@case.name)
+    @cases.size.should eq(1)
+    
+    # Specify search field
+    @cases = TestCase.search("name:#{@case.name}");
     @cases.size.should eq(1)
   end
 
@@ -51,4 +57,23 @@ describe TestCase do
     @case.save!
     @case.status(@plan.id).should eq(Status::UNKNOWN)
   end
+  
+  it "should generate a unique_key if not provided one" do
+    tc = Factory.build :test_case;
+    tc.unique_key = nil;
+    tc.save.should_not be_false;
+
+    tc.unique_key.should_not be_empty;
+    tc.unique_key.should match /^TC-\d+/;
+  end
+  
+  it "should respect user-set unique_key" do
+    tc = Factory.build :test_case;
+    tc.unique_key = "CNC-123456789";
+    tc.save.should_not be_false;
+
+    tc.unique_key.should_not be_empty;
+    tc.unique_key.should eq "CNC-123456789";
+  end
+  
 end

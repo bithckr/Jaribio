@@ -20,6 +20,10 @@ class PlansController < ApplicationController
     else
       @suite = @plan.suites.first
     end
+    @test_cases = nil
+    unless (@suite.nil?)
+      @test_cases = @suite.test_cases.scoped.order("name")
+    end
     respond_with @plan
   end
 
