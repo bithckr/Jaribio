@@ -59,6 +59,15 @@ ActiveRecord::Schema.define(:version => 20111207190551) do
   add_index "plans_suites", ["plan_id"], :name => "plans_suites_plan_id_fk"
   add_index "plans_suites", ["suite_id"], :name => "plans_suites_suite_id_fk"
 
+  create_table "steps", :force => true do |t|
+    t.string   "action"
+    t.string   "results"
+    t.integer  "position"
+    t.integer  "test_case_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "suites", :force => true do |t|
     t.string   "name",       :null => false
     t.integer  "user_id",    :null => false

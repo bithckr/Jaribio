@@ -23,19 +23,10 @@
     <span class="description">Enter descriptive test case name</span>
   </div>
   <div class="group">
-    <%= f.label "Test Case Steps", :class => "label" %>
-    <%= f.text_area :text, :cols => 80, :rows => 10, :class => "text_area" %>
-    <span class="description"></span>
-  </div>
-  <div class="group">
-    <%= f.label :expectation, :class => "label" %>
-    <%= f.text_area :expectations, :cols => 80, :rows => 10, :class => "text_area" %>
-    <span class="description"></span>
-  </div>
-  <div class="group">
     <%= f.label :automated, :class => "label" %>
     <%= f.check_box :automated %>
     <span class="description">Has this test case been automated?</span>
   </div>
   <%= render :partial => "partials/form_buttons" %>
 <% end %>
+  <%= render :partial => "step_list" %>
