@@ -1,0 +1,31 @@
+<%
+status = @plan.status
+passes = status[1]
+fails = status[2]
+unknowns = status[3]
+total = passes + fails + unknowns
+if total != 0
+%>
+<div id="plan_status" class="table">
+  <div id="plan_status" class="tr">
+    <% width = (passes*100)/total %>
+    <% if width != 0 %>
+      <div class="td ps_passes" style="width:<%= width %>%">
+        <%= passes %>
+      </div>
+    <% end %>
+    <% width = (fails*100)/total %>
+    <% if width != 0 %>
+      <div class="td ps_fails" style="width:<%= width %>%">
+        <%= fails %>
+      </div>
+    <% end %>
+    <% width = (unknowns*100)/total %>
+    <% if width != 0 %>
+      <div class="td ps_unknowns" style="width:<%= width %>%">
+        <%= unknowns %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% end %>
