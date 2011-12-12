@@ -3,20 +3,30 @@
   <div class="content">
     <div class="title">
         <%= t('jaribio.objects.cases', :default => 'Cases') %>
-        (
-            <%= link_to 'All', :controller => 'test_cases', :action => 'index' %> |
-            <%= link_to 'Automated', :controller => 'test_cases', :action => 'index', :q => 'automated:1' %> |
-            <%= link_to 'Manual', :controller => 'test_cases', :action => 'index',  :q => 'automated:0' %>
-        )
     </div>
     <%= render :partial => "partials/search" %>
     <div class="inner">
+      <div>
+        <%= link_to "#{@total_count} Cases", :controller => 'test_cases', :action => 'index' %>
+        <% if params[:q] =~ /automated:1/ %>
+          <strong><%= @auto_count %> Automated</strong>
+        <% else %>
+          <%= link_to "#{@auto_count} Automated", :controller => 'test_cases', :action => 'index', :q => 'automated:1' %>
+        <% end %>
+
+        <% if params[:q] =~ /automated:0/ %>
+          <strong><%= @manual_count %> Manual</strong>
+        <% else %>
+          <%= link_to "#{@manual_count} Manual", :controller => 'test_cases', :action => 'index',  :q => 'automated:0' %>
+        <% end %>
+
+      </div>
       <%= render :partial => 'test_case_list', :locals => { :test_cases => @test_cases } %>
       <div class="actions-bar wat-cf">
         <div class="actions">
         </div>
         <div class="pagination">
-          <%= paginate @test_cases %>  
+          <%= paginate @test_cases %>
         </div>
       </div>
     </div>
