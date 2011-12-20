@@ -7,6 +7,11 @@ class TestCasesController < ApplicationController
     if (params[:q])
       cases = TestCase.search(params[:q])
     end
+
+    @auto_count   = TestCase.count(:conditions => 'automated = 1');
+    @manual_count = TestCase.count(:conditions => 'automated = 0');
+    @total_count  = @auto_count + @manual_count;
+
     @test_cases = cases.order("updated_at").page(params[:page]).per(10)
     respond_with @test_cases
   end

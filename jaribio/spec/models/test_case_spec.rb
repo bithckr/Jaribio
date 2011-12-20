@@ -64,7 +64,7 @@ describe TestCase do
     tc.save.should_not be_false;
 
     tc.unique_key.should_not be_empty;
-    tc.unique_key.should match /^TC-\d+/;
+    tc.unique_key.should match /[A-Z0-9]+/;
   end
   
   it "should respect user-set unique_key" do

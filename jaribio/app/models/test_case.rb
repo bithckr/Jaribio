@@ -31,7 +31,7 @@ class TestCase < ActiveRecord::Base
   def unique_key
     ukey = read_attribute(:unique_key);
     if (ukey.to_s.empty?)
-        ukey = "TC-#{Time.now.hash.abs}";
+        ukey = Time.now.hash.abs.to_s(36).upcase
         write_attribute(:unique_key, ukey)
     end
 

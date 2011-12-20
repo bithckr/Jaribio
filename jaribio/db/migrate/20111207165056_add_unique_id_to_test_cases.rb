@@ -5,7 +5,7 @@ class AddUniqueIdToTestCases < ActiveRecord::Migration
     end
 
     TestCase.all.each do |tc|
-        tc.update_attributes!(:unique_key => "TC-#{Time.now.hash.abs}");
+        tc.update_attributes!(:unique_key => Time.now.hash.abs.to_s(36).upcase);
     end
 
     add_index :test_cases, :unique_key, :unique => true
