@@ -1,4 +1,6 @@
 Jaribio::Application.routes.draw do
+  resources :steps
+
   match 'home' => 'home#index'
   root :to => "home#index"
 
@@ -8,6 +10,7 @@ Jaribio::Application.routes.draw do
     member do
       get 'executions'
     end 
+    resources :steps
   end
 
   resources :plans do

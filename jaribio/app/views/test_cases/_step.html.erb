@@ -1,0 +1,7 @@
+<tr class="<%= (step_counter % 2 == 0) ? "even" : "odd" %>">
+  <td><%= step.position %></td>
+  <td><%= step.action %></td>
+  <td><%= step.results %></td>
+  <td>Edit|
+  <%= link_to t('jaribio.actions.destroy', :default => 'Destroy'), [@test_case, step], :confirm => t('jaribio.actions.confirm', :default => 'Are you sure?'), :method => :delete, :remote => true %>
+</tr>
