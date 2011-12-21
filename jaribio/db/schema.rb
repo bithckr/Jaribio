@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111207190551) do
+ActiveRecord::Schema.define(:version => 20111220174656) do
 
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
@@ -78,11 +78,13 @@ ActiveRecord::Schema.define(:version => 20111207190551) do
   add_index "suites", ["name"], :name => "index_suites_on_name"
   add_index "suites", ["user_id"], :name => "suites_user_id_fk"
 
-  create_table "suites_test_cases", :id => false, :force => true do |t|
+  create_table "suites_test_cases", :force => true do |t|
     t.integer "test_case_id", :null => false
     t.integer "suite_id",     :null => false
+    t.integer "sort_order"
   end
 
+  add_index "suites_test_cases", ["sort_order"], :name => "index_suites_test_cases_on_sort_order"
   add_index "suites_test_cases", ["suite_id", "test_case_id"], :name => "index_suites_test_cases_on_suite_id_and_test_case_id"
   add_index "suites_test_cases", ["test_case_id"], :name => "suites_test_cases_test_case_id_fk"
 
