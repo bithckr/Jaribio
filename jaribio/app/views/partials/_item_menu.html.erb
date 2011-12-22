@@ -12,5 +12,5 @@
   <% if (item.class.to_s == 'TestCase') %>
     <%= link_to t('jaribio.action.history', :default => 'History'), url_for([:executions, item]) %>|
   <% end %>
-  <%= link_to t('jaribio.actions.destroy', :default => 'Destroy'), item, :confirm => t('jaribio.actions.confirm', :default => 'Are you sure?'), :method => :delete %>
+  <%= button_to t('jaribio.actions.destroy', :default => 'Destroy'), item, :confirm => t('jaribio.actions.confirm', :default => 'Are you sure?'), :method => :delete %>
 </td>
