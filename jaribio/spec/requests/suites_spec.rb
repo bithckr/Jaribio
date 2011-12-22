@@ -18,11 +18,11 @@ describe "Suites" do
       end
 
       it "secondary navigation contains 'List'" do
-        page.should have_content('List')  
+        page.should have_link('List')  
       end
 
       it "secondary navigation contains 'New'" do
-        page.should have_content('New')  
+        page.should have_link('New')  
       end
     end
 
@@ -38,15 +38,15 @@ describe "Suites" do
       it "with results does include list of suites" do
         fill_in('q', :with => @suite.name)
         click_button('Search')
-        page.should have_content('Edit')
-        page.should have_content('Delete')
+        page.should have_link('Edit')
+        page.should have_button('Delete')
       end
 
       it "with no results does not include list of suites" do
         fill_in('q', :with => 'asdf')
         click_button('Search')
-        page.should have_no_content('Edit')
-        page.should have_no_content('Delete')
+        page.should have_no_link('Edit')
+        page.should have_no_button('Delete')
       end
     end
 
@@ -58,8 +58,8 @@ describe "Suites" do
       it "of suites" do
         page.should have_content(@suite.name)  
         page.should have_content(@suite.user.email)  
-        page.should have_content('Edit')
-        page.should have_content('Delete')
+        page.should have_link('Edit')
+        page.should have_button('Delete')
       end
     end
   end
@@ -73,14 +73,14 @@ describe "Suites" do
     it "with no associated test cases" do
       visit url_for([:add_cases, @suite])
       page.should have_content('Associate Cases')
-      page.should have_no_link('Associate')
+      page.should have_no_button('Associate')
     end
 
     it "with existing associated test cases" do
       @new_cases = [Factory.create(:test_case)]
       visit url_for([:add_cases, @suite])
       page.should have_content('Associate Cases')
-      page.should have_link('Associate')
+      page.should have_button('Associate')
     end
   end
   

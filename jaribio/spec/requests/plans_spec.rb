@@ -18,11 +18,11 @@ describe "Plans" do
       end
 
       it "secondary navigation contains 'List'" do
-        page.should have_content('List')  
+        page.should have_link('List')  
       end
 
       it "secondary navigation contains 'New'" do
-        page.should have_content('New')  
+        page.should have_link('New')  
       end
     end
 
@@ -38,14 +38,15 @@ describe "Plans" do
       it "with results does include list of plans" do
         fill_in('q', :with => @plan.name)
         click_button('Search')
-        page.should have_content('Delete')
+        page.should have_button('Delete')
       end
 
       it "with no results does not include list of plans" do
         fill_in('q', :with => 'asdf')
         click_button('Search')
-        page.should have_no_content('Edit')
-        page.should have_no_content('Delete')
+        page.should have_no_link('Edit')
+        page.should have_no_link('Add Suites')
+        page.should have_no_button('Delete')
       end
     end
 
@@ -57,8 +58,9 @@ describe "Plans" do
       it "of plans" do
         page.should have_content(@plan.name)  
         page.should have_content(@plan.user.email)  
-        page.should have_link('Delete')
         page.should have_link('View')
+        page.should have_link('Add Suites')
+        page.should have_button('Delete')
       end
     end
 
@@ -82,14 +84,14 @@ describe "Plans" do
     it "with no associated suites" do
       visit url_for([:add_suites, @plan])
       page.should have_content('Associate Suites')
-      page.should have_no_link('Associate')
+      page.should have_no_button('Associate')
     end
 
     it "with existing associated suites" do
       @new_suites = [Factory.create(:suite)]
       visit url_for([:add_suites, @plan])
       page.should have_content('Associate Suites')
-      page.should have_link('Associate')
+      page.should have_button('Associate')
     end
   end
 end

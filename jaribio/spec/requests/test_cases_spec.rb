@@ -18,11 +18,11 @@ describe "TestCases" do
       end
 
       it "secondary navigation contains 'List'" do
-        page.should have_content('List')  
+        page.should have_link('List')  
       end
 
       it "secondary navigation contains 'New'" do
-        page.should have_content('New')  
+        page.should have_link('New')  
       end
     end
 
@@ -38,15 +38,15 @@ describe "TestCases" do
       it "with results does include list of cases" do
         fill_in('q', :with => @test_case.name)
         click_button('Search')
-        page.should have_content('Edit')
-        page.should have_content('Delete')
+        page.should have_link('Edit')
+        page.should have_button('Delete')
       end
 
       it "with no results does not include list of cases" do
         fill_in('q', :with => 'asdf')
         click_button('Search')
-        page.should have_no_content('Edit')
-        page.should have_no_content('Delete')
+        page.should have_no_link('Edit')
+        page.should have_no_button('Delete')
       end
     end
 
@@ -55,9 +55,9 @@ describe "TestCases" do
         visit test_cases_path
         page.should have_content(@test_case.name)  
         page.should have_content(@test_case.user.email)  
-        page.should have_content('Edit')
-        page.should have_content('History')
-        page.should have_content('Delete')
+        page.should have_link('Edit')
+        page.should have_link('History')
+        page.should have_button('Delete')
       end
 
       it "supports pagination" do
@@ -76,7 +76,7 @@ describe "TestCases" do
         visit url_for([:executions, @test_case])
         page.should have_content(@test_case.name)
         page.should have_content('PASS')
-        page.should have_content('View')
+        page.should have_link('View')
       end
 
       it "has failing executions" do
