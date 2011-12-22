@@ -67,7 +67,9 @@ class StepsController < ApplicationController
     @step = Step.find(params[:id])
     @step.destroy
 
-    @test_case = TestCase.find(params[:test_case_id])
+    if(params[:test_case_id])
+      @test_case = TestCase.find(params[:test_case_id])
+    end
     @step = Step.new
     respond_with @step
   end

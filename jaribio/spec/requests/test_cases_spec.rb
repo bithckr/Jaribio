@@ -113,8 +113,6 @@ describe "TestCases" do
       @test_case = Factory.build(:test_case)
       visit url_for(:action => 'new', :controller => :test_cases)
       fill_in('test_case[name]', :with => @test_case.name)
-      fill_in('test_case[text]', :with => @test_case.text)
-      fill_in('test_case[expectations]', :with => @test_case.expectations)
       click_button('Save')
 
       page.status_code.should eql(200)

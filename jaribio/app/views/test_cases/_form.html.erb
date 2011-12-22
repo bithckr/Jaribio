@@ -29,7 +29,9 @@
   </div>
   <%= render :partial => "partials/form_buttons" %>
 <% end %>
-  <h1 class="title">Test Case Steps</h1>
-  <div class="inner" id="step_list">
-  <%= render :partial => "step_list" %>
-  </div>
+  <% unless @test_case.id.nil? %>
+    <h1 class="title">Test Case Steps</h1>
+    <div class="inner" id="step_list">
+    <%= render :partial => "step_list" %>
+    </div>
+  <% end %>

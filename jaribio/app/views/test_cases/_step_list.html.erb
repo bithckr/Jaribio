@@ -9,6 +9,6 @@
     <% end %>
     </th>
   </tr>
-  <%= render :partial => 'test_cases/step', :collection => @test_case.steps.order(:position), :as => :step %>
+  <%= render :partial => 'test_cases/step', :collection => @test_case.steps, :as => :step %>
 </table>
 <div id="step_form"></div>

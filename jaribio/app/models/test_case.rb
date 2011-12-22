@@ -2,10 +2,10 @@ class TestCase < ActiveRecord::Base
   has_many :suite_test_cases
   has_many :suites, :through => :suite_test_cases
   has_many :executions
-  has_many :steps
+  has_many :steps, :order => :position
   belongs_to :user
 
-  validates_presence_of :name, :unique_key, :text, :expectations
+  validates_presence_of :name, :unique_key
   validates_uniqueness_of :unique_key
   
   class << self
