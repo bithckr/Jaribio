@@ -109,14 +109,14 @@ describe "TestCases" do
       @user = login_any_user
     end
 
-    it "redirects to cases#index" do
+    it "redirects to cases#edit" do
       @test_case = Factory.build(:test_case)
       visit url_for(:action => 'new', :controller => :test_cases)
       fill_in('test_case[name]', :with => @test_case.name)
       click_button('Save')
 
       page.status_code.should eql(200)
-      page.current_url.should eql(url_for(:action => 'index', :controller => 'test_cases'))
+      page.current_url.should eql(edit_test_case_url(TestCase.last))
       page.should have_content('Successfully created test case.')
     end
   end

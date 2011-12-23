@@ -48,9 +48,9 @@ describe TestCasesController do
         assigns(:test_case).should be_persisted
       end
 
-      it "redirects to the created test_case" do
+      it "redirects to edit test_case" do
         post :create, :test_case => Factory.attributes_for(:test_case)
-        response.should redirect_to(test_cases_url)
+        response.should redirect_to(edit_test_case_path(TestCase.last))
       end
     end
 

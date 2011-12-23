@@ -42,7 +42,7 @@ class TestCasesController < ApplicationController
     end
     if @test_case.save
       flash[:notice] = "Successfully created test case."
-      redirect_to :action => 'index'
+      redirect_to edit_test_case_path(@test_case)
     else
       respond_with @test_case
     end

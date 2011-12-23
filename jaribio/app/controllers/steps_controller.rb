@@ -66,6 +66,7 @@ class StepsController < ApplicationController
   def destroy
     @step = Step.find(params[:id])
     @step.destroy
+    flash[:notice] = "Successfully destroyed step."
 
     if(params[:test_case_id])
       @test_case = TestCase.find(params[:test_case_id])
