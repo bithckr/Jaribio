@@ -60,6 +60,18 @@ class SuitesController < ApplicationController
     end
   end
 
+  def sort
+    params[:test_case].each_with_index do |v,i|
+      tc_id, pos = v.split('.', 2)
+      if (pos != i)
+        stc = SuiteTestCase.where(:suite_id => params[:id], :test_case_id => tc_id).first
+        stc.sort_order_position = i
+        stc.save!
+      end
+    end
+    render :nothing => true
+  end
+
   def destroy
     @suite = Suite.find(params[:id])
     @suite.destroy
