@@ -25,6 +25,7 @@ Jaribio::Application.routes.draw do
   resources :suites, :except => :show do
     member do
       get 'add_cases'
+      post 'sort'
     end
   end
 

@@ -22,7 +22,7 @@ class PlansController < ApplicationController
     end
     @test_cases = nil
     unless (@suite.nil?)
-      @test_cases = @suite.test_cases.scoped.order("name")
+      @test_cases = @suite.test_cases
     end
     respond_with @plan
   end
