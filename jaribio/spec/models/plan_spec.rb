@@ -52,14 +52,20 @@ describe Plan do
       @plan.save!
       @test_case.save!
       @execution.save!
-      @plan.status.should eq(Status::PASS)
+      @plan.status[0].should eq(Status::PASS)
+      @plan.status[1].should eq(1)
+      @plan.status[2].should eq(0)
+      @plan.status[3].should eq(0)
     end
 
     it "that failed should have a failing status" do
       fail_exec = Factory.build(:execution, :plan => @plan, :status_code => Status::FAIL)
       @plan.executions << fail_exec
       @plan.save!
-      @plan.status.should eq(Status::FAIL)
+      @plan.status[0].should eq(Status::FAIL)
+      @plan.status[1].should eq(1)
+      @plan.status[2].should eq(1)
+      @plan.status[3].should eq(-1)
       @plan.executions.size.should eq(2)
     end
   end
@@ -79,7 +85,10 @@ describe Plan do
       @pass_execution.save!
       sleep(2)
       @fail_execution.save!
-      @plan.status.should eq(Status::FAIL)
+      @plan.status[0].should eq(Status::FAIL)
+      @plan.status[1].should eq(0)
+      @plan.status[2].should eq(1)
+      @plan.status[3].should eq(0)
       @plan.executions.size.should eq(2)
     end
 
@@ -90,7 +99,10 @@ describe Plan do
       @fail_execution.save!
       sleep(2)
       @pass_execution.save!
-      @plan.status.should eq(Status::PASS)
+      @plan.status[0].should eq(Status::PASS)
+      @plan.status[1].should eq(1)
+      @plan.status[2].should eq(0)
+      @plan.status[3].should eq(0)
       @plan.executions.size.should eq(2)
     end
   end
@@ -98,7 +110,10 @@ describe Plan do
   describe "with no executed test case" do
 
     it "should have a unknown status" do
-      @plan.status.should eq(Status::UNKNOWN)
+      @plan.status[0].should eq(Status::UNKNOWN)
+      @plan.status[1].should eq(0)
+      @plan.status[2].should eq(0)
+      @plan.status[3].should eq(0)
     end
   end
 
@@ -118,7 +133,10 @@ describe Plan do
       pass_execution.save!
       test_case2.save!
       @suite.test_cases = [@test_case, test_case2]
-      @plan.status.should eq(Status::UNKNOWN)
+      @plan.status[0].should eq(Status::UNKNOWN)
+      @plan.status[1].should eq(1)
+      @plan.status[2].should eq(0)
+      @plan.status[3].should eq(1)
     end
 
     it "should have a unknown status when all test cases are unknown" do
@@ -128,7 +146,10 @@ describe Plan do
       @test_case.save!
       test_case2.save!
       @suite.test_cases = [@test_case, test_case2]
-      @plan.status.should eq(Status::UNKNOWN)
+      @plan.status[0].should eq(Status::UNKNOWN)
+      @plan.status[1].should eq(1)
+      @plan.status[2].should eq(0)
+      @plan.status[3].should eq(1)
     end
 
     it "should have a fail status when atleast one test case is failing" do
@@ -140,7 +161,10 @@ describe Plan do
       fail_execution.save!
       test_case2.save!
       @suite.test_cases = [@test_case, test_case2]
-      @plan.status.should eq(Status::FAIL)
+      @plan.status[0].should eq(Status::FAIL)
+      @plan.status[1].should eq(0)
+      @plan.status[2].should eq(1)
+      @plan.status[3].should eq(1)
     end
   end
 
@@ -162,7 +186,10 @@ describe Plan do
       fail_execution2.save!
       test_case2.save!
       @suite.test_cases = [@test_case, test_case2]
-      @plan.status.should eq(Status::FAIL)
+      @plan.status[0].should eq(Status::FAIL)
+      @plan.status[1].should eq(0)
+      @plan.status[2].should eq(2)
+      @plan.status[3].should eq(0)
     end
 
     it "has a passing status if all are passing" do
@@ -176,7 +203,10 @@ describe Plan do
       pass_execution2.save!
       test_case2.save!
       @suite.test_cases = [@test_case, test_case2]
-      @plan.status.should eq(Status::PASS)
+      @plan.status[0].should eq(Status::PASS)
+      @plan.status[1].should eq(2)
+      @plan.status[2].should eq(0)
+      @plan.status[3].should eq(0)
     end
 
     it "has a failing status if one is passing and one is failing" do
@@ -190,7 +220,10 @@ describe Plan do
       pass_execution2.save!
       test_case2.save!
       @suite.test_cases = [@test_case, test_case2]
-      @plan.status.should eq(Status::FAIL)
+      @plan.status[0].should eq(Status::FAIL)
+      @plan.status[1].should eq(1)
+      @plan.status[2].should eq(1)
+      @plan.status[3].should eq(0)
     end
   end
 end
