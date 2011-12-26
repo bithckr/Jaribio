@@ -60,16 +60,28 @@ class SuitesController < ApplicationController
     end
   end
 
+  # 
+  # Should really only need deal with the one we're moving, but here we end
+  # up saving a lot more stuff.
+  #
   def sort
     params[:test_case].each_with_index do |v,i|
       tc_id, pos = v.split('.', 2)
+      pos = pos.to_i
       if (pos != i)
         stc = SuiteTestCase.where(:suite_id => params[:id], :test_case_id => tc_id).first
         stc.sort_order_position = i
-        stc.save!
+        if stc.save
+          flash[:notice] = "Successfully saved sort order."
+        end
       end
     end
-    render :nothing => true
+    @suite = Suite.find(params[:id])
+    # must redraw list with updated id #'s
+    @current_cases = @suite.test_cases
+    respond_with @suite do |format|
+      format.js { render 'sort.js' }
+    end
   end
 
   def destroy

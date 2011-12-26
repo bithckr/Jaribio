@@ -25,15 +25,13 @@ $(function() {
     distance: 10, 
     items: 'tr',
     update: function(){
+      $("table tbody#sortable").sortable("option", "disabled", true);
       $.ajax({
         type: 'post',
         data: $('table tbody#sortable').sortable('serialize'),
         dataType: 'script',
-        error: function(request){
-          alert('error');
-        },
-        success: function(request){
-          alert('success');
+        complete: function(request, status){
+          $("table tbody#sortable").sortable("option", "disabled", false);
         },
         url: '<%= sort_suite_url(@suite) %>'
       })
