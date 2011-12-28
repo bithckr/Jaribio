@@ -35,6 +35,8 @@ class StepsController < ApplicationController
   # GET /steps/1/edit
   def edit
     @step = Step.find(params[:id])
+    @test_case = TestCase.find(params[:test_case_id])
+    @step.test_case_id = @test_case.id
   end
 
   # POST /steps
@@ -54,6 +56,8 @@ class StepsController < ApplicationController
   # PUT /steps/1.json
   def update
     @step = Step.find(params[:id])
+    @test_case = TestCase.find(params[:test_case_id])
+    @step.test_case_id = @test_case.id
 
     if @step.update_attributes(params[:step])
         flash[:notice] = 'Step was successfully updated.'

@@ -2,6 +2,6 @@
   <td><%= step.position %></td>
   <td><%= step.action %></td>
   <td><%= step.results %></td>
-  <td>Edit|
+  <td><%= link_to t('jaribio.actions.edit', :default => 'Edit'), edit_test_case_step_path(@test_case, step), :action => 'edit', :remote => true %>|
   <%= link_to t('jaribio.actions.destroy', :default => 'Destroy'), [@test_case, step], :confirm => t('jaribio.actions.confirm', :default => 'Are you sure?'), :method => :delete, :remote => true %>
 </tr>
