@@ -19,10 +19,12 @@
     <%= f.label :results %><br />
     <%= f.text_field :results %>
   </div>
+  <% if @step.position? %>
   <div class="field">
     <%= f.label :position %><br />
     <%= f.number_field :position %>
   </div>
+  <% end %>
   <div class="actions">
     <%= f.submit %>
   </div>

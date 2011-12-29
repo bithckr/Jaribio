@@ -46,6 +46,10 @@ class StepsController < ApplicationController
     @test_case = TestCase.find(params[:test_case_id])
     @step.test_case_id = @test_case.id
 
+    unless @step.position?
+      @step.position = @test_case.steps.size+1
+    end
+
     if @step.save
       flash[:notice] = "Successfully created step."
     end
