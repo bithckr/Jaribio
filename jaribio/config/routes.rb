@@ -9,6 +9,7 @@ Jaribio::Application.routes.draw do
   resources :test_cases, :path => '/cases', :except => :show do
     member do
       get 'executions'
+      post 'sort'
     end 
     resources :steps
   end

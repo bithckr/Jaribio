@@ -72,4 +72,22 @@ class TestCasesController < ApplicationController
     @executions = @test_case.executions.order("created_at desc").page(params[:page]).per(10)
     respond_with @test_case
   end
+
+  def sort
+    params[:step].each_with_index do |data,i|
+      step_id, pos = data.split('.', 2)
+      pos = pos.to_i
+      if (pos != i)
+        step = Step.find(step_id)
+        step.position = i
+        if step.save
+          flash[:notice] = "Successfully saved sort order."
+        end
+      end
+    end
+    @test_case = TestCase.find(params[:id])
+    respond_with @test_case do |format|
+      format.js { render 'sort.js' }
+    end
+  end
 end

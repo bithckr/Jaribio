@@ -1,14 +1,18 @@
 <table class="table">
-  <tr>
-    <th width="5%"><%= t('jaribio.misc.action', :default => 'Position') %></th>
-    <th width="20%"><%= t('jaribio.misc.action', :default => 'Step Action') %></th>
-    <th width="70%"><%= t('jaribio.misc.results', :default => 'Step Results') %></th>
-    <th width="5%" class="last">  
-    <%= form_tag(new_test_case_step_path(@test_case), :method => 'get', :remote => true) do |f| %>
-    <%= submit_tag "Add Step" %>
-    <% end %>
-    </th>
-  </tr>
-  <%= render :partial => 'test_cases/step', :collection => @test_case.steps, :as => :step %>
+  <thead>
+    <tr>
+      <th width="5%"><%= t('jaribio.misc.action', :default => 'Position') %></th>
+      <th width="20%"><%= t('jaribio.misc.action', :default => 'Step Action') %></th>
+      <th width="70%"><%= t('jaribio.misc.results', :default => 'Step Results') %></th>
+      <th width="5%" class="last">  
+      <%= form_tag(new_test_case_step_path(@test_case), :method => 'get', :remote => true) do |f| %>
+      <%= submit_tag "Add Step" %>
+      <% end %>
+      </th>
+    </tr>
+  </thead>
+  <tbody id="sortable">
+    <%= render :partial => 'test_cases/step', :collection => @test_case.steps, :as => :step %>
+  </tbody>
 </table>
 <div id="step_form"></div>
