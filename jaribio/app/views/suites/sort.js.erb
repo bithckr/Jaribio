@@ -1,0 +1,2 @@
+$("div[class='flash']").html("<%= escape_javascript(render(:partial => 'partials/flash', :locals => { :flash => flash })) %>");
+$("table tbody#sortable").html("<%= escape_javascript(render(:partial => 'test_cases/test_case', :collection => @current_cases, :locals => { :menu => 'suites/current_cases_item_menu' })) %>");
