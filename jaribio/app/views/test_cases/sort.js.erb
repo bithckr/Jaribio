@@ -1,2 +1,3 @@
 $("div[class='flash']").html("<%= escape_javascript(render(:partial => 'partials/flash', :locals => { :flash => flash })) %>");
 $("#step_list").html("<%= escape_javascript(render(:partial => 'test_cases/step_list')) %>");
+<%= render :partial => "sortable" %>

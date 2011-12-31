@@ -1,0 +1,19 @@
+  $("table tbody#sortable").sortable({
+    axis: 'y',
+    containment: 'parent',
+    distance: 10,
+    items: 'tr',
+    update: function(){
+      $("table tbody#sortable").sortable("option", "disabled", true);
+      $.ajax({
+        type: 'post',
+        data: $('table tbody#sortable').sortable('serialize'),
+        dataType: 'script',
+        complete: function(request, status){
+          $("table tbody#sortable").sortable("option", "disabled", false);
+        },
+        url: '<%= sort_test_case_url(@test_case) %>'
+      })
+    }
+  });
+  $("table tbody#sortable").disableSelection();
