@@ -1,5 +1,4 @@
 <tr class="<%= (step_counter % 2 == 0) ? "even" : "odd" %> draggable" id="step_<%= step.id %>.<%= step_counter %>">
-  <td><%= step.position %></td>
   <td><%= step.action %></td>
   <td><%= step.results %></td>
   <td><%= link_to t('jaribio.actions.edit', :default => 'Edit'), edit_test_case_step_path(@test_case, step), :action => 'edit', :remote => true %>|
