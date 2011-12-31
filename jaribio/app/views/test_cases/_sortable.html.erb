@@ -3,6 +3,7 @@
     containment: 'parent',
     distance: 10,
     items: 'tr',
+    cursor: 'move',
     update: function(){
       $("table tbody#sortable").sortable("option", "disabled", true);
       $.ajax({

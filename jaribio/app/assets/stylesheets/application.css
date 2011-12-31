@@ -118,3 +118,6 @@ td.checkbox {
   background-color: yellow;
   text-align: center;
 }
+.draggable {
+  cursor: move;
+}
