@@ -5,6 +5,7 @@
     <div class="inner">
       <div class="columns wat-cf">
         <div class="column left status-list">
+          <%= render :partial => 'plans/status' %>
           <div class="table">
             <div class="tr">
               <div class="th"><%= t('jaribio.objects.suite', :default => 'Suite') %> <%= t('jaribio.misc.name', :default => 'Name') %></div>
@@ -14,7 +15,6 @@
               <%= render :partial => 'plans/suite', :collection => @plan.suites %>
             <% end %>
           </div>
-          <%= render :partial => 'plans/status' %>
         </div>
         <div class="column right status-list">
           <% if (@suite and @suite.test_cases.size > 0) %>
