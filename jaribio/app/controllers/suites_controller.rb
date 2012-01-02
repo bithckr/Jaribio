@@ -65,12 +65,15 @@ class SuitesController < ApplicationController
   # up saving a lot more stuff.
   #
   def sort
-    params[:test_case].each_with_index do |v,i|
-      tc_id, pos = v.split('.', 2)
-      pos = pos.to_i
-      if (pos != i)
+    if (defined? params[:moved] and defined? params[:test_case])
+      # moved will look like 'test_case_3.0', make it '3.0' instead
+      params[:moved].gsub!(/.*_(\d+\.\d+)$/, '\1')
+      # find the new position for this item
+      pos = params[:test_case].index(params[:moved])
+      tc_id, tc_pos = params[:moved].split('.', 2)
+      if (defined? pos and pos != tc_pos.to_i)
         stc = SuiteTestCase.where(:suite_id => params[:id], :test_case_id => tc_id).first
-        stc.sort_order_position = i
+        stc.sort_order_position = pos
         if stc.save
           flash[:notice] = "Successfully saved sort order."
         end
