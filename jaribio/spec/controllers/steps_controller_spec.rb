@@ -36,7 +36,7 @@ describe StepsController do
   describe "GET edit" do
     it "assigns the requested step as @step" do
       step = Factory.create :step
-      get :edit, :id => step.id
+      get :edit, :id => step.id, :test_case_id => @test_case.id
       assigns(:step).should eq(step)
     end
   end
@@ -88,18 +88,18 @@ describe StepsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Step.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => step.id, :step => {'these' => 'params'}
+        put :update, :id => step.id, :test_case_id => @test_case.id, :step => {'these' => 'params'}
       end
 
       it "assigns the requested step as @step" do
         step = Factory.create :step
-        put :update, :id => step.id.to_s, :step => Factory.attributes_for(:step)
+        put :update, :id => step.id.to_s, :test_case_id => @test_case.id, :step => Factory.attributes_for(:step)
         assigns(:step).should eq(step)
       end
 
       it "redirects to the step" do
         step = Factory.create :step
-        put :update, :id => step.id.to_s, :step => Factory.attributes_for(:step)
+        put :update, :id => step.id.to_s, :test_case_id => @test_case.id, :step => Factory.attributes_for(:step)
         response.should redirect_to(step)
       end
     end
@@ -109,7 +109,7 @@ describe StepsController do
         step = Factory.create :step
         # Trigger the behavior that occurs when invalid params are submitted
         Step.any_instance.stub(:save).and_return(false)
-        put :update, :id => step.id, :step => {}
+        put :update, :id => step.id, :test_case_id => @test_case.id, :step => {}
         assigns(:step).should eq(step)
       end
 
@@ -118,7 +118,7 @@ describe StepsController do
         # Trigger the behavior that occurs when invalid params are submitted
         Step.any_instance.stub(:save).and_return(false)
         Step.any_instance.stub(:errors).and_return({ :anything => "any value (even nil)" })
-        put :update, :id => step.id, :step => {}
+        put :update, :id => step.id, :test_case_id => @test_case.id, :step => {}
         response.should render_template("edit")
       end
     end
