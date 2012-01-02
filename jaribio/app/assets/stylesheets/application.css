@@ -118,7 +118,7 @@ td.checkbox {
   background-color: yellow;
   text-align: center;
 }
-.draggable {
+.ui-sortable {
   cursor: move;
 }
 .status_bar {
