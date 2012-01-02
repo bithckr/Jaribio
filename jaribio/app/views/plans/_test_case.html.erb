@@ -18,17 +18,8 @@
       </div>
     </div>
     <div class="case-details">
-      <div class="tr">
-        <div class="td">
-          <%= f.label "Test Case Steps", :class => "label" %>
-          <%= test_case.text %>
-        </div>
-      </div>
-      <div class="tr">
-        <div class="td">
-          <%= f.label :expectations, :class => "label" %>
-          <%= test_case.expectations %>
-        </div>
+      <div class="tr" style="display: block;">
+      <%= render :partial => 'test_cases/step_list', :locals => { :@test_case => test_case, :is_static => 1 } %>
       </div>
       <div class="tr">
         <div class="td">
