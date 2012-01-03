@@ -1,7 +1,12 @@
 <script type="text/javascript">
 $(document).ready(function () {
-    $('div.dd_menu_class').click(function () {
-    $('ul.dd_menu').slideToggle('medium');
+    $('.dd_menu_head').click(function () {
+       $('.dd_menu_opts').slideToggle('fast');
+    });
+    $('.dd_menu').mouseout(function (e) {
+       if(e.target.id == this.id) {
+          $('.dd_menu_opts').hide();
+       }
     });
 });
 </script>
@@ -10,11 +15,11 @@ $(document).ready(function () {
               'automated:0' => "Manual (#{@manual_count})",
    }
 %>
-<div class="dd_menu_button">
-<div class="dd_menu_class"><%= params[:q].nil? ? queries['none'] : queries[params[:q]] %>
+<div class="dd_menu" id="dd_menu_full">
+<div class="dd_menu_head"><%= params[:q].nil? ? queries['none'] : queries[params[:q]] %>
 <span class="ui-icon ui-icon-triangle-1-s dd_menu_triangle"></span>
 </div>
-<ul class="dd_menu">
+<ul class="dd_menu_opts">
   <% queries.each do |key, value| %>
         <% next if key == params[:q] || (key == 'none' && params[:q].nil?) %>
         <% opts = {:controller => 'test_cases', :action => 'index'}

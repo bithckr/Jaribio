@@ -125,14 +125,15 @@ td.checkbox {
   padding: 0px 0px 0px 0px;
   height: 10px
 }
-.dd_menu_class {
+.dd_menu_head {
     border:1px solid #1c1c1c;
     font-size:13px;
     padding-left:10px;
     margin:0px;
 }
-.dd_menu_button {
+.dd_menu {
     position: absolute;
+    width: 150px;
     margin:0px;
     filter:alpha(opacity=50);
     background-color: #ffffff;
@@ -140,8 +141,9 @@ td.checkbox {
     -khtml-opacity: 1.0;
     opacity: 1.0;
     z-index: 10000;
+    border: 1px solid #1c1c1c;
 }
-.dd_menu {
+.dd_menu_opts {
     display:none;
     border: 1px solid #1c1c1c;
     margin:0px;
@@ -149,17 +151,18 @@ td.checkbox {
     font-size:13px;
     color:#111111;
 }
-.dd_menu li a {
+.dd_menu_opts li a {
     color:#111111;
     text-decoration:none;
     padding-left:10px;
     display:inline-block;
 }
-.dd_menu li a:hover {
+.dd_menu_opts li a:hover {
     padding-left:10px;
     font-weight:bold;
 }
 .dd_menu_triangle {
     float:right;
     margin-top:4px;
+    border-left: 1px solid #1c1c1c;
 }

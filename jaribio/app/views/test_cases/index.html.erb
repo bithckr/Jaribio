@@ -1,10 +1,10 @@
 <div class="block">
   <%= render :partial => "partials/navigation", :locals => { :active => 'list' } %>
   <div class="content">
-    <div class="title" style="display:table; position:relative;">
-      <div style="display:table-row; border:1px solid #1c1c1c; margin:0px; position:relative;">
+    <div class="title">
+      <div>
         <div style="display:table-cell;padding-right:10px;"><%= t('jaribio.objects.cases', :default => 'Cases') %></div>
-        <div style="display:table-cell; vertical-align:top;"><%= render :partial => "index_filter" %></div>
+        <div style="display:table-cell;vertical-align:top;"><%= render :partial => "index_filter" %></div>
       </div>
     </div>
     <%= render :partial => "partials/search" %>
