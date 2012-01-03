@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111220174656) do
+ActiveRecord::Schema.define(:version => 20120102150708) do
 
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(:version => 20111220174656) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "steps", ["test_case_id"], :name => "steps_test_case_id_fk"
 
   create_table "suites", :force => true do |t|
     t.string   "name",       :null => false
@@ -133,6 +135,8 @@ ActiveRecord::Schema.define(:version => 20111220174656) do
 
   add_foreign_key "plans_suites", "plans", :name => "plans_suites_plan_id_fk", :dependent => :delete
   add_foreign_key "plans_suites", "suites", :name => "plans_suites_suite_id_fk", :dependent => :delete
+
+  add_foreign_key "steps", "test_cases", :name => "steps_test_case_id_fk", :dependent => :delete
 
   add_foreign_key "suites", "users", :name => "suites_user_id_fk"
 
