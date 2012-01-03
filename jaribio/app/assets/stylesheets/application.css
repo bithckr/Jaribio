@@ -125,3 +125,41 @@ td.checkbox {
   padding: 0px 0px 0px 0px;
   height: 10px
 }
+.dd_menu_class {
+    border:1px solid #1c1c1c;
+    font-size:13px;
+    padding-left:10px;
+    margin:0px;
+}
+.dd_menu_button {
+    position: absolute;
+    margin:0px;
+    filter:alpha(opacity=50);
+    background-color: #ffffff;
+    -moz-opacity:1.0;
+    -khtml-opacity: 1.0;
+    opacity: 1.0;
+    z-index: 10000;
+}
+.dd_menu {
+    display:none;
+    border: 1px solid #1c1c1c;
+    margin:0px;
+    list-style:none;
+    font-size:13px;
+    color:#111111;
+}
+.dd_menu li a {
+    color:#111111;
+    text-decoration:none;
+    padding-left:10px;
+    display:inline-block;
+}
+.dd_menu li a:hover {
+    padding-left:10px;
+    font-weight:bold;
+}
+.dd_menu_triangle {
+    float:right;
+    margin-top:4px;
+}

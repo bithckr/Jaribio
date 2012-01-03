@@ -1,26 +1,14 @@
 <div class="block">
   <%= render :partial => "partials/navigation", :locals => { :active => 'list' } %>
   <div class="content">
-    <div class="title">
-        <%= t('jaribio.objects.cases', :default => 'Cases') %>
+    <div class="title" style="display:table; position:relative;">
+      <div style="display:table-row; border:1px solid #1c1c1c; margin:0px; position:relative;">
+        <div style="display:table-cell;padding-right:10px;"><%= t('jaribio.objects.cases', :default => 'Cases') %></div>
+        <div style="display:table-cell; vertical-align:top;"><%= render :partial => "index_filter" %></div>
+      </div>
     </div>
     <%= render :partial => "partials/search" %>
     <div class="inner">
-      <div>
-        <%= link_to "#{@total_count} Cases", :controller => 'test_cases', :action => 'index' %>
-        <% if params[:q] =~ /automated:1/ %>
-          <strong><%= @auto_count %> Automated</strong>
-        <% else %>
-          <%= link_to "#{@auto_count} Automated", :controller => 'test_cases', :action => 'index', :q => 'automated:1' %>
-        <% end %>
-
-        <% if params[:q] =~ /automated:0/ %>
-          <strong><%= @manual_count %> Manual</strong>
-        <% else %>
-          <%= link_to "#{@manual_count} Manual", :controller => 'test_cases', :action => 'index',  :q => 'automated:0' %>
-        <% end %>
-
-      </div>
       <%= render :partial => 'test_case_list', :locals => { :test_cases => @test_cases } %>
       <div class="actions-bar wat-cf">
         <div class="actions">
