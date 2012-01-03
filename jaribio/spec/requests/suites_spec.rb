@@ -64,6 +64,87 @@ describe "Suites" do
     end
   end
 
+  describe "GET /suites/1/edit" do
+    before(:each) do
+      @user = login_any_user
+      @suite = Factory.build(:suite)
+      4.times do 
+        @suite.test_cases << Factory.build(:test_case)
+      end
+      @suite.save!
+    end
+
+    describe "secondary navigation" do
+      before(:each) do
+        visit edit_suite_path(@suite)
+      end
+
+      it "exists" do
+        page.should have_xpath("//div[@class='secondary-navigation']")
+      end
+
+      it "secondary navigation contains 'List'" do
+        page.should have_link('List')  
+      end
+
+      it "secondary navigation contains 'New'" do
+        page.should have_link('New')  
+      end
+    end
+
+    describe "form input" do
+      before(:each) do
+        visit edit_suite_path(@suite)
+      end
+
+      it "supports editing 'Name'" do
+        page.should have_field("suite_name")
+      end
+
+      it "has 'Save' button" do
+        page.should have_button("Save")
+      end
+
+      it "has 'Cancel' link" do
+        page.should have_link("Cancel")
+      end
+    end
+
+    describe "current case list" do
+      before(:each) do
+        visit edit_suite_path(@suite)
+      end
+
+      it "displays 'Key'" do
+        page.should have_content('Key')
+        @suite.test_cases.each do |tc|
+          page.should have_content(tc.unique_key)
+        end
+      end
+
+      it "displays 'Name'" do
+        page.should have_content('Name')
+        @suite.test_cases.each do |tc|
+          page.should have_content(tc.name)
+        end
+      end
+
+      it "displays 'Created By'" do
+        page.should have_content('Created By')
+        @suite.test_cases.each do |tc|
+          page.should have_content(tc.user.email)
+        end
+      end
+
+      it "can be sorted"
+
+      it "has 'Unassociate button" do
+        page.should have_button("Unassociate")
+      end
+    end
+
+  end
+
   describe "GET /suites/1/add_cases" do
     before(:each) do
       @user = login_any_user
