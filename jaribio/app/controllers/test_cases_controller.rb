@@ -29,7 +29,7 @@ class TestCasesController < ApplicationController
   end
 
   def edit
-    @test_case = TestCase.find(params[:id])
+    @test_case = TestCase.find(params[:id], :include => :suites)
     @suites = Suite.select(:name)
     @pre_steps = PreStep.all()
     respond_with @test_case

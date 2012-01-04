@@ -1,12 +1,28 @@
 <ul id="suites_test_cases_handler"></ul>
 <script type="text/javascript">
-    $(document).ready( function() {
-
-        $('#suites_test_cases_handler').tagHandler({
-            availableTags : [ <% @suites.each do |suite| %>'<%= suite.name %>', <% end %>  ],
-            autocomplete  : true
+  $(document).ready( function() {
+    $('#suites_test_cases_handler').tagHandler({
+      assignedTags : [ <% @test_case.suites.each do |suite| %>'<%= suite.name %>', <% end %> ],
+      availableTags : [ <% @suites.each do |suite| %>'<%= suite.name %>', <% end %>  ],
+      autocomplete  : true,
+      minChars: 1,
+      maxTags: 0,
+      onAdd: function(tag){ 
+        var list = $('#suites_test_cases_handler').tagHandler("getTags");
+//        list.push(tag);
+        $("#suites").attr('value', list.join(','));
+      },
+      onDelete: function(tag){
+        var list = $('#suites_test_cases_handler').tagHandler("getTags");
+        $(list).each(function(i, e) {
+          if (e == tag) {
+            list.splice(i, 1);
+          }
         });
-        //$('#suites_test_cases_handler').tagHandler();
-
+        $("#suites").attr('value', list.join(','));
+      }
     });
+    //$('#suites_test_cases_handler').tagHandler();
+
+  });
 </script>

@@ -4,14 +4,14 @@
       <h2><%= pluralize(@test_case.errors.count, "error") %> prohibited this case from being saved:</h2>
 
       <ul>
-      <% @test_case.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @test_case.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
       <p>
     </div>
   <% end %>
-  
+
   <div class="group">
     <%= f.label :unique_key, :class => "label" %>
     <%= f.text_field :unique_key, :class => "text_field" %>
@@ -29,6 +29,10 @@
   </div>
   <div class="group">
     <%= f.label :suites, :class => "label" %>
+    <%
+      current_suites = @test_case.suites.inject([]) { |r,s| r << s.name }
+    %>
+    <%= hidden_field_tag 'suites', current_suites.join(',') %>
     <%= render :partial => "new_tag_handler" %>
     <span class="description">Enter names of Suites to which this test case belongs.</span>
   </div>
@@ -39,9 +43,9 @@
   </div>
   <%= render :partial => "partials/form_buttons" %>
 <% end %>
-  <% unless @test_case.id.nil? %>
-    <h1 class="title">Test Case Steps</h1>
-    <div class="inner" id="step_list">
+<% unless @test_case.id.nil? %>
+  <h1 class="title">Test Case Steps</h1>
+  <div class="inner" id="step_list">
     <%= render :partial => "step_list" %>
-    </div>
-  <% end %>
+  </div>
+<% end %>
