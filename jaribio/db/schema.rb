@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120102150708) do
+ActiveRecord::Schema.define(:version => 20120104015342) do
 
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
@@ -62,12 +62,14 @@ ActiveRecord::Schema.define(:version => 20120102150708) do
   create_table "steps", :force => true do |t|
     t.string   "action"
     t.string   "results"
-    t.integer  "position"
     t.integer  "test_case_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sort_order",   :null => false
   end
 
+  add_index "steps", ["sort_order", "test_case_id"], :name => "index_steps_on_sort_order_and_test_case_id", :unique => true
+  add_index "steps", ["sort_order"], :name => "index_steps_on_sort_order"
   add_index "steps", ["test_case_id"], :name => "steps_test_case_id_fk"
 
   create_table "suites", :force => true do |t|

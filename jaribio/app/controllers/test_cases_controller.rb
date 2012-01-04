@@ -74,12 +74,15 @@ class TestCasesController < ApplicationController
   end
 
   def sort
-    params[:step].each_with_index do |data,i|
-      step_id, pos = data.split('.', 2)
-      pos = pos.to_i
-      if (pos != i)
-        step = Step.find(step_id)
-        step.position = i
+    if (defined? params[:moved] and defined? params[:step])
+      # moved will look like 'step_3.0', make it '3.0' instead
+      params[:moved].gsub!(/.*_(\d+\.\d+)$/, '\1')
+      # find the new position for this item
+      pos = params[:step].index(params[:moved])
+      s_id, s_pos = params[:moved].split('.', 2)
+      if (defined? pos and pos != s_pos.to_i)
+        step = Step.find(s_id)
+        step.sort_order_position = pos
         if step.save
           flash[:notice] = "Successfully saved sort order."
         end

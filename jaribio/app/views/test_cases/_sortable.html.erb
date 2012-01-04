@@ -4,11 +4,11 @@
     distance: 10,
     items: 'tr',
     cursor: 'move',
-    update: function(){
+    update: function(event, ui){
       $("table tbody#sortable").sortable("option", "disabled", true);
       $.ajax({
         type: 'post',
-        data: $('table tbody#sortable').sortable('serialize'),
+        data: $('table tbody#sortable').sortable('serialize') + '&' + $.param({moved: ui.item.attr('id')}),
         dataType: 'script',
         complete: function(request, status){
           $("table tbody#sortable").sortable("option", "disabled", false);

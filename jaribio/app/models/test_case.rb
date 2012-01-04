@@ -2,7 +2,7 @@ class TestCase < ActiveRecord::Base
   has_many :suite_test_cases
   has_many :suites, :through => :suite_test_cases
   has_many :executions
-  has_many :steps, :order => :position
+  has_many :steps, :order => "steps.sort_order ASC"
   belongs_to :user
 
   validates_presence_of :name, :unique_key

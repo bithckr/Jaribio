@@ -1,3 +1,6 @@
 class Step < ActiveRecord::Base
-  validates :position, :presence => true, :numericality => true
+  belongs_to :test_casea
+
+  include RankedModel
+  ranks :sort_order, :with_same => :test_case_id
 end
