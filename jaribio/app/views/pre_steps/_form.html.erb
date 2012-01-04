@@ -1,0 +1,25 @@
+<%= form_for(@pre_step) do |f| %>
+  <% if @pre_step.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pre_step.errors.count, "error") %> prohibited this pre_step from being saved:</h2>
+
+      <ul>
+      <% @pre_step.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :list %><br />
+    <%= f.text_area :list %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
