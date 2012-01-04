@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120104172211) do
+ActiveRecord::Schema.define(:version => 20120104203622) do
 
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
@@ -109,9 +109,11 @@ ActiveRecord::Schema.define(:version => 20120104172211) do
     t.string   "name",                            :null => false
     t.string   "unique_key",                      :null => false
     t.boolean  "automated",    :default => false, :null => false
+    t.integer  "pre_step_id"
   end
 
   add_index "test_cases", ["name"], :name => "index_test_cases_on_name"
+  add_index "test_cases", ["pre_step_id"], :name => "test_cases_pre_step_id_fk"
   add_index "test_cases", ["unique_key"], :name => "index_test_cases_on_unique_key", :unique => true
   add_index "test_cases", ["user_id"], :name => "test_cases_user_id_fk"
 
@@ -153,6 +155,7 @@ ActiveRecord::Schema.define(:version => 20120104172211) do
   add_foreign_key "suites_test_cases", "suites", :name => "suites_test_cases_suite_id_fk", :dependent => :delete
   add_foreign_key "suites_test_cases", "test_cases", :name => "suites_test_cases_test_case_id_fk", :dependent => :delete
 
+  add_foreign_key "test_cases", "pre_steps", :name => "test_cases_pre_step_id_fk"
   add_foreign_key "test_cases", "users", :name => "test_cases_user_id_fk"
 
 end

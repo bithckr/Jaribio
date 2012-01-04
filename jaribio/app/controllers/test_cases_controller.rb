@@ -8,9 +8,9 @@ class TestCasesController < ApplicationController
       cases = TestCase.search(params[:q])
     end
 
-    @auto_count   = TestCase.count(:conditions => 'automated = 1');
-    @manual_count = TestCase.count(:conditions => 'automated = 0');
-    @total_count  = @auto_count + @manual_count;
+    @auto_count   = TestCase.count(:conditions => 'automated = 1')
+    @manual_count = TestCase.count(:conditions => 'automated = 0')
+    @total_count  = @auto_count + @manual_count
 
     @test_cases = cases.order("updated_at").page(params[:page]).per(10)
     respond_with @test_cases
@@ -23,13 +23,15 @@ class TestCasesController < ApplicationController
 
   def new
     @test_case = TestCase.new
-    @suites = Suite.select(:name);
+    @suites = Suite.select(:name)
+    @pre_steps = PreStep.all()
     respond_with @test_case
   end
 
   def edit
     @test_case = TestCase.find(params[:id])
-    @suites = Suite.select(:name);
+    @suites = Suite.select(:name)
+    @pre_steps = PreStep.all()
     respond_with @test_case
   end
 
@@ -38,7 +40,7 @@ class TestCasesController < ApplicationController
     @test_case.user = current_user
 
     if params.has_key? :test_case_suites
-      @test_case.suite_ids=params[:test_case_suites].split(',');
+      @test_case.suite_ids=params[:test_case_suites].split(',')
     end
     if @test_case.save
       flash[:notice] = "Successfully created test case."
