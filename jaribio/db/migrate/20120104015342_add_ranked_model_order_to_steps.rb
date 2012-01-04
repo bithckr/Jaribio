@@ -25,7 +25,7 @@ class AddRankedModelOrderToSteps < ActiveRecord::Migration
     end
 
     add_index :steps, :sort_order
-    add_index :steps, [:sort_order, :test_case_id], :unique => true
+    add_index :steps, [:test_case_id, :sort_order], :unique => true
     remove_column :steps, :position
   end
 
