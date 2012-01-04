@@ -1,0 +1,12 @@
+<ul id="suites_test_cases_handler"></ul>
+<script type="text/javascript">
+    $(document).ready( function() {
+
+        $('#suites_test_cases_handler').tagHandler({
+            availableTags : [ <% @suites.each do |suite| %>'<%= suite.name %>', <% end %>  ],
+            autocomplete  : true
+        });
+        //$('#suites_test_cases_handler').tagHandler();
+
+    });
+</script>

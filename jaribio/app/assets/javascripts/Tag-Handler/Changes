@@ -1,0 +1,36 @@
+Revision history for jQuery Tag-Handler plugin
+
+1.2.1 2011-12-11
+    - modified the code for the onAdd & onDelete callbacks to ensure the tag name was being properly being passed to the functions
+
+1.2.0 2011-12-11
+    - added plugin convenience methods
+        - getTags: returns an array of tags
+        - getSerializedTags: returns comma separated string of tags
+    - added options for callback functions onAdd & onDelete -- these execute after adding or deleting a tag (ryanhollister -- issue #6)
+    - modified the way that the ajax retrieval of tags from the server when initLoad is set to false expects returned data to be more in line with the rest of the AJAX calls -- the server must now return an object with an availableTags array just like the other ajax calls or the regualr tag setup
+      *** NOTE ***: this is not backwards compatible with previous versions of the Tag-Handler (although I'm not sure how well used this functionality is anyhow)
+    - fixed: issue with the getData & updateData options which were being initalized as strings instead of objects (sebpiq )
+
+1.1.0 2011-03-29
+    - added maxTags option to limit the maximum number of tags allowed
+    - added check for all autocomplete functions to ensure that jQueryUI autocomplete is enabled
+    - added maxTags option to limit number of tags -- set to 0 for unlimited (default)
+    - saved $(tagContainer) to a variable to save on some jQuery function calls
+
+1.0.3 2011-02-09
+    - Shortened the name of the messageNoPermissionNewTag and messageErrorLoading options down to msgNoNewTag and msgError (as was shown in the README).
+    - Merged in change to the delegate function from Pierre Giraud
+    - Renamed the tagDebug internal method to just debug.
+
+1.0.2 2010-12-13
+    - Added the possibility of autocompleting the tag list as the user writes, instead of loading all the tags at the beginning.
+    - Option to restrict if the user can create new tags
+    - Added several options to customize the messages
+
+1.0.1 2010-10-20
+    - Fixed a typo bug that was introduced at some point where the tag box's
+      autocomplete would no longer work.
+
+1.0.0 2010-07-08
+    - initial release

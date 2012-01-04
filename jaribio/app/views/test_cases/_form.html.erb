@@ -27,6 +27,11 @@
     <%= f.check_box :automated %>
     <span class="description">Has this test case been automated?</span>
   </div>
+  <div class="group">
+    <%= f.label :suites, :class => "label" %>
+    <%= render :partial => "new_tag_handler" %>
+    <span class="description">Enter names of Suites to which this test case belongs.</span>
+  </div>
   <%= render :partial => "partials/form_buttons" %>
 <% end %>
   <% unless @test_case.id.nil? %>
