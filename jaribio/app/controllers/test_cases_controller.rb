@@ -23,13 +23,13 @@ class TestCasesController < ApplicationController
 
   def new
     @test_case = TestCase.new
-    @suites = Suite.find(:all);
-
+    @suites = Suite.select(:name);
     respond_with @test_case
   end
 
   def edit
     @test_case = TestCase.find(params[:id])
+    @suites = Suite.select(:name);
     respond_with @test_case
   end
 
