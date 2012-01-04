@@ -4,6 +4,7 @@ class TestCase < ActiveRecord::Base
   has_many :executions
   has_many :steps, :order => "steps.sort_order ASC"
   belongs_to :user
+  belongs_to :pre_steps
 
   validates_presence_of :name, :unique_key
   validates_uniqueness_of :unique_key

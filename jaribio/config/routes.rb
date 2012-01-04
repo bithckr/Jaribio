@@ -1,4 +1,6 @@
 Jaribio::Application.routes.draw do
+  resources :pre_steps
+
   resources :steps
 
   match 'home' => 'home#index'
