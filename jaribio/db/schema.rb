@@ -70,7 +70,6 @@ ActiveRecord::Schema.define(:version => 20120104154501) do
 
   add_index "steps", ["sort_order"], :name => "index_steps_on_sort_order"
   add_index "steps", ["test_case_id", "sort_order"], :name => "index_steps_on_test_case_id_and_sort_order", :unique => true
-  add_index "steps", ["test_case_id"], :name => "dummy"
 
   create_table "suites", :force => true do |t|
     t.string   "name",       :null => false

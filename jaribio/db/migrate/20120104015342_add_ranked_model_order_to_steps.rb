@@ -41,7 +41,7 @@ class AddRankedModelOrderToSteps < ActiveRecord::Migration
     end
 
     remove_index :steps, :sort_order
-    remove_index :steps, [:sort_order, :test_case_id]
+    remove_index :steps, [:test_case_id, :sort_order]
     remove_column :steps, :sort_order
   end
 end
