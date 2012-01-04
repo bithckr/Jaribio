@@ -1,4 +1,4 @@
-<%= form_for(@pre_step) do |f| %>
+<%= form_for(@pre_step, :html => {:class => 'form'}) do |f| %>
   <% if @pre_step.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@pre_step.errors.count, "error") %> prohibited this pre_step from being saved:</h2>
@@ -11,15 +11,14 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <div class="group">
+    <%= f.label :name, :class => "label" %>
+    <%= f.text_field :name, :class => "text_field" %>
+    <span class="description">Enter a name for the pre-steps."</span>
   </div>
-  <div class="field">
-    <%= f.label :list %><br />
-    <%= f.text_area :list %>
+  <div class="group">
+    <%= f.label :list, :class => "label" %>
+    <%= f.text_area :list, :class => "text_area"%>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= render :partial => "partials/form_buttons" %>
 <% end %>

@@ -2,7 +2,7 @@ class PreStepsController < ApplicationController
   # GET /pre_steps
   # GET /pre_steps.json
   def index
-    @pre_steps = PreStep.all
+    @pre_steps = PreStep.order("name").page(params[:page]).per(10)
 
     respond_to do |format|
       format.html # index.html.erb

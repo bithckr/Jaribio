@@ -1,25 +1,16 @@
-<h1>Listing pre_steps</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>List</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @pre_steps.each do |pre_step| %>
-  <tr>
-    <td><%= pre_step.name %></td>
-    <td><%= pre_step.list %></td>
-    <td><%= link_to 'Show', pre_step %></td>
-    <td><%= link_to 'Edit', edit_pre_step_path(pre_step) %></td>
-    <td><%= link_to 'Destroy', pre_step, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Pre step', new_pre_step_path %>
+<div class="block">
+  <%= render :partial => "partials/navigation", :locals => { :active => 'list' } %>
+  <div class="content">
+    <div class="title"><%= t('jaribio.objects.pre_steps', :default => 'Pre-Steps') %></div>
+    <div class="inner">
+      <%= render :partial => 'pre_step_list', :locals => { :pre_steps => @pre_steps } %>
+      <div class="actions-bar wat-cf">
+        <div class="actions">
+        </div>
+        <div class="pagination">
+          <%= paginate @pre_steps %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

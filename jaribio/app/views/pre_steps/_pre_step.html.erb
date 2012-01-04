@@ -1,0 +1,4 @@
+<tr class="<%= (pre_step_counter % 2 == 0) ? "even" : "odd" %>">
+  <td><%= pre_step.name %></td>
+  <%= render :partial => 'partials/item_menu', :locals => { :item => pre_step } %>
+</tr>

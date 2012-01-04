@@ -1,6 +1,9 @@
-<h1>Editing pre_step</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @pre_step %> |
-<%= link_to 'Back', pre_steps_path %>
+<div class="block">
+  <%= render :partial => "partials/navigation", :locals => { :active => nil } %>
+  <div class="content">
+    <h2 class="title">Editing pre-step</h2>
+    <div class="inner">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>
