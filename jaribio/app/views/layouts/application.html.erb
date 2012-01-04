@@ -1,49 +1,56 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Jaribio</title>
-  <%= stylesheet_link_tag "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tag %>
-</head>
-<body>
-  <div id="container">
-    <div id="header">
-      <h1><a href="<%= root_url %>">Jaribio</a></h1>
-      <div id="user-navigation">
-        <ul class="wat-cf">
-          <% if user_signed_in? %>
-            <li><%= link_to t('jaribio.actions.logout', :default => 'Logout'), destroy_user_session_url, :method => :delete %></li> 
-          <% else %>
-            <li><%= link_to t('jaribio.actions.login', :default => 'Login'), new_user_session_url %></li>
-          <% end %>
-        </ul>
-      </div>
-      <div id="main-navigation">
-        <ul class="wat-cf">
-          <li><%= link_to t('jaribio.objects.cases', :default => 'Cases'), test_cases_url %></li>
-          <li><%= link_to t('jaribio.objects.suites', :default => 'Suites'), suites_url %></li>
-          <li><%= link_to t('jaribio.objects.plans', :default => 'Plans'), plans_url %></li>
-
-        </ul>
-      </div>
-    </div>    
-    <div id="wrapper" class="wat-cf">
-      <div class="flash">
-        <%= render :partial => "partials/flash", :locals => { :flash => flash } %>
-      </div>
-      <div id="main">
-        <%= yield %>
-        <div id="footer">
-          <div class="block">
-            <p>Copyright &copy; <%= Time.now.year %> Jaribio.</p>
-          </div>      
+  <head>
+    <title>Jaribio</title>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tag %>
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <h1><a href="<%= root_url %>">Jaribio</a></h1>
+        <div id="user-navigation">
+          <ul class="wat-cf">
+            <% if user_signed_in? %>
+              <li><%= link_to t('jaribio.actions.logout', :default => 'Logout'), destroy_user_session_url, :method => :delete %></li> 
+            <% else %>
+              <li><%= link_to t('jaribio.actions.login', :default => 'Login'), new_user_session_url %></li>
+            <% end %>
+          </ul>
         </div>
-      </div>
-      <div id="sidebar">
-        <%= yield :sidebar %>
-      </div>
-    </div>    
-  </div>
-</body>
+        <div id="main-navigation">
+          <ul class="wat-cf">
+            <li>
+            <%= link_to t('jaribio.objects.cases', :default => 'Cases'), test_cases_url %>
+            <div>
+              <ul>
+                <li><%= link_to t('jaribio.objects.presteps', :default => 'Pre-Steps'), pre_steps_url %></li>
+              </ul>
+            </div>
+            </li>
+            <li><%= link_to t('jaribio.objects.suites', :default => 'Suites'), suites_url %></li>
+            <li><%= link_to t('jaribio.objects.plans', :default => 'Plans'), plans_url %></li>
+
+          </ul>
+        </div>
+      </div>    
+      <div id="wrapper" class="wat-cf">
+        <div class="flash">
+          <%= render :partial => "partials/flash", :locals => { :flash => flash } %>
+        </div>
+        <div id="main">
+          <%= yield %>
+          <div id="footer">
+            <div class="block">
+              <p>Copyright &copy; <%= Time.now.year %> Jaribio.</p>
+            </div>      
+          </div>
+        </div>
+        <div id="sidebar">
+          <%= yield :sidebar %>
+        </div>
+      </div>    
+    </div>
+  </body>
 </html>
