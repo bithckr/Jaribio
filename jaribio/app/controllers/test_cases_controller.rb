@@ -39,26 +39,34 @@ class TestCasesController < ApplicationController
     @test_case = TestCase.new(params[:test_case])
     @test_case.user = current_user
 
-    if params.has_key? :test_case_suites
-      @test_case.suite_ids=params[:test_case_suites].split(',')
-    end
-    if @test_case.save
-      flash[:notice] = "Successfully created test case."
-      redirect_to edit_test_case_path(@test_case)
-    else
-      respond_with @test_case
+    transaction do 
+      if params.has_key? :suites
+        update_suites(@test_case, params[:suites])
+      end
+      if @test_case.save
+        flash[:notice] = "Successfully created test case."
+        redirect_to edit_test_case_path(@test_case)
+      else
+        respond_with @test_case
+      end
     end
   end
 
   def update
+    params[:test_case].delete(:user_id)
     @test_case = TestCase.find(params[:id])
     @test_case.user = current_user
-    params[:test_case].delete(:user_id)
-    if @test_case.update_attributes(params[:test_case])
-      flash[:notice] = "Successfully updated test case."
-      redirect_to :action => 'index'
-    else
-      respond_with @test_case
+
+    TestCase.transaction do
+      if params.has_key? :suites
+        update_suites(@test_case, params[:suites])
+      end
+      if @test_case.update_attributes(params[:test_case])
+        flash[:notice] = "Successfully updated test case."
+        redirect_to :action => 'index'
+      else
+        respond_with @test_case
+      end
     end
   end
 
@@ -95,4 +103,20 @@ class TestCasesController < ApplicationController
       format.js { render 'sort.js' }
     end
   end
+
+  private
+
+  def update_suites(test_case, suite_names)
+    suite_ids = []
+    suite_names.split(',').each do |suite_name|
+      suite = Suite.find_or_initialize_by_name(suite_name)
+      if (suite.new_record?)
+        suite.user = current_user
+        suite.save!
+      end
+      suite_ids << suite.id
+    end
+    test_case.suite_ids=suite_ids
+  end
+
 end
