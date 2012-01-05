@@ -1,5 +1,5 @@
 class Step < ActiveRecord::Base
-  belongs_to :test_casea
+  belongs_to :test_case
 
   include RankedModel
   ranks :sort_order, :with_same => :test_case_id
