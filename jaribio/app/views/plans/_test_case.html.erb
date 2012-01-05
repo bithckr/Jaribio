@@ -18,6 +18,21 @@
       </div>
     </div>
     <div class="case-details">
+      <div class="tr" style="display:block;">
+          <% pre_list = test_case.pre_step.nil? ? '' : test_case.pre_step.list %>
+          <table class="table">
+            <thead>
+            <tr>
+              <th width="100%" class="last"><%= t('jaribio.objects.pre_steps') %></th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr class="odd">
+              <td> <pre><%= pre_list %></pre></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
       <div class="tr" style="display: block;">
       <%= render :partial => 'test_cases/step_list', :locals => { :@test_case => test_case, :is_static => 1 } %>
       </div>

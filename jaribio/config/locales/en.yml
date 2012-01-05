@@ -24,6 +24,7 @@ en:
       suites: "Suites"
       plan: "Plan"
       plans: "Plans"
+      pre_steps: "Prerequisites"
     misc:
       name: "Name"
       status: "Status"
