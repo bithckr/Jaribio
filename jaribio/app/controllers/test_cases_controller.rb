@@ -39,7 +39,7 @@ class TestCasesController < ApplicationController
     @test_case = TestCase.new(params[:test_case])
     @test_case.user = current_user
 
-    transaction do 
+    TestCase.transaction do 
       if params.has_key? :suites
         update_suites(@test_case, params[:suites])
       end
