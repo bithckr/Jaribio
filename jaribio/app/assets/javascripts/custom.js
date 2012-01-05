@@ -10,3 +10,12 @@ function toggle_case_details(case_id) {
     // Animation complete.
   });
 }
+
+$(document).ready( function() {
+
+    /*
+    * initialize superfish menu for main navigation
+    */
+    $('#main-navigation .sf-menu').superfish();
+
+});
