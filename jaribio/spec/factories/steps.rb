@@ -4,6 +4,6 @@ FactoryGirl.define do
   factory :step do
     action "MyString"
     results "MyString"
-    position 1
+    sort_order 1
   end
 end
