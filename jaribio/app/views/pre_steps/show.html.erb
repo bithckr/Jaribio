@@ -1,15 +1,17 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @pre_step.name %>
-</p>
-
-<p>
-  <b>List:</b>
-  <%= @pre_step.list %>
-</p>
-
-
-<%= link_to 'Edit', edit_pre_step_path(@pre_step) %> |
-<%= link_to 'Back', pre_steps_path %>
+<div class="block">
+  <%= render :partial => "partials/navigation", :locals => { :active => nil } %>
+  <div class="content">
+    <h2 class="title">Viewing <%= t('jaribio.objects.pre_step', :default => 'Pre-Steps') %></h2>
+    <div class="inner">
+      <div class="grouping">
+        <div class="label">Name:</div>
+        <div class="text_field"><%= @pre_step.name %></div>
+      </div>
+      <div class="grouping">
+        <div class="label">List:</div>
+        <div class="text_area"><pre><%= @pre_step.list %></pre></div>
+      </div>
+      <%= link_to 'Edit', edit_pre_step_path(@pre_step) %>
+    </div>
+  </div>
+</div>

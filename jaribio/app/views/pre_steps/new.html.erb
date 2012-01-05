@@ -1,7 +1,7 @@
 <div class="block">
   <%= render :partial => "partials/navigation", :locals => { :active => 'new' } %>
   <div class="content">
-    <h2 class="title">New Pre-step</h2>
+    <h2 class="title">New <%= t('jaribio.objects.pre_step', :default => 'Pre-Step') %></h2>
     <div class="inner">
     <%= render 'form' %>
     </div>
