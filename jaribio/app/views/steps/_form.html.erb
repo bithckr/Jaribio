@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :action %><br />
-    <%= f.text_field :action %>
+    <%= f.text_area :action, :rows => 3, :columns => 50 %>
   </div>
   <div class="field">
-    <%= f.label :results %><br />
-    <%= f.text_field :results %>
+    <%= f.label 'Expected results' %><br />
+    <%= f.text_area :results, :rows => 3, :columns => 50 %>
   </div>
   <div class="actions">
     <%= f.submit %>

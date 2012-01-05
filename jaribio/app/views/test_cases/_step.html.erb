@@ -1,3 +1,4 @@
+<% is_static = 0 if local_assigns[:is_static].nil? %>
 <tr class="<%= (step_counter % 2 == 0) ? "even" : "odd" %>" id="step_<%= step.id %>.<%= step_counter %>">
   <td><%= step.action %></td>
   <td><%= step.results %></td>

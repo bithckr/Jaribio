@@ -37,9 +37,9 @@
     <span class="description">Enter names of Suites to which this test case belongs.</span>
   </div>
   <div class="group">
-    <%= f.label :pre_steps, :class => "label" %>
+    <%= f.label t('jaribio.objects.pre_step'), :class => "label" %>
     <%= select_tag "test_case[pre_step_id]", options_from_collection_for_select(@pre_steps, "id", "name", @test_case.pre_step_id), :include_blank => true, :class => "text_field" %>
-    <div class="description">Select the pre-steps for this test case.</div>
+    <div class="description">Select the <%= t('jaribio.objects.pre_step') %> steps for this test case.</div>
   </div>
   <%= render :partial => "partials/form_buttons" %>
 <% end %>
