@@ -32,7 +32,7 @@ Jaribio::Application.routes.draw do
     end
   end
 
-  resources :executions
+  resources :executions, :only => [:show]
 
   match 'suites/:id/cases/:case_id' => "suites#associate",   :via => 'post',   :as => :associate_suite_case
   match 'suites/:id/cases/:case_id' => "suites#unassociate", :via => 'delete', :as => :unassociate_suite_case
