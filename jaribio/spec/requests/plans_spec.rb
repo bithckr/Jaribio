@@ -8,22 +8,8 @@ describe "Plans" do
       @plan = Factory.create(:plan)
     end
 
-    describe "secondary navigation" do
-      before(:each) do
-        visit plans_path
-      end
-
-      it "exists" do
-        page.should have_xpath("//div[@class='secondary-navigation']")
-      end
-
-      it "secondary navigation contains 'List'" do
-        page.should have_link('List')  
-      end
-
-      it "secondary navigation contains 'New'" do
-        page.should have_link('New')  
-      end
+    it_behaves_like "a page with secondary navigation" do 
+      let(:path) { plans_path }
     end
 
     describe "search" do
@@ -64,6 +50,13 @@ describe "Plans" do
       end
     end
 
+  end
+
+  describe "GET /plans/1" do
+    before(:each) do
+      @user = login_any_user
+      @plan = Factory.create(:plan)
+    end
     describe "show" do
       before(:each) do
         visit plan_path(@plan)
