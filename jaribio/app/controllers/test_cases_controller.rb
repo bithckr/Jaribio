@@ -16,11 +16,6 @@ class TestCasesController < ApplicationController
     respond_with @test_cases
   end
 
-  def show
-    @test_case = TestCase.find(params[:id])
-    respond_with @test_case
-  end
-
   def new
     @test_case = TestCase.new
     @suites = Suite.select(:name)
