@@ -75,9 +75,9 @@ ActiveRecord::Schema.define(:version => 20120104203622) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sort_order",   :null => false
+    t.integer  "position"
   end
 
-  add_index "steps", ["sort_order"], :name => "index_steps_on_sort_order"
   add_index "steps", ["test_case_id", "sort_order"], :name => "index_steps_on_test_case_id_and_sort_order", :unique => true
 
   create_table "suites", :force => true do |t|
