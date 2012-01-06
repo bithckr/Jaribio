@@ -34,6 +34,12 @@ end
 platform :mri do
   gem 'mysql2', '~> 0.3.2'
   gem 'simplecov', :require => false, :group => :test
+
+  group :assets do
+    if RbConfig::CONFIG["host_os"] =~ /linux/
+      gem 'therubyracer'
+    end
+  end
 end
 
 platform :jruby do
