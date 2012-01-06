@@ -11,11 +11,6 @@ class SuitesController < ApplicationController
     respond_with @suites
   end
 
-  def show
-    @suite = Suite.find(params[:id])
-    respond_with @suite
-  end
-
   def new
     @suite = Suite.new
     respond_with @suite
