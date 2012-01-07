@@ -8,22 +8,8 @@ describe "TestCases" do
       @test_case = Factory.create(:test_case)
     end
 
-    describe "secondary navigation" do
-      before(:each) do
-        visit test_cases_path
-      end
-
-      it "exists" do
-        page.should have_xpath("//div[@class='secondary-navigation']")
-      end
-
-      it "secondary navigation contains 'List'" do
-        page.should have_link('List')  
-      end
-
-      it "secondary navigation contains 'New'" do
-        page.should have_link('New')  
-      end
+    it_behaves_like "a page with secondary navigation" do
+      let(:path) { test_cases_path }
     end
 
     describe "search" do

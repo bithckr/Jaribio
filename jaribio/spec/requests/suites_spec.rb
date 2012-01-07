@@ -8,22 +8,8 @@ describe "Suites" do
       @suite = Factory.create(:suite)
     end
 
-    describe "secondary navigation" do
-      before(:each) do
-        visit suites_path
-      end
-
-      it "exists" do
-        page.should have_xpath("//div[@class='secondary-navigation']")
-      end
-
-      it "secondary navigation contains 'List'" do
-        page.should have_link('List')  
-      end
-
-      it "secondary navigation contains 'New'" do
-        page.should have_link('New')  
-      end
+    it_behaves_like "a page with secondary navigation" do
+      let(:path) { suites_path }
     end
 
     describe "search" do
@@ -74,22 +60,8 @@ describe "Suites" do
       @suite.save!
     end
 
-    describe "secondary navigation" do
-      before(:each) do
-        visit edit_suite_path(@suite)
-      end
-
-      it "exists" do
-        page.should have_xpath("//div[@class='secondary-navigation']")
-      end
-
-      it "secondary navigation contains 'List'" do
-        page.should have_link('List')  
-      end
-
-      it "secondary navigation contains 'New'" do
-        page.should have_link('New')  
-      end
+    it_behaves_like "a page with secondary navigation" do
+      let(:path) { edit_suite_path(@suite) }
     end
 
     describe "form input" do
@@ -149,6 +121,10 @@ describe "Suites" do
     before(:each) do
       @user = login_any_user
       @suite = Factory.create(:suite)
+    end
+
+    it_behaves_like "a page with secondary navigation" do
+      let(:path) { url_for([:add_cases, @suite]) }
     end
 
     it "with no associated test cases" do
