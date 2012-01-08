@@ -1,5 +1,5 @@
 class Plan < ActiveRecord::Base
-  has_and_belongs_to_many :suites
+  has_and_belongs_to_many :suites, :order => "suites.name ASC"
   has_many :executions
   belongs_to :user
 

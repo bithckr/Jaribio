@@ -42,13 +42,15 @@ describe "Plans" do
       it "with results does include list of plans" do
         fill_in('q', :with => @plan.name)
         click_button('Search')
+        page.should have_link('View')
+        page.should have_link('Add Suites')
         page.should have_button('Delete')
       end
 
       it "with no results does not include list of plans" do
         fill_in('q', :with => 'asdf')
         click_button('Search')
-        page.should have_no_link('Edit')
+        page.should have_no_link('View')
         page.should have_no_link('Add Suites')
         page.should have_no_button('Delete')
       end
@@ -65,6 +67,16 @@ describe "Plans" do
         page.should have_link('View')
         page.should have_link('Add Suites')
         page.should have_button('Delete')
+      end
+
+      it "clicking 'View' loads expected page" do
+        click_link("View")
+        current_path.should == plan_path(@plan)
+      end
+
+      it "clicking 'Add Suites' loads expected page" do
+        click_link("Add Suites")
+        current_path.should == add_suites_plan_path(@plan)
       end
     end
 
@@ -83,6 +95,19 @@ describe "Plans" do
       let(:path) { new_plan_path }
     end
 
+    it "creates a new plan when form is submitted" do
+      visit new_plan_path
+      fill_in('plan_name', :with => 'Plan A')
+      click_button('Save')
+      plan = Plan.where(:name => 'Plan A').first
+      current_path.should == plan_path(plan)
+    end
+
+    it "shows the user an error message if no name is given" do
+      visit new_plan_path
+      click_button('Save')
+      page.should have_content("Name can't be blank")
+    end
   end
 
   describe "GET /plans/1" do
@@ -95,13 +120,81 @@ describe "Plans" do
       let(:path) { plan_path(@plan) }
     end
 
-    describe "show" do
+    it "should display 'Edit' link" do
+      visit plan_path(@plan)
+      page.should have_link('Edit')
+    end
+
+    it "should display plan name" do
+      visit plan_path(@plan)
+      page.should have_content(@plan.name)
+    end
+
+    it "clicking 'Edit' loads expected page" do
+      visit plan_path(@plan)
+      click_link('Edit')
+      current_path.should == edit_plan_path(@plan)
+    end
+
+    describe "plan without associated suites" do
       before(:each) do
         visit plan_path(@plan)
       end
 
-      it "should display without associated suites" do
+      it "should display plan name" do
         page.should have_content(@plan.name)
+      end
+
+      it "should not display suite list" do
+        page.should_not have_content("Suite Name")
+        page.should_not have_content("Suite Status")
+      end
+    end
+
+    describe "plan with associated suites" do
+      before(:each) do
+        suites = []
+        suites.push(Factory.create(:suite, :name => 'Suite A'))
+        suites.push(Factory.create(:suite, :name => 'Suite B'))
+        @plan.suites = suites
+        @plan.save!
+      end
+
+      it "should display suite list" do
+        visit plan_path(@plan)
+        page.should have_content('Suite Name')
+        page.should have_content('Suite Status')
+        @plan.suites.each do |suite|
+          page.should have_link(suite.name)
+        end
+      end
+
+      it "should display plan status" do
+        visit plan_path(@plan)
+        page.should have_xpath("//div[@id='plan_status']")
+      end
+
+      it "should select the first suite in the list" do
+        visit plan_path(@plan)
+        element = page.find("#suite_#{@plan.suites.first.id}")
+        element[:class].should =~ /selected/
+      end
+
+      it "should display the suite names alphabetically"
+
+      describe "with cases" do
+        it "should display the test case list in the expected order"
+        it "should have a link for each test case name"
+        it "should have a pass and fail radio button for each case"
+        it "should have a 'Re-Test' button"
+        it "should have a disabled 'Re-Test' button if the case has no status"
+        it "should have enabled pass/fail radio buttons if the case has no status"
+        it "should have an enabled 'Re-Test' button if the case has a status"
+        it "should have disabled pass/fail radio buttons if the case has a status"
+      end
+
+      describe "without cases" do
+        it "should not display a test case list"
       end
     end
   end
