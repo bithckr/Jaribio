@@ -1,10 +1,10 @@
 <% is_static = 0 if local_assigns[:is_static].nil? %>
-<% action_width = is_static == 1 ? 30 : 20 %>
+<% action_width = is_static == 1 ? 40 : 35 %>
 <table class="table">
   <thead>
     <tr>
-      <th width="<% action_width %>%"><%= t('jaribio.misc.action', :default => 'Step Action') %></th>
-      <th width="70%"><%= t('jaribio.misc.results', :default => 'Step Results') %></th>
+      <th width="<%= action_width %>%"><%= t('jaribio.misc.action', :default => 'Step Action') %></th>
+      <th width="60%"><%= t('jaribio.misc.results', :default => 'Step Results') %></th>
       <% unless is_static == 1 %>
         <th width="5%" class="last">  
         <%= form_tag(new_test_case_step_path(@test_case), :method => 'get', :remote => true) do |f| %>
