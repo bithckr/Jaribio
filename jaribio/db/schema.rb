@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120104203622) do
+ActiveRecord::Schema.define(:version => 20120112154219) do
 
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
@@ -101,14 +101,12 @@ ActiveRecord::Schema.define(:version => 20120104203622) do
   add_index "suites_test_cases", ["test_case_id"], :name => "suites_test_cases_test_case_id_fk"
 
   create_table "test_cases", :force => true do |t|
-    t.integer  "user_id",                         :null => false
-    t.text     "text",                            :null => false
-    t.text     "expectations",                    :null => false
+    t.integer  "user_id",                        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",                            :null => false
-    t.string   "unique_key",                      :null => false
-    t.boolean  "automated",    :default => false, :null => false
+    t.string   "name",                           :null => false
+    t.string   "unique_key",                     :null => false
+    t.boolean  "automated",   :default => false, :null => false
     t.integer  "pre_step_id"
   end
 
