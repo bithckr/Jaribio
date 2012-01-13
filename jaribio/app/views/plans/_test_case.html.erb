@@ -10,6 +10,9 @@
         <a href="#" onclick="toggle_case_details(<%= test_case.id %>);"><%= test_case.name %></a>
       </div>
       <div class="td">
+        <%= test_case.automated? ? 'Yes' : 'No' %>
+      </div>
+      <div class="td" style="width: 30%">
         <%= f.radio_button :status_code, Status::PASS, :disabled => disabled, :checked => status_checked_helper(status, Status::PASS) %>
         <%= f.label :status_code, "Pass", :value => Status::PASS %>
         <%= f.radio_button :status_code, Status::FAIL, :disabled => disabled, :checked => status_checked_helper(status, Status::FAIL) %>
