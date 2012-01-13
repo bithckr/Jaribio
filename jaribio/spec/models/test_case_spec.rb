@@ -75,5 +75,13 @@ describe TestCase do
     tc.unique_key.should_not be_empty;
     tc.unique_key.should eq "CNC-123456789";
   end
+
+  it "can deep-copy" do
+    @case.save!
+    new_case = @case.deep_clone
+    new_case.save!
+    new_case.id.should_not eq @case.id
+    new_case.suite_ids.should eq @case.suite_ids
+  end
   
 end

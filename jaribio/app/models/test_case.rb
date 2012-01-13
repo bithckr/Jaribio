@@ -64,4 +64,14 @@ class TestCase < ActiveRecord::Base
     return rel.first
   end
 
+  # deep_clone assumes you are cloning for the purpose of creating
+  # a duplicate database record, therefore it intentionally skips
+  # some data such as executions.
+  def deep_clone
+    # use deep_cloneable to create a clone of most of the test_case
+    new_case = self.dup(:include => [:steps], :except => [:unique_key, {:steps => :id}])
+    # couldn't get the suites to copy, but those are simple enough
+    new_case.suite_ids=self.suite_ids
+    return new_case
+  end
 end

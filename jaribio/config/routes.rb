@@ -12,6 +12,7 @@ Jaribio::Application.routes.draw do
     member do
       get 'executions'
       post 'sort'
+      post 'copy'
     end 
     resources :steps
   end

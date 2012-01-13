@@ -99,6 +99,16 @@ class TestCasesController < ApplicationController
     end
   end
 
+  def copy
+    @old_case = TestCase.find(params[:id])
+    @test_case = @old_case.deep_clone
+    if @test_case.save
+      flash[:notice] = "Successfully copied test case."
+    end
+    
+    redirect_to edit_test_case_path(@test_case)
+  end
+
   private
 
   def update_suites(test_case, suite_names)
