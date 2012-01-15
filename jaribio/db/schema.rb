@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120112154219) do
+ActiveRecord::Schema.define(:version => 20120115024142) do
 
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20120112154219) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "authentication_token"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
