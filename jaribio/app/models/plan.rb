@@ -29,7 +29,7 @@ class Plan < ActiveRecord::Base
     # inspecting only one record. If we have not recorded any executions for the
     # given plan, then we return Status::UNKNOWN.
     results = Execution.find_by_sql(["select LEFT(GROUP_CONCAT(status_code order by " +
-                                     "created_at desc), 1) as status_code from executions " +
+                                     "created_at desc), 1) as status_code, test_case_id from executions " +
                                      "where plan_id = ? group by test_case_id order by " +
                                      "status_code desc", self.id])
 
@@ -40,22 +40,19 @@ class Plan < ActiveRecord::Base
     # remove test cases used in multiple suites
     case_count = cases.uniq.size
 
-    unless results.nil? or results.empty?
-      if results[0].status_code == Status::FAIL
-        status = Status::FAIL
-      elsif results[0].status_code == Status::PASS
-        execution = Execution.find_by_sql(["select count(executions.test_case_id) from executions " +
-                                           "where plan_id = ? group by test_case_id", self.id])
+    # count our passes and failures, but limit it to only the current list of test cases within
+    # our plan. This ensures we handle the case where test cases are removed from a suite after
+    # we execute the test case for the plan.
+    passes = results.count{|r| r.status_code == Status::PASS && cases.index{|i| i.id == r.test_case_id} }
+    fails  = results.count{|r| r.status_code == Status::FAIL && cases.index{|i| i.id == r.test_case_id} }
+    unknowns = case_count - (passes + fails)
 
-        # A plan can not have a PASS status unless ALL test cases are passing
-        status = Status::PASS if(execution.count == case_count)
-      end
+    if(fails > 0)
+      status = Status::FAIL
+    elsif((case_count > 0) && (passes == case_count))
+      status = Status::PASS
     end
 
-    passes = results.count{|r| r.status_code == Status::PASS}
-    fails  = results.count{|r| r.status_code == Status::FAIL}
-    unknowns = case_count - (passes + fails)
-    
     return [ status, passes, fails, unknowns ]
   end
 

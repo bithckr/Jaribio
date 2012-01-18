@@ -6,7 +6,7 @@ describe Plan do
     @plan = Factory.build :plan, :suites => [@suite]
     @test_case = Factory.build :test_case, :suites => [@suite]
     @execution = Factory.build :execution, :plan => @plan, :test_case => @test_case
-    @plan.executions = [@execution]
+    @plan.executions << @execution
   end
 
   it "has many suites" do
@@ -49,14 +49,14 @@ describe Plan do
     end
 
     it "that failed should have a failing status" do
-      fail_exec = Factory.build(:execution, :plan => @plan, :status_code => Status::FAIL)
+      fail_exec = Factory.build(:execution, :plan => @plan, :test_case => @test_case, :status_code => Status::FAIL)
       @plan.executions << fail_exec
       @plan.save!
       @plan.reload
       @plan.status[0].should eq(Status::FAIL)
-      @plan.status[1].should eq(1)
+      @plan.status[1].should eq(0)
       @plan.status[2].should eq(1)
-      @plan.status[3].should eq(-1)
+      @plan.status[3].should eq(0)
       @plan.executions.size.should eq(2)
     end
   end
@@ -181,6 +181,66 @@ describe Plan do
       @plan.executions << fail_execution
       @plan.executions << pass_execution2
       @plan.save!
+      @plan.status[0].should eq(Status::FAIL)
+      @plan.status[1].should eq(1)
+      @plan.status[2].should eq(1)
+      @plan.status[3].should eq(0)
+    end
+  end
+  describe "with multiple suites per plan" do
+    before(:each) do
+      @plan.executions = []
+      @suite2 = Factory.build(:suite)
+      @test_case2 = Factory.build(:test_case, :suites => [@suite, @suite2])
+      @plan.suites << @suite2
+    end
+    it "passes when all test cases pass" do
+      execution = Factory.build(:execution, :plan => @plan, :test_case => @test_case2)
+      @plan.executions << execution
+      @plan.save!
+      @plan.reload
+      @plan.status[0].should eq(Status::PASS)
+      @plan.status[1].should eq(1)
+      @plan.status[2].should eq(0)
+      @plan.status[3].should eq(0)
+    end
+  end
+  describe "with removed test case" do
+    before(:each) do
+      @test_case2 = Factory.build(:test_case, :suites => [@suite])
+      @execution = Factory.build(:execution, :plan => @plan, :test_case => @test_case)
+      @execution2 = Factory.build(:execution, :plan => @plan, :test_case => @test_case2)
+      @plan.executions << @execution
+      @plan.executions << @execution2
+    end
+    it "passes when remaining test cases pass" do
+      @plan.save!
+      @plan.reload
+      @suite.test_cases.delete(@test_case)
+      @plan.status[0].should eq(Status::PASS)
+      @plan.status[1].should eq(1)
+      @plan.status[2].should eq(0)
+      @plan.status[3].should eq(0)
+    end 
+    it "passes when all failed test cases removed" do
+      @test_case3 = Factory.build(:test_case, :suites => [@suite])
+      @execution3 = Factory.build(:execution, :status_code => Status::FAIL, :plan => @plan, :test_case => @test_case3)
+      @plan.executions << @execution3
+      @plan.save!
+      @plan.reload
+      @suite.test_cases.delete(@test_case3)
+      @plan.status[0].should eq(Status::PASS)
+      @plan.status[1].should eq(2)
+      @plan.status[2].should eq(0)
+      @plan.status[3].should eq(0)
+    end
+    it "fails when any failed test case remains" do
+      @test_case3 = Factory.build(:test_case, :suites => [@suite])
+      @execution3 = Factory.build(:execution, :status_code => Status::FAIL, :plan => @plan, :test_case => @test_case3)
+      @plan.executions << @execution3
+      @plan.save!
+      @plan.reload
+      @suite.test_cases.delete(@test_case2)
       @plan.status[0].should eq(Status::FAIL)
       @plan.status[1].should eq(1)
       @plan.status[2].should eq(1)
