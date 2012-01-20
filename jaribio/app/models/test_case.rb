@@ -43,12 +43,7 @@ class TestCase < ActiveRecord::Base
   def status(plan_id = nil)
     status = Status::UNKNOWN
 
-    if plan_id.nil?
-      execution = last_execution
-    else
-      execution = last_execution(plan_id)
-    end
-    
+    execution = last_execution(plan_id)
     unless execution.nil?
       status = execution.status_code
     end
@@ -57,10 +52,11 @@ class TestCase < ActiveRecord::Base
   end
 
   def last_execution(plan_id = nil)
-    rel = self.executions.order("created_at desc").limit(1)
-    if (plan_id)
-      rel.where("plan_id = ?", plan_id)
+    rel = self.executions.scoped
+    unless (plan_id.nil?)
+      rel = rel.where("plan_id = ?", plan_id)
     end
+    rel = rel.order("created_at desc").limit(1)
     return rel.first
   end
 

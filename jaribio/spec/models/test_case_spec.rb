@@ -6,6 +6,7 @@ describe TestCase do
     @suite = Factory.build :suite
     @case = Factory.build :test_case, :suites => [@suite]
     @plan = Factory.build :plan
+    @plan.suites << @suite
     @execution = Factory.build :execution, :test_case => @case, :plan => @plan
     @case.executions = [@execution]
   end
@@ -56,6 +57,20 @@ describe TestCase do
     @case.executions = []
     @case.save!
     @case.status(@plan.id).should eq(Status::UNKNOWN)
+  end
+  it "has a UNKNOWN status when executed in another plan" do
+    @plan.save!
+    @case.save!
+    @plan2 = Factory.build(:plan)
+    @plan2.suites << @suite
+    @plan2.save!
+    res = @case.last_execution(@plan2.id)
+    @case.status(@plan2.id).should eq(Status::UNKNOWN)
+  end
+  it "has a UNKNOWN status when no executions are found and no plan_id" do
+    @case.executions = []
+    @case.save!
+    @case.status.should eq(Status::UNKNOWN)
   end
   
   it "should generate a unique_key if not provided one" do
