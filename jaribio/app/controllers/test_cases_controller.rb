@@ -50,7 +50,6 @@ class TestCasesController < ApplicationController
   def update
     params[:test_case].delete(:user_id)
     @test_case = TestCase.find(params[:id])
-    @test_case.user = current_user
 
     TestCase.transaction do
       if params.has_key? :suites

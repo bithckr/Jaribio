@@ -122,5 +122,29 @@ describe "TestCases" do
       page.current_url.should eql(url_for(:action => 'index', :controller => 'test_cases'))
       page.should have_content('Successfully updated test case.')
     end
+    it "keeps original user assigned to test_case" do
+      @test_case = Factory.create(:test_case)
+      @orig_user = @test_case.user
+      @user = login_any_user
+      visit url_for([:edit, @test_case])
+      fill_in(:name, :with => 'Example Test Name')
+      click_button('Save')
+
+      # I couldn't get capy to locate the ID because of a . in the name
+      # not sure if that is a bug or not
+      page.should have_content(@orig_user.email)
+    end
+
+      it "uses ajax to retrieve form", :js => true do
+        Capybara.default_wait_time = 5
+        @test_case = Factory.create(:test_case)
+        visit url_for([:edit, @test_case])
+        #puts page.find_by_id('step_list').text
+        #puts page.body
+        click_button('Add Step')
+        #page.should have_content('Add Test Case Step')
+        #puts find_by_id('step_list').text
+        #puts page.body
+      end
   end
 end
