@@ -11,11 +11,14 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
+version = File.exist?('VERSION') ? File.read('VERSION') : ""
+
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "jaribio-formatter"
-  gem.homepage = "http://github.com/bjones/jaribio-formatter"
+  gem.version = version
+  gem.homepage = "https://github.com/bithckr/Jaribio/tree/master/jaribio-formatter"
   gem.license = "MIT"
   gem.summary = %Q{Jaribio test framework formatters}
   gem.description = %Q{Provide the necessary code to record execution results in Jaribio while running tests in RSpec, Test::Unit, or Cucumber}
@@ -31,19 +34,19 @@ RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']
 end
 
-RSpec::Core::RakeTask.new(:rcov) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
-end
-
 task :default => :spec
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "jaribio-formatter #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+# Disabling some tasks we can't/don't want to ever run
+task(:release).clear_prerequisites.clear_actions
+namespace :git do
+  task(:release).clear_prerequisites.clear_actions
 end
