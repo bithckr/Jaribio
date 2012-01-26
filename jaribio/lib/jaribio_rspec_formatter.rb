@@ -1,3 +1,5 @@
+require 'ruby-debug'
+
 module Jaribio
   class RSpecFormatter
 
@@ -91,26 +93,35 @@ module Jaribio
       }
     end
 
+    # 
+    # Should this return?
+    # - jaribio_key if set (and desc based on that)
+    # - otherwise
+    # -- example full description
+    # -- or example_group full description
+    #
     def get_example_key(example)
+      key, desc = find_jaribio_key(example)
+      if (key.nil?)
+        key = example_group.metadata[:example_group][:full_description]
+        desc = key
+      end
+      return key, desc
+    end
+
+    def find_jaribio_key(example)
       key = nil
       desc = example.full_description
       if example.metadata.has_key?(:jaribio_key)
         key = example.metadata[:jaribio_key]
       end
-#      if (key.nil?)
-#        group = example_group
-#        key = group.metadata[:jaribio_key]
-#        desc = group.metadata.full_description
-#        if (key.nil? and group.metadata.responds_to?(:container_stack))
-#          group.metadata.container_stack.each do |g|
-#            if g.metadata.has_key?(:jaribio_key)
-#              key = g.metadata[:jaribio_key]
-#              desc = g.metadata.full_description
-#              break
-#            end
-#          end
-#        end
-#      end
+#      debugger
+      group = example_group
+      while (key.nil? and not group.top_level?) do
+        key = group.metadata[:jaribio_key]
+        desc = group.metadata[:example_group][:full_description]
+        group = group.superclass
+      end
       if (key.nil?)
         key = desc
       end
