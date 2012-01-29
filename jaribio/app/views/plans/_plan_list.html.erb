@@ -3,7 +3,8 @@
     <th><%= t('jaribio.plans.name', :default => 'Name') %></th>
     <th><%= t('jaribio.plans.status', :default => 'Status') %></th>
     <th><%= t('jaribio.plans.created_by', :default => 'Created By') %></th>
-    <th class="last"></th>
+    <th><%= t('jaribio.plans.closed_at', :default => 'Closed Date') %></th>
+    <th class="last" style="width: 20%"></th>
   </tr>
   <% cnt = 0 %>
   <% plans.each do |plan| %>
@@ -14,6 +15,7 @@
         <%= status_text(status) %>
       </td>
       <td><%= plan.user.email %></td>
+      <td><%= plan.closed_at %></td>
       <%= render :partial => "partials/item_menu", :locals => { :item => plan } %>
     </tr>
     <% cnt += 1 %>

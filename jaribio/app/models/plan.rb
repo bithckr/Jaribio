@@ -35,7 +35,11 @@ class Plan < ActiveRecord::Base
 
     cases = Array.new
     self.suites.each do |suite|
-      cases += suite.test_cases
+      if (self.closed_at.nil?)
+        cases += suite.test_cases
+      else
+        cases += suite.test_cases.where("created_at < ?", self.closed_at)
+      end
     end
     # remove test cases used in multiple suites
     case_count = cases.uniq.size

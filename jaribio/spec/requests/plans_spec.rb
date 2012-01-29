@@ -66,6 +66,7 @@ describe "Plans" do
         page.should have_content(@plan.user.email)  
         page.should have_link('View')
         page.should have_link('Add Suites')
+        page.should have_button('Close')
         page.should have_button('Delete')
       end
 
@@ -77,6 +78,15 @@ describe "Plans" do
       it "clicking 'Add Suites' loads expected page" do
         click_link("Add Suites")
         current_path.should == add_suites_plan_path(@plan)
+      end
+
+      it "clicking 'Close' closes plan" do
+         click_button("Close")
+         @plan.reload
+         @plan.closed_at.should_not be_nil
+         page.should have_content('Successfully closed plan.')
+         page.should_not have_link('Add Suites', :href => add_suites_plan_path(@plan))
+         page.should_not have_link('Close', :href => close_plan_path(@plan))
       end
     end
 
@@ -169,11 +179,6 @@ describe "Plans" do
         end
       end
 
-      it "should display plan status" do
-        visit plan_path(@plan)
-        page.should have_xpath("//div[@id='plan_status']")
-      end
-
       it "should select the first suite in the list" do
         visit plan_path(@plan)
         element = page.find("#suite_#{@plan.suites.first.id}")
@@ -183,14 +188,62 @@ describe "Plans" do
       it "should display the suite names alphabetically"
 
       describe "with cases" do
-        it "should display the test case list in the expected order"
-        it "should have a link for each test case name"
-        it "should have a pass and fail radio button for each case"
-        it "should have a 'Re-Test' button"
-        it "should have a disabled 'Re-Test' button if the case has no status"
+        before(:each) do
+          @plan.suites.each do |suite|
+            5.times do
+              test_case = Factory.create(:test_case, :suites => [suite])
+              test_case.save
+            end
+          end
+          visit plan_path(@plan)
+        end
+        it "should have a link for each test case name" do
+          @plan.suites.first.test_cases.each do |test_case|
+            page.should have_link(test_case.name)
+          end
+        end
+        it "should have a pass and fail radio button for each case" do
+          @plan.suites.first.test_cases.each do |test_case|
+            within("div#case_" + test_case.id.to_s) do
+              page.has_field?('execution_status_code_1')
+              page.has_field?('execution_status_code_2')
+            end
+          end
+        end
+        it "should have a 'Re-Test' button" do
+          @plan.suites.first.test_cases.each do |test_case|
+            within("div#case_" + test_case.id.to_s) do
+              page.has_button?('Re-Test')
+            end
+          end
+        end
+        it "should have a disabled 'Re-Test' button if the case has no status" do
+          @plan.suites.first.test_cases.each do |test_case|
+            within("div#case_" + test_case.id.to_s) do
+              page.find("button")['disabled'].should == 'disabled'
+            end
+          end
+        end
+        it "should not have a 'Re-Test' button if the plan is closed" do
+          @plan.closed_at = Time.now
+          @plan.save
+          visit plan_path(@plan)
+          @plan.suites.first.test_cases.each do |test_case|
+            within("div#case_" + test_case.id.to_s) do
+              page.has_no_button?('Re-Test')
+            end
+          end
+        end
+        it "should display plan status" do
+          visit plan_path(@plan)
+          page.should have_xpath("//div[@id='plan_status']")
+          page.should have_xpath("//div[@id='ps_unknowns']")
+          find("#ps_unknowns")['title'].should == "Not executed: 10"
+        end
         it "should have enabled pass/fail radio buttons if the case has no status"
         it "should have an enabled 'Re-Test' button if the case has a status"
         it "should have disabled pass/fail radio buttons if the case has a status"
+        it "should display the test case list in the expected order"
       end
 
       describe "without cases" do

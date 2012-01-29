@@ -22,7 +22,11 @@ class PlansController < ApplicationController
     end
     @test_cases = nil
     unless (@suite.nil?)
-      @test_cases = @suite.test_cases
+      if (@plan.closed_at.nil?)
+        @test_cases = @suite.test_cases
+      else
+        @test_cases = @suite.test_cases.where("created_at < ?", @plan.closed_at)
+      end
     end
     respond_with @plan
   end
@@ -92,5 +96,13 @@ class PlansController < ApplicationController
     plan.suites.delete(suite)
 
     redirect_to edit_plan_path(plan)
+  end
+  def close
+    @plan = Plan.find(params[:id])
+    @plan.closed_at = Time.now
+    if @plan.save
+      flash[:notice] = "Successfully closed plan."
+    end
+    redirect_to plans_path
   end
 end

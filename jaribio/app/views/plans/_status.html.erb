@@ -10,15 +10,15 @@ if total != 0
   <div id="plan_status" class="tr">
     <% width = (passes*100)/total %>
     <% if width != 0 %>
-      <div class="td ps_passes status_bar" style="width:<%= width %>%;" title="Passing: <%= passes %>"></div>
+      <div class="td ps_passes status_bar" id="ps_passes" style="width:<%= width %>%;" title="Passing: <%= passes %>"></div>
     <% end %>
     <% width = (fails*100)/total %>
     <% if width != 0 %>
-      <div class="td ps_fails status_bar" style="width:<%= width %>%;" title="Failing: <%= fails %>"></div>
+      <div class="td ps_fails status_bar" id="ps_fails" style="width:<%= width %>%;" title="Failing: <%= fails %>"></div>
     <% end %>
     <% width = (unknowns*100)/total %>
     <% if width != 0 %>
-      <div class="td ps_unknowns status_bar" style="width:<%= width %>%;" title="Not executed: <%= unknowns %>"></div>
+      <div class="td ps_unknowns status_bar" id="ps_unknowns" style="width:<%= width %>%;" title="Not executed: <%= unknowns %>"></div>
     <% end %>
   </div>
 </div>

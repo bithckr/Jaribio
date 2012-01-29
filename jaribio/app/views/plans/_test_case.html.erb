@@ -17,7 +17,9 @@
         <%= f.label :status_code, "Pass", :value => Status::PASS %>
         <%= f.radio_button :status_code, Status::FAIL, :disabled => disabled, :checked => status_checked_helper(status, Status::FAIL) %>
         <%= f.label :status_code, "Fail", :value => Status::FAIL %>
-        <%= button_tag 'Re-Test', :type => 'button', :confirm => 'Are you sure you want to execute this test again?', :disabled => !disabled, :onclick => "enable_execution_for_case(#{test_case.id});" %>
+        <% if (@plan.closed_at.nil?) %>
+          <%= button_tag 'Re-Test', :type => 'button', :confirm => 'Are you sure you want to execute this test again?', :disabled => !disabled, :onclick => "enable_execution_for_case(#{test_case.id});" %>
+        <% end %>
       </div>
     </div>
     <div class="case-details">

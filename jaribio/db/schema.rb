@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115024142) do
+ActiveRecord::Schema.define(:version => 20120115180754) do
 
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20120115024142) do
     t.string   "name",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "closed_at"
   end
 
   add_index "plans", ["name"], :name => "index_plans_on_name"

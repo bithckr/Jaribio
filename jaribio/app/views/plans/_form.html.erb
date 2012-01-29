@@ -16,5 +16,10 @@
     <%= f.text_field :name, :class => "text_field" %>
     <span class="description">Enter descriptive plan name</span>
   </div>
+  <div class="grouping">
+    <%= f.label :closed_date, :class => "label" %>
+    <%= f.text_field :closed_at, :class=> "text_field", :disabled => true %>
+    <span class="description">Date plan was closed</span>
+  </div>
   <%= render :partial => "partials/form_buttons" %>
 <% end %>
