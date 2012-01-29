@@ -43,6 +43,7 @@ describe "TestCases" do
         page.should have_content(@test_case.user.email)  
         page.should have_link('Edit')
         page.should have_link('History')
+        page.should have_button('Copy')
         page.should have_button('Delete')
       end
 
@@ -52,6 +53,16 @@ describe "TestCases" do
         end
         visit test_cases_path
         page.should have_xpath("//nav")
+      end
+
+      it "allows test case to be copied" do
+        page.reset_session!
+        @new_user = login_any_user
+        visit test_cases_path
+        click_button('Copy')
+        find("#test_case_unique_key")['value'].should_not == @test_case.unique_key
+        click_link('Cancel')
+        page.should have_content(@new_user.email)
       end
     end
 

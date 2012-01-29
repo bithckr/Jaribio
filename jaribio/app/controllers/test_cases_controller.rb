@@ -101,6 +101,7 @@ class TestCasesController < ApplicationController
   def copy
     @old_case = TestCase.find(params[:id])
     @test_case = @old_case.deep_clone
+    @test_case.user = current_user
     if @test_case.save
       flash[:notice] = "Successfully copied test case."
     end
