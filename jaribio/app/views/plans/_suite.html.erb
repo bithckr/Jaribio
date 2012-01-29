@@ -5,6 +5,6 @@
     <%= link_to suite.name, plan_path(@plan, :suite_id => suite.id) %>
   </div>
   <div class="td <%= status_class_helper(status) %>">
-    <%= status_text(suite.status) %>
+    <%= status_text(status) %>
   </div>
 </div>
