@@ -1,5 +1,3 @@
-#require 'ruby-debug'
-
 module Jaribio
   class RSpecFormatter
 
@@ -97,8 +95,7 @@ module Jaribio
     # Should this return?
     # - jaribio_key if set (and desc based on that)
     # - otherwise
-    # -- example full description
-    # -- or example_group full description
+    # -- example_group full description
     #
     def get_example_key(example)
       key, desc = find_jaribio_key(example)
@@ -109,22 +106,40 @@ module Jaribio
       return key, desc
     end
 
+    #
+    # metadata of a group is shared with descendants
+    # must check ancestors until key not found (if it is found)
+    #
     def find_jaribio_key(example)
-      key = nil
-      desc = example.full_description
-      if example.metadata.has_key?(:jaribio_key)
+      key, desc = nil, nil
+      if defined? example.metadata and example.metadata.has_key?(:jaribio_key)
         key = example.metadata[:jaribio_key]
+        desc = example.full_description
       end
-#      debugger
       group = example_group
-      while (key.nil? and not group.top_level?) do
+      while (key.nil? and defined? group) do
         key = group.metadata[:jaribio_key]
         desc = group.metadata[:example_group][:full_description]
+        break if group.top_level?
         group = group.superclass
       end
-      if (key.nil?)
-        key = desc
+
+      # after finding the first instance of the key, continue
+      # checking up the chain to be sure this where it is defined
+      while (defined? key)
+        if group.metadata.has_key?(:jaribio_key)
+          if (group.metadata[:jaribio_key] != key)
+            break
+          else
+            desc = group.metadata[:example_group][:full_description]
+          end
+        else
+          break
+        end
+        break if group.top_level?
+        group = group.superclass
       end
+
       return key, desc
     end
 
