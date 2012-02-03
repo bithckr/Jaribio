@@ -26,4 +26,15 @@ RSpec.configure do |config|
   config.extend ControllerMacros, :type => :controller
   config.include RequestMacros, :type => :request
   config.include LoggerMacros, :type => :model
+  config.include Warden::Test::Helpers
+end
+
+RSpec.configure do |config|
+  config.before(:each) do
+    Warden.test_mode!
+  end
+
+  config.after(:each) do
+    Warden.test_reset!
+  end
 end

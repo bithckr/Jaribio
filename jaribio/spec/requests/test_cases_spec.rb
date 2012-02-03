@@ -146,16 +146,17 @@ describe "TestCases" do
       page.should have_content(@orig_user.email)
     end
 
-      it "uses ajax to retrieve form", :js => true do
-        Capybara.default_wait_time = 5
+      it "uses ajax to add Step", :js => true do
         @test_case = Factory.create(:test_case)
-        visit url_for([:edit, @test_case])
-        #puts page.find_by_id('step_list').text
-        #puts page.body
+        @step = Factory.build(:step)
+        visit url_for_selenium([:edit, @test_case])
         click_button('Add Step')
-        #page.should have_content('Add Test Case Step')
-        #puts find_by_id('step_list').text
-        #puts page.body
+        page.should have_content('Add Test Case Step')
+        fill_in('step_action', :with => @step.action)
+        fill_in('step_results', :with => @step.results)
+        click_button('Create Step')
+        page.should have_content(@step.action)
+        page.should have_content(@step.results)
       end
   end
 end

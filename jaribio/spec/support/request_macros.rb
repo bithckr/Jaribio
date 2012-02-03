@@ -7,7 +7,15 @@ module RequestMacros
   end
 
   def login(user)
-    page.driver.post user_session_path, 
-      :user => {:email => user.email, :password => user.password}
+    login_as(user, :scope => :user)
+  end
+  
+  def url_for_selenium(options = nil)
+    # Make ActionDispatch::Routing::UrlFor do the heavy lifting
+    url = url_for(options)
+    # Then strip off the bogus domain, because this causes issues
+    # with Selenium.
+    url.sub!('http://www.example.com', '')
+    return url
   end
 end

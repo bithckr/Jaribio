@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :step do
-    action "MyString"
-    results "MyString"
+    action { Forgery(:lorem_ipsum).words(4) }
+    results { Forgery(:lorem_ipsum).words(8) }
     sort_order 1
   end
 end
