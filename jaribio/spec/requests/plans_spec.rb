@@ -225,7 +225,7 @@ describe "Plans" do
           end
         end
         it "should not have a 'Re-Test' button if the plan is closed" do
-          @plan.closed_at = Time.now
+          @plan.closed_at = Time.now + 1.second
           @plan.save
           visit plan_path(@plan)
           @plan.suites.first.test_cases.each do |test_case|
