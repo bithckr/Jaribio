@@ -13,6 +13,7 @@
         <div id="user-navigation">
           <ul class="wat-cf">
             <% if user_signed_in? %>
+              <li><%= link_to(t('jaribio.action.edit_registration', :default => 'Account settings'), edit_user_registration_path) %></li>
               <li><%= link_to t('jaribio.actions.logout', :default => 'Logout'), destroy_user_session_url, :method => :delete %></li> 
             <% else %>
               <li><%= link_to t('jaribio.actions.login', :default => 'Login'), new_user_session_url %></li>

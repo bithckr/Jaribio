@@ -1,25 +1,50 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="block">
+<div class="content">
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+<h2 class="title">Edit <%= resource_name.to_s.humanize %></h2>
+
+<div class="inner">
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => 'form' }) do |f| %>
   <%= devise_error_messages! %>
 
-  <p><%= f.label :email %><br />
-  <%= f.email_field :email %></p>
+  <div class="grouping">
+  <%= f.label :email, :class => "label" %>
+  <%= f.email_field :email, :class => "text_field" %>
+  </div>
 
-  <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-  <%= f.password_field :password %></p>
+  <div class="grouping">
+  <%= f.label :password, :class => "label" %>
+  <%= f.password_field :password, :class => "text_field" %>
+  <span class="description">leave blank if you don't want to change it</span>
+  </div>
 
-  <p><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></p>
+  <div class="grouping">
+  <%= f.label :password_confirmation, :class => "label" %>
+  <%= f.password_field :password_confirmation, :class => "text_field" %>
+  </div>
 
-  <p><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-  <%= f.password_field :current_password %></p>
+  <div class="grouping">
+  <%= f.label :current_password, :class => "label" %>
+  <%= f.password_field :current_password, :class => "text_field" %>
+  <span class="description">we need your current password to confirm your changes</span>
+  </div>
+
+  <div class="grouping">
+  <label class="label" for="authentication_token">API Authentication Key
+  (<%= link_to "Generate Key", token_authentications_path(:user_id => resource.id), :method => :post, :confirm => "Are you sure?"  %> |
+  <%= link_to "Delete Key", token_authentication_path(resource), :method => :delete, :confirm => "Are you sure?"  %>)
+  </label>
+  <%= f.text_field :authentication_token, :class => "text_field", :disabled => true %>
+  <% if resource.authentication_token %>
+  <span class="description">You can use this url to login<br />
+  <%= link_to "http://localhost:3000#{root_path(:auth_token => resource.authentication_token)}", root_path(:auth_token => resource.authentication_token)  %></span>
+<% end %>
+  </div>
 
   <p><%= f.submit "Update" %></p>
 <% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete %>.</p>
+</div>
+</div>
+</div>
 
 <%= link_to "Back", :back %>
