@@ -2,9 +2,7 @@
 
 This gem contains:
 
-* Jaribio::RSpecFormatter - An RSpec formatter that when configured
-appropriately will record test case execution for automated tests
-in jaribio
+* Jaribio::RSpecFormatter - An RSpec formatter that when configured appropriately will record test case execution for automated tests in jaribio.
 
 == TODO
 
