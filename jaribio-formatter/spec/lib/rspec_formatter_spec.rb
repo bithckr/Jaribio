@@ -20,9 +20,13 @@ describe "Jaribio::RSpecFormatter" do
       formatter
     end
 
-    it "uses example group full description as key" do
-      example = example_group.example("example 1")
-      verify_key_and_description(example, 'object', 'object')
+    it "uses example group full description as key when jaribio_key not defined" do
+      group = example_group.describe("method")
+      example = group.example("example 1")
+      formatter.instance_eval {
+        @example_group = group
+      }
+      verify_key_and_description(example, 'object method', 'object method')
     end
 
     it "gets jaribio_key from example" do
@@ -69,11 +73,15 @@ describe "Jaribio::RSpecFormatter" do
       g1 = example_group.describe("subgroup", :jaribio_key => 'g1')
       g1.example("example 1") { fail } 
       g1.example("example 2", :jaribio_key => 'g1e2') { fail } 
+      g2 = example_group.describe("subgroup2")
+      g2.example("example 1") { 1.should eq(1) }
+      g2.example("example 2") { fail }
+      g2.example("example 3") { 1.should eq(1) }
       example_group.run(formatter)
     end
 
     it "is a hash with all keys found while testing" do
-      formatter.results.keys.sort.should eql ['e2', 'g1', 'g1e2', 'object']
+      formatter.results.keys.sort.should eql ['e2', 'g1', 'g1e2', 'object', 'object subgroup2']
     end
 
     it "values are a hash with description and failed state" do
@@ -92,6 +100,10 @@ describe "Jaribio::RSpecFormatter" do
       },
         'object' => {
         :description => 'object',
+        :failed => true
+      },
+        'object subgroup2' => {
+        :description => 'object subgroup2',
         :failed => true
       },
       })
