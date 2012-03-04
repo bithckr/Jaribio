@@ -1,3 +1,5 @@
+require 'jaribio/record'
+
 module Jaribio
   class RSpecFormatter
 
@@ -83,12 +85,10 @@ module Jaribio
     def record_result(example, failed = false)
       key, desc = get_example_key(example)
       if (@results.has_key?(key))
-        failed = failed || @results[key][:failed] 
+        failed = failed || @results[key].failed?
       end
-      @results[key] = {
-        :description => desc,
-        :failed => failed
-      }
+      record = Record.new(:key => key, :description => desc, :state => failed ? Jaribio::Record::FAIL : Jaribio::Record::PASS)
+      @results[key] = record
     end
 
     # 
@@ -143,6 +143,13 @@ module Jaribio
       return key, desc
     end
 
+  end
+
+  RSpec.configure do |c|
+    c.add_setting :jaribio_url
+    c.add_setting :jaribio_api_key
+    c.add_setting :jaribio_plans, :default => []
+    c.add_setting :jaribio_auto_create, :default => false
   end
 end
 

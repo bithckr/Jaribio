@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "Jaribio::RSpecFormatter" do
   let(:output) { StringIO.new }
@@ -85,27 +85,12 @@ describe "Jaribio::RSpecFormatter" do
     end
 
     it "values are a hash with description and failed state" do
-      formatter.results.should eql({ 
-        'e2' => {
-        :description => 'object example 2',
-        :failed => true
-      },
-        'g1' => {
-        :description => 'object subgroup',
-        :failed => true
-      },
-        'g1e2' => {
-        :description => 'object subgroup example 2',
-        :failed => true
-      },
-        'object' => {
-        :description => 'object',
-        :failed => true
-      },
-        'object subgroup2' => {
-        :description => 'object subgroup2',
-        :failed => true
-      },
+      formatter.results.should eql({
+        'e2' => Jaribio::Record.new(:key => 'e2', :description => 'object example 2', :failed => true), 
+        'g1' => Jaribio::Record.new(:key => 'g1', :description => 'object subgroup', :failed => true), 
+        'g1e2' => Jaribio::Record.new(:key => 'g1e2', :description => 'object subgroup example 2', :failed => true), 
+        'object' => Jaribio::Record.new(:key => 'object', :description => 'object', :failed => true), 
+        'object subgroup2' => Jaribio::Record.new(:key => 'object subgroup2', :description => 'object subgroup2', :failed => true),
       })
     end
   end
@@ -113,9 +98,37 @@ describe "Jaribio::RSpecFormatter" do
   it "has output indicating when a specified key does not exist in Jaribio"
   it "creates new executions for open plans and existing test cases"
 
+  describe "can configure" do
+    before do
+      RSpec.configure do |config|
+        config.jaribio_url = 'http://localhost/jaribio'
+        config.jaribio_api_key = 'asdf1234'
+        config.jaribio_plans = ['plan 1', 'plan 2', 'plan 3']
+        config.jaribio_auto_create = true
+      end
+    end
+
+    it "jaribio url" do 
+      RSpec.configuration.jaribio_url.should == 'http://localhost/jaribio'
+    end
+
+    it "jaribio api key" do
+      RSpec.configuration.jaribio_api_key.should == 'asdf1234'
+    end
+
+    it "test case creation" do
+      RSpec.configuration.jaribio_auto_create.should be_true
+    end
+
+    it "specific plans" do
+      RSpec.configuration.jaribio_plans.should eql(['plan 1', 'plan 2', 'plan 3'])
+    end
+  end
+
   describe "when configured to create test cases" do
     it "creates new test cases if the test case does not exist"
     it "creates new executions for open plans and new test cases"
-    it "creates new executions for open plans and existing test cases"
   end
+
+  it "creates new executions for open plans and existing test cases"
 end
