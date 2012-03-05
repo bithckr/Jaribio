@@ -3,15 +3,6 @@ require 'jaribio/formatter/version'
 require 'rspec/core'
 require 'rspec/core/rake_task'
 
-#  gem.name = "jaribio-formatter"
-#  gem.version = version
-#  gem.homepage = "https://github.com/bithckr/Jaribio/tree/master/jaribio-formatter"
-#  gem.license = "MIT"
-#  gem.summary = %Q{Jaribio test framework formatters}
-#  gem.description = %Q{Provide the necessary code to record execution results in Jaribio while running tests in RSpec, Test::Unit, or Cucumber}
-#  gem.email = "cbjones1@gmail.com"
-#  gem.authors = ["bjones"]
-
 RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']
 end
