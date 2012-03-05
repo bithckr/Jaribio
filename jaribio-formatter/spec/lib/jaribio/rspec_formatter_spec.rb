@@ -130,5 +130,4 @@ describe "Jaribio::RSpecFormatter" do
     it "creates new executions for open plans and new test cases"
   end
 
-  it "creates new executions for open plans and existing test cases"
 end
