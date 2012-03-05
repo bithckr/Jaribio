@@ -7,6 +7,10 @@ describe PlansController do
       get("/plans").should route_to("plans#index")
     end
 
+    it "routes to #open" do
+      get("plans/open").should route_to("plans#open")
+    end
+
     it "routes to #new" do
       get("/plans/new").should route_to("plans#new")
     end

@@ -5,6 +5,9 @@ class Plan < ActiveRecord::Base
 
   validates_presence_of :name
 
+  # private method 'open' exists already
+  scope :open_plans, where(:closed_at => nil)
+
   class << self
     # Simplistic search functionality
     def search(q, relation = Plan.scoped)

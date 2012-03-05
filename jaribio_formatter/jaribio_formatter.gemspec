@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.required_rubygems_version = ">= 1.8.10"
 
-  s.add_runtime_dependency 'activeresource', '~> 3.0.11'
+  s.add_runtime_dependency 'activeresource', '~> 3.1.1'
 
   s.add_development_dependency 'rake', '~> 0.9.2.2'
   s.add_development_dependency 'rdoc', '3.12'

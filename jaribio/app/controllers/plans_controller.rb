@@ -1,12 +1,19 @@
 class PlansController < ApplicationController
   before_filter :authenticate_user!
-  respond_to :html
+  respond_to :html, :json
 
   def index
     plans = Plan.scoped
     if (params[:q])
       plans = Plan.search(params[:q])
     end
+    @plans = plans.order("updated_at").page(params[:page]).per(10)
+    respond_with @plans
+  end
+
+  # GET /plans/open
+  def open
+    plans = Plan.open_plans()
     @plans = plans.order("updated_at").page(params[:page]).per(10)
     respond_with @plans
   end
@@ -97,6 +104,7 @@ class PlansController < ApplicationController
 
     redirect_to edit_plan_path(plan)
   end
+
   def close
     @plan = Plan.find(params[:id])
     @plan.closed_at = Time.now

@@ -1,1 +1,1 @@
-rvm --create use ruby-1.9.3-p0@jaribio-formatter
+rvm --create use ruby-1.9.3-p0@jaribio_formatter

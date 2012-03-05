@@ -37,6 +37,12 @@ describe Plan do
     sql.should == %Q{SELECT `suites`.* FROM `suites`  WHERE (`suites`.`id` NOT IN (SELECT `suites`.`id` FROM `suites` INNER JOIN `plans_suites` ON `suites`.`id` = `plans_suites`.`suite_id` WHERE `plans_suites`.`plan_id` IS NULL))}
   end
 
+  it "can list open plans" do
+    Plan.should respond_to(:open_plans)
+    sql = Plan.open_plans.to_sql
+    sql.should == %Q{SELECT `plans`.* FROM `plans`  WHERE `plans`.`closed_at` IS NULL}
+  end
+
   describe "with one execution per test case" do
     it "that passed should have a passing status" do
       @plan.save!

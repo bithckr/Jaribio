@@ -1,4 +1,5 @@
 require 'jaribio/record'
+require 'rspec/core'
 
 module Jaribio
   class RSpecFormatter

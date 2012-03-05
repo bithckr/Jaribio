@@ -15,6 +15,14 @@ describe PlansController do
     end
   end
 
+  describe "GET open" do
+    it "assigns open plans as @plans" do
+      plan = Factory.create :plan
+      get :open, :format => :json
+      assigns(:plans).should eq([plan])
+    end
+  end
+
   describe "GET new" do
     it "assigns a new plan as @plan" do
       get :new

@@ -23,6 +23,11 @@ Jaribio::Application.routes.draw do
       get 'add_suites'
       post 'close'
     end
+
+    collection do
+      get 'open'
+    end
+
     resources :test_cases, :only => [] do
       resources :executions, :only => [:create]
     end
