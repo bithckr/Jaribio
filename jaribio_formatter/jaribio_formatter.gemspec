@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.date = Time.now.utc.strftime("%Y-%m-%d")
   s.authors = ["C. Brian Jones"]
   s.email = "cbjones1@gmail.com"
-  s.homepage = "https://github.com/bithckr/Jaribio/tree/master/jaribio-formatter"
+  s.homepage = "https://github.com/bithckr/Jaribio/tree/master/jaribio_formatter"
   s.license = "MIT"
   s.summary = %Q{Jaribio test framework formatters}
   s.description = %Q{Provide the necessary code to record execution results in Jaribio while running tests in RSpec, Test::Unit, or Cucumber}
