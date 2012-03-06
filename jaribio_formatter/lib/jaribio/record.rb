@@ -5,10 +5,10 @@ module Jaribio
 
     attr_accessor :key, :description, :state
 
-    def initialize(args)
-      key = args[:key] 
-      description = args[:description]
-      state = args[:state]
+    def initialize(args = {})
+      self.key = args[:key] 
+      self.description = args[:description]
+      self.state = args[:state]
     end
 
     def failed?

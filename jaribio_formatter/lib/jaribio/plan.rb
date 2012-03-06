@@ -1,15 +1,7 @@
-require 'active_resource'
+require 'jaribio/remote_object'
 
 module Jaribio
-  class Plan < ActiveResource::Base
-    # site is set as needed by formatters
-    
-    # use json, not xml
-    self.format = :json
-
-    # set timeout to 5 seconds (does not affect DNS lookups generally)
-    self.timeout = 5
-
+  class Plan < RemoteObject
     # Usage: Jaribio::Plan.find(1, :params => {'api_key' => 'asdf'})
   end
 end

@@ -86,11 +86,11 @@ describe "Jaribio::RSpecFormatter" do
 
     it "values are a hash with description and failed state" do
       formatter.results.should eql({
-        'e2' => Jaribio::Record.new(:key => 'e2', :description => 'object example 2', :failed => true), 
-        'g1' => Jaribio::Record.new(:key => 'g1', :description => 'object subgroup', :failed => true), 
-        'g1e2' => Jaribio::Record.new(:key => 'g1e2', :description => 'object subgroup example 2', :failed => true), 
-        'object' => Jaribio::Record.new(:key => 'object', :description => 'object', :failed => true), 
-        'object subgroup2' => Jaribio::Record.new(:key => 'object subgroup2', :description => 'object subgroup2', :failed => true),
+        'e2' => Jaribio::Record.new(:key => 'e2', :description => 'object example 2', :state => Jaribio::Record::FAIL), 
+        'g1' => Jaribio::Record.new(:key => 'g1', :description => 'object subgroup', :state => Jaribio::Record::FAIL), 
+        'g1e2' => Jaribio::Record.new(:key => 'g1e2', :description => 'object subgroup example 2', :state => Jaribio::Record::FAIL), 
+        'object' => Jaribio::Record.new(:key => 'object', :description => 'object', :state => Jaribio::Record::FAIL), 
+        'object subgroup2' => Jaribio::Record.new(:key => 'object subgroup2', :description => 'object subgroup2', :state => Jaribio::Record::FAIL),
       })
     end
   end
