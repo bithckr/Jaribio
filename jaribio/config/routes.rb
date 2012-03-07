@@ -28,7 +28,7 @@ Jaribio::Application.routes.draw do
       get 'open'
     end
 
-    resources :test_cases, :only => [] do
+    resources :test_cases, :path => '/cases', :only => [] do
       resources :executions, :only => [:create]
     end
   end
