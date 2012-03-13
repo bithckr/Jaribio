@@ -14,4 +14,8 @@ require 'jaribio_formatter'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |config|
+  config.jaribio_url = 'http://jaribio.dev'
+  config.jaribio_api_key = 'kpwLvp4JNSMpxskZSypq'
+  config.jaribio_auto_create = true
+  config.jaribio_timeout = 30
 end

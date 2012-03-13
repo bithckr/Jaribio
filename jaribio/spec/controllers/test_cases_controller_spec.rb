@@ -26,11 +26,26 @@ describe TestCasesController do
     end
   end
 
+  describe "GET show" do
+    it "assigns the requested case as @test_case" do
+      test_case = Factory.create(:test_case)
+      get :show, :id => test_case.id.to_s, :format => :json
+      assigns(:test_case).should eq(test_case)
+    end
+
+    it "can retrieve by unique key" do
+      test_case = Factory.create(:test_case)
+      get :show, :id => test_case.unique_key, :format => :json
+      assigns(:test_case).should eq(test_case)
+    end
+  end
+
   describe "GET executions" do
     it "assigns the requested case as @test_case" do
       test_case = Factory.create(:test_case)
       get :executions, :id => test_case.id.to_s
       assigns(:test_case).should eq(test_case)
+      assigns(:executions).should be_empty
     end
   end
 

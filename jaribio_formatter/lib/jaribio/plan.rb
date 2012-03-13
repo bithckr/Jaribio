@@ -2,7 +2,12 @@ require 'jaribio/remote_object'
 
 module Jaribio
   class Plan < RemoteObject
-    # Usage: Jaribio::Plan.find(1, :params => {'api_key' => 'asdf'})
+    def open?
+      if self.respond_to?(:closed_at)
+        return (closed_at == nil or closed_at > Time.now)
+      end
+      true
+    end
   end
 end
 

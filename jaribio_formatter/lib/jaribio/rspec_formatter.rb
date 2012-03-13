@@ -1,5 +1,6 @@
 require 'jaribio/record'
 require 'rspec/core'
+require 'cgi'
 
 module Jaribio
   class RSpecFormatter
@@ -46,7 +47,7 @@ module Jaribio
 
     def stop
     end
-   
+
     def start_dump()
     end
 
@@ -59,8 +60,8 @@ module Jaribio
     def dump_summary(duration, example_count, failure_count, pending_count)
       results.each do |key, data|
         output.puts "Key: #{key}"
-        output.puts "Desc: #{data[:description]}"
-        output.puts "Failed: #{data[:failed].to_s}"
+        output.puts "Desc: #{data.description}"
+        output.puts "Failed: #{data.failed?.to_s}"
       end
     end
 
@@ -75,10 +76,50 @@ module Jaribio
     # - configured to generate plan/suite/test case?
     #
     def close()
+      Jaribio::RemoteObject.configure(RSpec.configuration)
+      # create missing test cases, the new test cases are not automatically
+      # added to any plan
+      if RSpec.configuration.jaribio_auto_create
+        results.values.each do |record|
+          begin
+            test_case = Jaribio::TestCase.find(CGI::escape(record.key))
+          rescue ActiveResource::ResourceNotFound
+          end
+          if (test_case.nil?)
+            test_case = Jaribio::TestCase.new(
+              :name => record.description,
+              :unique_key => record.key,
+              :automated => true
+            )
+            begin
+              test_case.save
+            rescue Exception => e
+              $stderr.puts "Error creating test case #{record.key}: #{e.message}"
+            end
+          end
+        end
+      end
+
+      plans = nil
+      # create executions for specific plans only
+      if RSpec.configuration.jaribio_plans.size > 0
+        RSpec.configuration.jaribio_plans.each do |plan_id|
+          begin
+            plan = Jaribio::Plan.find(plan_id)
+            if plan.open?
+              plans << plan
+            end
+          rescue ActiveResource::ResourceNotFound
+            $stderr.puts "RSpec configuration of jaribio_plans includes unknown plan_id #{plan_id}"
+          end
+        end
+      end
+
+      Jaribio::Execution.record_results(results.values, plans)
     end
 
     protected
-      
+
     def configuration
       RSpec.configuration
     end
@@ -88,7 +129,12 @@ module Jaribio
       if (@results.has_key?(key))
         failed = failed || @results[key].failed?
       end
-      record = Record.new(:key => key, :description => desc, :state => failed ? Jaribio::Record::FAIL : Jaribio::Record::PASS)
+      error = nil
+      if (defined? example.execution_result[:exception])
+        exception = example.execution_result[:exception]
+        error = "#{exception.message}\n#{exception.backtrace}"
+      end
+      record = Record.new(:key => key, :description => desc, :state => failed ? Jaribio::Record::FAIL : Jaribio::Record::PASS, :error => error)
       @results[key] = record
     end
 
@@ -151,6 +197,7 @@ module Jaribio
     c.add_setting :jaribio_api_key
     c.add_setting :jaribio_plans, :default => []
     c.add_setting :jaribio_auto_create, :default => false
+    c.add_setting :jaribio_timeout, :default => 5
   end
 end
 

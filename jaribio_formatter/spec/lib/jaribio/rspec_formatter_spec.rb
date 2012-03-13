@@ -84,7 +84,7 @@ describe "Jaribio::RSpecFormatter" do
       formatter.results.keys.sort.should eql ['e2', 'g1', 'g1e2', 'object', 'object subgroup2']
     end
 
-    it "values are a hash with description and failed state" do
+    it "results are a hash of key to Jaribio::Record values" do
       formatter.results.should eql({
         'e2' => Jaribio::Record.new(:key => 'e2', :description => 'object example 2', :state => Jaribio::Record::FAIL), 
         'g1' => Jaribio::Record.new(:key => 'g1', :description => 'object subgroup', :state => Jaribio::Record::FAIL), 
@@ -99,21 +99,13 @@ describe "Jaribio::RSpecFormatter" do
   it "creates new executions for open plans and existing test cases"
 
   describe "can configure" do
-    before do
-      RSpec.configure do |config|
-        config.jaribio_url = 'http://localhost/jaribio'
-        config.jaribio_api_key = 'asdf1234'
-        config.jaribio_plans = ['plan 1', 'plan 2', 'plan 3']
-        config.jaribio_auto_create = true
-      end
-    end
 
     it "jaribio url" do 
-      RSpec.configuration.jaribio_url.should == 'http://localhost/jaribio'
+      RSpec.configuration.should respond_to :jaribio_url
     end
 
     it "jaribio api key" do
-      RSpec.configuration.jaribio_api_key.should == 'asdf1234'
+      RSpec.configuration.should respond_to :jaribio_api_key
     end
 
     it "test case creation" do
@@ -121,7 +113,7 @@ describe "Jaribio::RSpecFormatter" do
     end
 
     it "specific plans" do
-      RSpec.configuration.jaribio_plans.should eql(['plan 1', 'plan 2', 'plan 3'])
+      RSpec.configuration.should respond_to :jaribio_plans
     end
   end
 

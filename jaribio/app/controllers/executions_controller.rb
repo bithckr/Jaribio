@@ -1,6 +1,6 @@
 class ExecutionsController < ApplicationController
   before_filter :authenticate_user!
-  respond_to :js, :html
+  respond_to :json, :js, :html
 
   def show
     @execution = Execution.find(params[:id])

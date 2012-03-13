@@ -1,6 +1,6 @@
 class TestCasesController < ApplicationController
   before_filter :authenticate_user!
-  respond_to :html
+  respond_to :json, :html
 
   def index
     cases = TestCase.scoped
@@ -14,6 +14,15 @@ class TestCasesController < ApplicationController
 
     @test_cases = cases.order("updated_at").page(params[:page]).per(10)
     respond_with @test_cases
+  end
+
+  def show
+    if (params[:id].to_s =~ /\A[+-]?\d+\Z/)
+      @test_case = TestCase.find(params[:id])
+    else
+      @test_case = TestCase.where(:unique_key => params[:id]).first
+    end
+    respond_with @test_case
   end
 
   def new
@@ -105,7 +114,7 @@ class TestCasesController < ApplicationController
     if @test_case.save
       flash[:notice] = "Successfully copied test case."
     end
-    
+
     redirect_to edit_test_case_path(@test_case)
   end
 

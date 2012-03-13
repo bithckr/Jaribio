@@ -1,14 +1,15 @@
 module Jaribio
   class Record
     PASS = 1
-    FAIL = 0
+    FAIL = 2
 
-    attr_accessor :key, :description, :state
+    attr_accessor :key, :description, :state, :error
 
     def initialize(args = {})
       self.key = args[:key] 
       self.description = args[:description]
       self.state = args[:state]
+      self.error = args[:error]
     end
 
     def failed?

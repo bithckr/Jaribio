@@ -9,7 +9,7 @@ Jaribio::Application.routes.draw do
   devise_for :users
   resources :token_authentications, :only => [:create, :destroy]
 
-  resources :test_cases, :path => '/cases', :except => :show do
+  resources :test_cases, :path => '/cases' do
     member do
       get 'executions'
       post 'sort'
