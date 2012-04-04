@@ -91,12 +91,11 @@ class TestCasesController < ApplicationController
       # moved will look like 'step_3.0', make it '3.0' instead
       params[:moved].gsub!(/.*_(\d+\.\d+)$/, '\1')
       # find the new position for this item
-      pos = params[:step].index(params[:moved])
+      pos = params[:step].index(params[:moved]) + 1
       s_id, s_pos = params[:moved].split('.', 2)
       if (defined? pos and pos != s_pos.to_i)
         step = Step.find(s_id)
-        step.sort_order_position = pos
-        if step.save
+        if step.insert_at(pos) != false
           flash[:notice] = "Successfully saved sort order."
         end
       end

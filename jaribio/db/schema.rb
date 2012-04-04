@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115180754) do
+ActiveRecord::Schema.define(:version => 20120404022150) do
 
   create_table "executions", :force => true do |t|
     t.datetime "created_at"
@@ -75,11 +75,11 @@ ActiveRecord::Schema.define(:version => 20120115180754) do
     t.integer  "test_case_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "sort_order",   :null => false
+    t.integer  "position",     :default => 0
   end
 
-  add_index "steps", ["sort_order"], :name => "index_steps_on_sort_order"
-  add_index "steps", ["test_case_id", "sort_order"], :name => "index_steps_on_test_case_id_and_sort_order", :unique => true
+  add_index "steps", ["position"], :name => "index_steps_on_position"
+  add_index "steps", ["test_case_id", "position"], :name => "index_steps_on_test_case_id_and_position"
 
   create_table "suites", :force => true do |t|
     t.string   "name",       :null => false
@@ -92,12 +92,12 @@ ActiveRecord::Schema.define(:version => 20120115180754) do
   add_index "suites", ["user_id"], :name => "suites_user_id_fk"
 
   create_table "suites_test_cases", :force => true do |t|
-    t.integer "test_case_id", :null => false
-    t.integer "suite_id",     :null => false
-    t.integer "sort_order"
+    t.integer "test_case_id",                :null => false
+    t.integer "suite_id",                    :null => false
+    t.integer "position",     :default => 0
   end
 
-  add_index "suites_test_cases", ["sort_order"], :name => "index_suites_test_cases_on_sort_order"
+  add_index "suites_test_cases", ["position"], :name => "index_suites_test_cases_on_position"
   add_index "suites_test_cases", ["suite_id", "test_case_id"], :name => "index_suites_test_cases_on_suite_id_and_test_case_id"
   add_index "suites_test_cases", ["test_case_id"], :name => "suites_test_cases_test_case_id_fk"
 

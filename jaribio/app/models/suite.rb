@@ -1,6 +1,6 @@
 class Suite < ActiveRecord::Base
   has_many :suite_test_cases
-  has_many :test_cases, :through => :suite_test_cases, :order => "suites_test_cases.sort_order ASC"
+  has_many :test_cases, :through => :suite_test_cases, :order => "suites_test_cases.position ASC"
   has_and_belongs_to_many :issues
   has_and_belongs_to_many :plans
   belongs_to :user

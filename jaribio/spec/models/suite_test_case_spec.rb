@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'ruby-debug'
 
 describe SuiteTestCase do
   before(:each) do
@@ -23,15 +24,14 @@ describe SuiteTestCase do
 
   # these things are provided by ranked-model
   it "is orderable" do
-    @suite_case.should respond_to(:sort_order_position, :sort_order_position=)
-    @suite_case.sort_order_position.should be_nil
+    @suite_case.should respond_to(:position, :position=)
+    @suite_case.position.should == 0
     @suite_test_cases.each { |stc| stc.save! }
-    @suite_case.sort_order_position.should_not be_nil
-    @suite_case.sort_order_position = :first
-    @suite_case.save!
+    @suite_case.position.should_not be_nil
+    # is already first, so insert_at returns nil instead of true
+    @suite_case.insert_at().should be_nil
     @suite.test_cases.first.id.should == @suite_case.test_case.id
-    @suite_case.sort_order_position = :last
-    @suite_case.save!
+    @suite_case.move_to_bottom.should be_true
     @suite.test_cases.last.id.should == @suite_case.test_case.id
   end
 end

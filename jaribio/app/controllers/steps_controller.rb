@@ -45,7 +45,6 @@ class StepsController < ApplicationController
     @step = Step.new(params[:step])
     @test_case = TestCase.find(params[:test_case_id])
     @step.test_case_id = @test_case.id
-    @step.sort_order_position = :last
 
     if @step.save
       flash[:notice] = "Successfully created step."

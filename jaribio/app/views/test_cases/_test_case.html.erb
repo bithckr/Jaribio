@@ -1,4 +1,4 @@
-<tr class="<%= (test_case_counter % 2 == 0) ? "even" : "odd" %>" id="test_case_<%= test_case.id %>.<%= test_case_counter %>">
+<tr class="<%= (test_case_counter % 2 == 0) ? "even" : "odd" %>" id="test_case_<%= test_case.id %>.<%= test_case_counter + 1 %>">
   <td><%= test_case.unique_key %></td>
   <td><%= test_case.name %></td>
   <td><%= test_case.user.email %></td>

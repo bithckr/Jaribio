@@ -2,7 +2,7 @@ class TestCase < ActiveRecord::Base
   has_many :suite_test_cases
   has_many :suites, :through => :suite_test_cases
   has_many :executions
-  has_many :steps, :order => "steps.sort_order ASC"
+  has_many :steps, :order => "steps.position ASC"
   belongs_to :user
   belongs_to :pre_step
 
