@@ -100,7 +100,7 @@ module Jaribio
         end
       end
 
-      plans = nil
+      plans = []
       # create executions for specific plans only
       if RSpec.configuration.jaribio_plans.size > 0
         RSpec.configuration.jaribio_plans.each do |plan_id|

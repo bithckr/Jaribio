@@ -96,7 +96,50 @@ describe "Jaribio::RSpecFormatter" do
   end
 
   it "has output indicating when a specified key does not exist in Jaribio"
-  it "creates new executions for open plans and existing test cases"
+
+  describe "#close" do
+    let(:formatter) { Jaribio::RSpecFormatter.new(output) }
+    let!(:configuration) {
+      double("config",
+      :jaribio_url => 'http://localhost/jaribio',
+      :jaribio_api_key => 'api_key',
+      :jaribio_timeout => 10,
+      :treat_symbols_as_metadata_keys_with_true_values? => true)
+    }
+
+    before do
+      RSpec.should_receive(:configuration).at_least(:once).and_return(configuration)
+      Jaribio::Execution.should_receive(:record_results)
+    end
+
+    it "creates missing test cases" do
+      configuration.should_receive(:jaribio_auto_create).and_return(true)
+      configuration.should_receive(:jaribio_plans).and_return([])
+
+      Jaribio::TestCase.should_receive(:find).and_return(nil)
+      test_case = double("Jaribio::TestCase")
+      Jaribio::TestCase.should_receive(:new).and_return(test_case)
+      test_case.should_receive(:save)
+
+      example = example_group.example("example 1", :jaribio_key => 'abc123') { fail } 
+      example_group.run(formatter)
+      formatter.close()
+    end
+
+    it "finds configured plans" do
+      configuration.should_receive(:jaribio_auto_create).and_return(false)
+      configuration.should_receive(:jaribio_plans).twice.and_return([1])
+
+      plan = double("Jaribio::Plan")
+      plan.should_receive(:open?).and_return(true)
+      Jaribio::Plan.should_receive(:find).with(1).once.and_return(plan)
+
+      example = example_group.example("example 1", :jaribio_key => 'abc123') { fail } 
+      example_group.run(formatter)
+      formatter.close()
+    end
+
+  end
 
   describe "can configure" do
 
@@ -115,11 +158,6 @@ describe "Jaribio::RSpecFormatter" do
     it "specific plans" do
       RSpec.configuration.should respond_to :jaribio_plans
     end
-  end
-
-  describe "when configured to create test cases" do
-    it "creates new test cases if the test case does not exist"
-    it "creates new executions for open plans and new test cases"
   end
 
 end

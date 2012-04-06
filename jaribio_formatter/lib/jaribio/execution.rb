@@ -5,8 +5,8 @@ module Jaribio
   class Execution < RemoteObject
     self.prefix = '/plans/:plan_id/cases/:test_case_id/'
 
-    def self.record_results(records, plans = nil)
-      if plans.nil?
+    def self.record_results(records, plans = [])
+      if plans.size == 0
         plans = Jaribio::Plan.find(:all, :from => :open)
       end
 
