@@ -99,22 +99,17 @@ describe "Jaribio::RSpecFormatter" do
 
   describe "#close" do
     let(:formatter) { Jaribio::RSpecFormatter.new(output) }
-    let!(:configuration) {
-      double("config",
-      :jaribio_url => 'http://localhost/jaribio',
-      :jaribio_api_key => 'api_key',
-      :jaribio_timeout => 10,
-      :treat_symbols_as_metadata_keys_with_true_values? => true)
-    }
 
     before do
-      RSpec.should_receive(:configuration).at_least(:once).and_return(configuration)
+      RSpec.configuration.should_receive(:jaribio_url).at_least(:once).and_return('http://localhost/jaribio')
+      RSpec.configuration.should_receive(:jaribio_api_key).at_least(:once).and_return('api_key')
+      RSpec.configuration.should_receive(:jaribio_timeout).at_least(:once).and_return(10)
       Jaribio::Execution.should_receive(:record_results)
     end
 
     it "creates missing test cases" do
-      configuration.should_receive(:jaribio_auto_create).and_return(true)
-      configuration.should_receive(:jaribio_plans).and_return([])
+      RSpec.configuration.should_receive(:jaribio_auto_create).and_return(true)
+      RSpec.configuration.should_receive(:jaribio_plans).and_return([])
 
       Jaribio::TestCase.should_receive(:find).and_return(nil)
       test_case = double("Jaribio::TestCase")
@@ -127,8 +122,8 @@ describe "Jaribio::RSpecFormatter" do
     end
 
     it "finds configured plans" do
-      configuration.should_receive(:jaribio_auto_create).and_return(false)
-      configuration.should_receive(:jaribio_plans).twice.and_return([1])
+      RSpec.configuration.should_receive(:jaribio_auto_create).and_return(false)
+      RSpec.configuration.should_receive(:jaribio_plans).twice.and_return([1])
 
       plan = double("Jaribio::Plan")
       plan.should_receive(:open?).and_return(true)
@@ -142,7 +137,12 @@ describe "Jaribio::RSpecFormatter" do
   end
 
   describe "can configure" do
-
+    before do
+      RSpec.configure do |c|
+        c.jaribio_auto_create = true
+      end
+    end
+    
     it "jaribio url" do 
       RSpec.configuration.should respond_to :jaribio_url
     end

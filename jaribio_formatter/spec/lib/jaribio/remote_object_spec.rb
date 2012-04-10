@@ -2,11 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "Jaribio::RemoteObject" do
   before do
-    RSpec.configuration.stub!(:jaribio_api_key).and_return('asdf1234')
-    Jaribio::RemoteObject.configure(RSpec.configuration)
-  end
-
-  after(:all) do
+    RSpec.configure do |c|
+      c.jaribio_api_key = 'asdf1234'
+      c.jaribio_url = 'http://localhost'
+    end
     Jaribio::RemoteObject.configure(RSpec.configuration)
   end
 

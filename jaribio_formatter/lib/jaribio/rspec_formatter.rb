@@ -76,7 +76,7 @@ module Jaribio
     # - configured to generate plan/suite/test case?
     #
     def close()
-      Jaribio::RemoteObject.configure(RSpec.configuration)
+      Jaribio::RemoteObject.configure(configuration)
       # create missing test cases, the new test cases are not automatically
       # added to any plan
       if RSpec.configuration.jaribio_auto_create
@@ -190,14 +190,17 @@ module Jaribio
       return key, desc
     end
 
+    def self.configure()
+      RSpec.configure do |c|
+        c.add_setting :jaribio_url
+        c.add_setting :jaribio_api_key
+        c.add_setting :jaribio_plans, :default => []
+        c.add_setting :jaribio_auto_create, :default => false
+        c.add_setting :jaribio_timeout, :default => 5
+      end
+    end
   end
 
-  RSpec.configure do |c|
-    c.add_setting :jaribio_url
-    c.add_setting :jaribio_api_key
-    c.add_setting :jaribio_plans, :default => []
-    c.add_setting :jaribio_auto_create, :default => false
-    c.add_setting :jaribio_timeout, :default => 5
-  end
+  RSpecFormatter.configure
 end
 
