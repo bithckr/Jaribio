@@ -130,9 +130,11 @@ module Jaribio
         failed = failed || @results[key].failed?
       end
       error = nil
-      if (defined? example.execution_result[:exception])
+      if (example.execution_result.has_key?(:exception))
         exception = example.execution_result[:exception]
-        error = "#{exception.message}\n#{exception.backtrace}"
+        unless (exception.nil?)
+          error = "#{exception.message}\n#{exception.backtrace}"
+        end
       end
       record = Record.new(:key => key, :description => desc, :state => failed ? Jaribio::Record::FAIL : Jaribio::Record::PASS, :error => error)
       @results[key] = record
