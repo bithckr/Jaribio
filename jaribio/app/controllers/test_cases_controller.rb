@@ -20,14 +20,20 @@ class TestCasesController < ApplicationController
 
   def show
     if (params[:id].to_s =~ /\A[+-]?\d+\Z/)
-      @test_case = TestCase.find(params[:id])
+      @test_case = TestCase.where(:id => params[:id]).first
     else
       @test_case = TestCase.where(:unique_key => CGI.unescape(params[:id])).first
       if (@test_case.nil?)
         raise ActiveRecord::RecordNotFound.new("Couldn't find TestCase with id=#{params[:id]}")
       end
     end
-    respond_with @test_case
+    if (params[:format] == :json)
+      @test_case.includes([:plans]) 
+    end
+    respond_with @test_case do |format|
+      format.html
+      format.json { render :json => @test_case, :include => :plans }
+    end
   end
 
   def new
