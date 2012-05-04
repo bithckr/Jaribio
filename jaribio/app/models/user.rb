@@ -10,6 +10,15 @@ class User < ActiveRecord::Base
     :validatable,
     :token_authenticatable
 
+  def token_authenticated?
+    return false unless defined? @token_authenticated
+    @token_authenticated
+  end
+
+  def after_token_authentication
+    @token_authenticated = true
+  end
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
@@ -17,4 +26,5 @@ class User < ActiveRecord::Base
   has_many :suites
   has_many :plans
   has_many :executions
+
 end

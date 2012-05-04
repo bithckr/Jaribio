@@ -54,7 +54,10 @@ class TestCasesController < ApplicationController
       end
       if @test_case.save
         flash[:notice] = "Successfully created test case."
-        redirect_to edit_test_case_path(@test_case)
+        respond_to do |format|
+          format.html { redirect_to edit_test_case_path(@test_case) }
+          format.json { render :json => @test_case, :status => :created, :location => @test_case }
+        end
       else
         respond_with @test_case
       end

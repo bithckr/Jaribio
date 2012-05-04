@@ -19,6 +19,11 @@ describe TestCase do
     @case.should have(1).executions
   end
 
+  it "has many plans" do
+    @case.plans << @plan
+    @case.should have(1).plans
+  end
+
   it "can be searched" do
     @case.save!
 
@@ -98,5 +103,5 @@ describe TestCase do
     new_case.id.should_not eq @case.id
     new_case.suite_ids.should eq @case.suite_ids
   end
-  
+
 end

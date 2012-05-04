@@ -25,4 +25,11 @@ describe User do
   it "has many executions" do
     @user.should have(1).executions
   end
+
+  it "remembers when token_authenticated" do
+    @user.token_authenticated?.should be_false
+    @user.after_token_authentication
+    @user.token_authenticated?.should be_true
+  end
+
 end

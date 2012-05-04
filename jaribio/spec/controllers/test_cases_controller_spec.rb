@@ -67,6 +67,16 @@ describe TestCasesController do
         post :create, :test_case => Factory.attributes_for(:test_case)
         response.should redirect_to(edit_test_case_path(TestCase.last))
       end
+
+      it "does not redirect for json post" do
+        post :create, :format => :json, :test_case => Factory.attributes_for(:test_case)
+        response.status.should == 201
+      end
+
+      it "sets location for json post" do
+        post :create, :format => :json, :test_case => Factory.attributes_for(:test_case)
+        response.location.should match(/#{test_case_path(assigns(:test_case))}$/)
+      end
     end
 
     describe "with invalid params" do
