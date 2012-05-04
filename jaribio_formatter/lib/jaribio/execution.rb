@@ -41,6 +41,7 @@ module Jaribio
     end
 
     def self.create_execution(record, test_case, plan)
+      return unless plan.open?
       execution = Jaribio::Execution.new(
         :status_code => record.state,
         :results => record.error
