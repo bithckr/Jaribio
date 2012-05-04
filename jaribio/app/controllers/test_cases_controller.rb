@@ -1,3 +1,5 @@
+require 'cgi'
+
 class TestCasesController < ApplicationController
   before_filter :authenticate_user!
   respond_to :json, :html
@@ -20,7 +22,10 @@ class TestCasesController < ApplicationController
     if (params[:id].to_s =~ /\A[+-]?\d+\Z/)
       @test_case = TestCase.find(params[:id])
     else
-      @test_case = TestCase.where(:unique_key => params[:id]).first
+      @test_case = TestCase.where(:unique_key => CGI.unescape(params[:id])).first
+      if (@test_case.nil?)
+        raise ActiveRecord::RecordNotFound.new("Couldn't find TestCase with id=#{params[:id]}")
+      end
     end
     respond_with @test_case
   end

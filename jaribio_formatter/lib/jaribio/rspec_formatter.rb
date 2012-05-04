@@ -1,6 +1,8 @@
 require 'jaribio/record'
 require 'rspec/core'
 require 'cgi'
+require 'base64'
+require 'digest/md5'
 
 module Jaribio
   class RSpecFormatter
@@ -144,13 +146,14 @@ module Jaribio
     # Should this return?
     # - jaribio_key if set (and desc based on that)
     # - otherwise
-    # -- example_group full description
+    # -- example_group full description (md5)
     #
     def get_example_key(example)
       key, desc = find_jaribio_key(example)
       if (key.nil?)
         key = example_group.metadata[:example_group][:full_description]
         desc = key
+        key = Base64.strict_encode64(Digest::MD5.digest(key))
       end
       return key, desc
     end

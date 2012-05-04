@@ -24,6 +24,7 @@ group :development, :test do
   gem 'forgery'
   # requires libffi on osx (sudo port install libffi)
   gem 'capybara'
+  gem 'selenium-webdriver', '2.20.0'
   # For debugging under ruby 1.9 special gems are needed
 #  gem 'ruby-debug19', :platform => :mri
   # See http://blog.wyeworks.com/2011/11/1/ruby-1-9-3-and-ruby-debug

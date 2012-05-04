@@ -1,5 +1,6 @@
 require 'jaribio/plan'
 require 'jaribio/test_case'
+require 'cgi'
 
 module Jaribio
   class Execution < RemoteObject
@@ -12,7 +13,7 @@ module Jaribio
 
       records.each do |record|
         begin
-          test_case = Jaribio::TestCase.find(record.key)
+          test_case = Jaribio::TestCase.find(CGI::escape(record.key))
         rescue ActiveResource::ResourceNotFound
           $stderr.puts "Test case #{record.key} not found"
           next
@@ -27,8 +28,9 @@ module Jaribio
             :status_code => record.state,
             :results => record.error
           )
+          execution.prefix_options = {:plan_id => plan.id, :test_case_id => test_case.id}
           begin
-            execution.save({:plan_id => plan.id, :test_case_id => test_case.id})
+            execution.save()
           rescue Exception => e
             $stderr.puts "Error saving execution of #{test_case.id} for plan #{plan.id}: #{e.message}"
           end

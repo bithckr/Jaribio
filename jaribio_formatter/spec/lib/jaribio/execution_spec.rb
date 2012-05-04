@@ -19,7 +19,8 @@ describe "Jaribio::Execution" do
       test_case = double("Jaribio::TestCase", :id => 1)
       Jaribio::TestCase.should_receive(:find).with(record.key).and_return(test_case)
       execution = double("Jaribio::Execution")
-      execution.should_receive(:save).with({:plan_id => @plan.id, :test_case_id => test_case.id})
+      execution.should_receive(:prefix_options=).with({:plan_id => @plan.id, :test_case_id => test_case.id})
+      execution.should_receive(:save)
       Jaribio::Execution.should_receive(:new).with({:status_code => record.state, :results => record.error}).and_return(execution)
       Jaribio::Execution.record_results(records)
     end

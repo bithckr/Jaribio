@@ -1,5 +1,5 @@
 module Jaribio
   class TestCase < RemoteObject
-    self.element_name = 'case'
+    self.collection_name = 'cases'
   end
 end

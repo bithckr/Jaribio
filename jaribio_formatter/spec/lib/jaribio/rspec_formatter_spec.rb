@@ -1,4 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'base64'
+require 'digest/md5'
 
 describe "Jaribio::RSpecFormatter" do
   let(:output) { StringIO.new }
@@ -26,7 +28,7 @@ describe "Jaribio::RSpecFormatter" do
       formatter.instance_eval {
         @example_group = group
       }
-      verify_key_and_description(example, 'object method', 'object method')
+      verify_key_and_description(example, Base64.strict_encode64(Digest::MD5.digest('object method')), 'object method')
     end
 
     it "gets jaribio_key from example" do
@@ -81,7 +83,10 @@ describe "Jaribio::RSpecFormatter" do
     end
 
     it "is a hash with all keys found while testing" do
-      formatter.results.keys.sort.should eql ['e2', 'g1', 'g1e2', 'object', 'object subgroup2']
+      formatter.results.keys.sort.should eql [
+        'e2', 'g1', 'g1e2', 
+        Base64.strict_encode64(Digest::MD5.digest('object')), 
+        Base64.strict_encode64(Digest::MD5.digest('object subgroup2'))].sort
     end
 
     it "results are a hash of key to Jaribio::Record values" do
@@ -89,8 +94,8 @@ describe "Jaribio::RSpecFormatter" do
         'e2' => Jaribio::Record.new(:key => 'e2', :description => 'object example 2', :state => Jaribio::Record::FAIL), 
         'g1' => Jaribio::Record.new(:key => 'g1', :description => 'object subgroup', :state => Jaribio::Record::FAIL), 
         'g1e2' => Jaribio::Record.new(:key => 'g1e2', :description => 'object subgroup example 2', :state => Jaribio::Record::FAIL), 
-        'object' => Jaribio::Record.new(:key => 'object', :description => 'object', :state => Jaribio::Record::FAIL), 
-        'object subgroup2' => Jaribio::Record.new(:key => 'object subgroup2', :description => 'object subgroup2', :state => Jaribio::Record::FAIL),
+        Base64.strict_encode64(Digest::MD5.digest('object')) => Jaribio::Record.new(:key => Base64.strict_encode64(Digest::MD5.digest('object')), :description => 'object', :state => Jaribio::Record::FAIL), 
+        Base64.strict_encode64(Digest::MD5.digest('object subgroup2')) => Jaribio::Record.new(:key => Base64.strict_encode64(Digest::MD5.digest('object subgroup2')), :description => 'object subgroup2', :state => Jaribio::Record::FAIL),
       })
     end
   end
