@@ -7,7 +7,7 @@ Jaribio::Application.routes.draw do
   root :to => "home#index"
 
   devise_for :users
-  resources :token_authentications, :only => [:create, :destroy]
+  resource :token_authentication, :only => [:create, :destroy]
 
   resources :test_cases, :path => '/cases' do
     member do

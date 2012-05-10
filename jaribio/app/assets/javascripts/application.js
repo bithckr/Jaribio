@@ -22,3 +22,11 @@ function toggle_case_details(case_id) {
     // Animation complete.
   });
 }
+$(document).ready(function() {
+  $('#copy-text').click(function(event) {
+    var text = $('#copy-text').attr('text');
+    window.prompt('Copy this text', text);
+    event.preventDefault(); // Prevent link from following its href
+  });
+});
+
