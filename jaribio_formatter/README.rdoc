@@ -7,16 +7,21 @@ This gem contains:
 == RSpec Configuration
 
   RSpec.configure do |config|
-    # the url to the installation of jaribio
+    # Can add the formatter here or on command line of rspec
+    config.add_formatter 'Jaribio::RSpecFormatter',
+      File.join(File.dirname(__FILE__), 'jaribio.txt')
+
+    # Configure the url to the installation of jaribio
     config.jaribio_url = 'https://localhost/jaribio'
 
-    # a jaribio api key, obtained from a user's profile page
+    # Configure a jaribio api key, obtained from a user's profile page
     config.jaribio_api_key = 'asdf1234'
 
-    # optional, by default all open plans are updated
-    config.jaribio_plans = ['plan 1', 'plan 2', 'plan 3']
+    # Optional, by default all open plans are updated
+    # Configure only specific plans to be updated.
+    config.jaribio_plans = [1, 2, 3]
 
-    # optional, by default this is false and the formatter will not create 
+    # Optional, by default this is false and the formatter will not create 
     # missing test cases
     config.jaribio_auto_create = true
   end
