@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 require 'base64'
 require 'digest/md5'
+require 'stringio'
 
 describe "Jaribio::RSpecFormatter" do
   let(:output) { StringIO.new }
@@ -100,8 +101,6 @@ describe "Jaribio::RSpecFormatter" do
     end
   end
 
-  it "has output indicating when a specified key does not exist in Jaribio"
-
   describe "#close" do
     let(:formatter) { Jaribio::RSpecFormatter.new(output) }
 
@@ -109,10 +108,10 @@ describe "Jaribio::RSpecFormatter" do
       RSpec.configuration.should_receive(:jaribio_url).at_least(:once).and_return('http://localhost/jaribio')
       RSpec.configuration.should_receive(:jaribio_api_key).at_least(:once).and_return('api_key')
       RSpec.configuration.should_receive(:jaribio_timeout).at_least(:once).and_return(10)
-      Jaribio::Record.any_instance.stub(:save)
     end
 
     it "creates missing test cases" do
+      Jaribio::Record.any_instance.stub(:save)
       RSpec.configuration.should_receive(:jaribio_auto_create).and_return(true)
       RSpec.configuration.should_receive(:jaribio_plans).and_return([])
 
@@ -127,6 +126,7 @@ describe "Jaribio::RSpecFormatter" do
     end
 
     it "finds configured plans" do
+      Jaribio::Record.any_instance.stub(:save)
       RSpec.configuration.should_receive(:jaribio_auto_create).and_return(false)
       RSpec.configuration.should_receive(:jaribio_plans).twice.and_return([1])
 
@@ -137,6 +137,17 @@ describe "Jaribio::RSpecFormatter" do
       example = example_group.example("example 1", :jaribio_key => 'abc123') { fail } 
       example_group.run(formatter)
       formatter.close()
+    end
+
+    it "has output indicating when a specified key does not exist in Jaribio" do
+      RSpec.configuration.should_receive(:jaribio_auto_create).and_return(false)
+      RSpec.configuration.should_receive(:jaribio_plans).and_return([])
+
+
+      example = example_group.example("example 1", :jaribio_key => 'abc123') { fail }
+      example_group.run(formatter)
+      formatter.close()
+      output.string.should =~ /Test case abc123 not found/
     end
 
   end
