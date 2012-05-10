@@ -52,6 +52,8 @@ def sandboxed(&block)
 RSpec.configure do |config|
   config.around {|example| sandboxed { example.run }}
 
+  config.add_formatter 'Jaribio::RSpecFormatter', 
+    File.join(File.dirname(__FILE__), 'jaribio.txt')
   config.jaribio_url = 'http://jaribio.dev'
   config.jaribio_api_key = 'kpwLvp4JNSMpxskZSypq'
   config.jaribio_auto_create = true

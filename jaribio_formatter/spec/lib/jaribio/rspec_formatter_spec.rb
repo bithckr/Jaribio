@@ -109,7 +109,7 @@ describe "Jaribio::RSpecFormatter" do
       RSpec.configuration.should_receive(:jaribio_url).at_least(:once).and_return('http://localhost/jaribio')
       RSpec.configuration.should_receive(:jaribio_api_key).at_least(:once).and_return('api_key')
       RSpec.configuration.should_receive(:jaribio_timeout).at_least(:once).and_return(10)
-      Jaribio::Execution.should_receive(:record_results)
+      Jaribio::Record.any_instance.stub(:save)
     end
 
     it "creates missing test cases" do

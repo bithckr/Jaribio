@@ -60,10 +60,12 @@ module Jaribio
     end
 
     def dump_summary(duration, example_count, failure_count, pending_count)
-      results.each do |key, data|
-        output.puts "Key: #{key}"
-        output.puts "Desc: #{data.description}"
-        output.puts "Failed: #{data.failed?.to_s}"
+      output.puts "1..#{results.size}"
+      results.each_with_index do |data, index|
+        result = data[1]
+        status = (result.failed?) ? "not ok" : "ok"
+        count = index + 1
+        output.puts "#{status} #{count} - (#{result.key}) #{result.description}"
       end
     end
 
@@ -95,8 +97,10 @@ module Jaribio
             )
             begin
               test_case.save
+              output.puts "# Created test case with unique key #{record.key}"
             rescue Exception => e
-              $stderr.puts "Error creating test case #{record.key}: #{e.message}"
+              output.puts "# Error creating test case #{record.key}: #{e.message}"
+              output.puts e.backtrace
             end
           end
         end
@@ -110,14 +114,18 @@ module Jaribio
             plan = Jaribio::Plan.find(plan_id)
             if plan.open?
               plans << plan
+            else
+              output.puts "# RSpec configuration includes closed plan #{plan_id}"
             end
           rescue ActiveResource::ResourceNotFound
-            $stderr.puts "RSpec configuration of jaribio_plans includes unknown plan_id #{plan_id}"
+            output.puts "# RSpec configuration of jaribio_plans includes unknown plan_id #{plan_id}"
           end
         end
       end
 
-      Jaribio::Execution.record_results(results.values, plans)
+      results.each_value do |record|
+        record.save(plans)
+      end
     end
 
     protected
@@ -138,7 +146,7 @@ module Jaribio
           error = "#{exception.message}\n#{exception.backtrace}"
         end
       end
-      record = Record.new(:key => key, :description => desc, :state => failed ? Jaribio::Record::FAIL : Jaribio::Record::PASS, :error => error)
+      record = Record.new(:key => key, :description => desc, :state => failed ? Jaribio::Record::FAIL : Jaribio::Record::PASS, :error => error, :output => output)
       @results[key] = record
     end
 
