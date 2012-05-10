@@ -26,6 +26,26 @@ This gem contains:
     config.jaribio_auto_create = true
   end
 
+== RSpec Output
+
+It is expected that in general you will continue to use whatever standard formatter you know and love and this formatter will be in addition to that.  So the output is minimalistic TAP format for the rspec formatter.  The goal is to let you know primarily the keys for each test and inform you of errors in communicating with Jaribio, if any.
+
+  1..10
+  ok 1 - (wRq7gMRkRJeHnqZxkqkDng==) Jaribio::Plan#open?
+  ok 2 - (tccJHXEmFLwXeHzoPzRG+g==) Jaribio::Record#failed?
+  ok 3 - (I6JDDF4nqkrcAwC3ZGArJw==) Jaribio::Record#eql?
+  ok 4 - (9AfA585llnqxPxpEXNJcGg==) Jaribio::Record#save
+  ok 5 - (pBw77Ov/D/ZvKtAqJOMp8g==) Jaribio::RemoteObject#query_string
+  ok 6 - (QNi21vVeqvCyXIIg2/hlSA==) Jaribio::RemoteObject#configure
+  ok 7 - (XXpQMW5Ii4t2f6WSeWhxZg==) Jaribio::RSpecFormatter#get_example_key
+  ok 8 - (1ytapaYfeTdvJQ/dZzKSXg==) Jaribio::RSpecFormatter#results
+  ok 9 - (XcEQFeZVa+8E6UUmVFGjuw==) Jaribio::RSpecFormatter#close
+  ok 10 - (Gz4dbtEYCTJAgQrD4iEhGg==) Jaribio::RSpecFormatter can configure
+  # Saving execution of XXpQMW5Ii4t2f6WSeWhxZg== - Jaribio::RSpecFormatter#get_example_key for plan 5 - jaribio_formatter
+  # Saving execution of 1ytapaYfeTdvJQ/dZzKSXg== - Jaribio::RSpecFormatter#results for plan 5 - jaribio_formatter
+  # Saving execution of XcEQFeZVa+8E6UUmVFGjuw== - Jaribio::RSpecFormatter#close for plan 5 - jaribio_formatter
+  # Saving execution of Gz4dbtEYCTJAgQrD4iEhGg== - Jaribio::RSpecFormatter can configure for plan 5 - jaribio_formatter
+
 == TODO
 
 Eventually would like to include support for:
