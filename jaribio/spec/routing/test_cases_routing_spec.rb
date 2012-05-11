@@ -7,6 +7,10 @@ describe TestCasesController do
       get("/cases").should route_to("test_cases#index")
     end
 
+    it "routes to #show" do
+      get("/cases/1").should route_to("test_cases#show", :id => "1")
+    end
+
     it "routes to #new" do
       get("/cases/new").should route_to("test_cases#new")
     end
