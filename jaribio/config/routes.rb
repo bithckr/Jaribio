@@ -23,6 +23,7 @@ Jaribio::Application.routes.draw do
       get 'add_suites'
       post 'close'
       post 'open'
+      post 'copy'
     end
 
     collection do

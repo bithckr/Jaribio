@@ -9,6 +9,7 @@
     <% else %>
       Add Suites|
     <% end %>
+    <%= button_to t('jaribio.actions.copy', :default => 'Copy'), url_for([:copy, item]), :confirm => t('jaribio.actions.confirm', :default => 'Are you sure?'), :method => :post %>
     <% if item.closed_at.nil? %>
       <%= button_to t('jaribio.actions.close', :default => 'Close'), url_for([:close, item]), :confirm => t('jaribio.actions.confirm', :default => 'Are you sure?'), :method => :post %>
     <% else %>

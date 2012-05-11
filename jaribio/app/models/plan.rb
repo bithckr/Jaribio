@@ -66,4 +66,10 @@ class Plan < ActiveRecord::Base
   def test_cases
     TestCase.in_plan(self)
   end
+
+  def deep_clone
+    new_plan = self.dup
+    new_plan.suite_ids = self.suite_ids
+    return new_plan
+  end
 end

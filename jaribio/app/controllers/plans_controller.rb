@@ -124,4 +124,14 @@ class PlansController < ApplicationController
     redirect_to plans_path
   end
 
+  def copy
+    @old_plan = Plan.find(params[:id])
+    @plan = @old_plan.deep_clone
+    @plan.user = current_user
+    if @plan.save
+      flash[:notice] = "Successfully copied plan."
+    end
+
+    redirect_to edit_plan_path(@plan)
+  end
 end

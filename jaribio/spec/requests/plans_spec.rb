@@ -44,6 +44,8 @@ describe "Plans" do
         click_button('Search')
         page.should have_link('View')
         page.should have_link('Add Suites')
+        page.should have_button('Copy')
+        page.should have_button('Close')
         page.should have_button('Delete')
       end
 
@@ -52,6 +54,8 @@ describe "Plans" do
         click_button('Search')
         page.should have_no_link('View')
         page.should have_no_link('Add Suites')
+        page.should have_no_button('Copy')
+        page.should have_no_button('Close')
         page.should have_no_button('Delete')
       end
     end
@@ -66,6 +70,7 @@ describe "Plans" do
         page.should have_content(@plan.user.email)  
         page.should have_link('View')
         page.should have_link('Add Suites')
+        page.should have_button('Copy')
         page.should have_button('Close')
         page.should have_button('Delete')
       end
@@ -87,6 +92,18 @@ describe "Plans" do
          page.should have_content('Successfully closed plan.')
          page.should_not have_link('Add Suites', :href => add_suites_plan_path(@plan))
          page.should_not have_link('Close', :href => close_plan_path(@plan))
+      end
+
+      it "clicking 'Copy' clones plan" do
+        page.reset_session!
+        @new_user = login_any_user
+        visit plans_path
+        click_button("Copy")
+        form = find(".inner").find("form")
+        form[:id].should =~ /^edit_plan_(\d+)/
+        $1.should_not == @plan.id
+        click_link('Cancel')
+        page.should have_content(@new_user.email)
       end
     end
 

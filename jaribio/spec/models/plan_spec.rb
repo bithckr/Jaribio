@@ -253,4 +253,36 @@ describe Plan do
       @plan.status[3].should eq(0)
     end
   end
+
+  describe "#deep_clone" do
+    before(:each) do 
+      @plan = Factory.build(:plan)
+      4.times do
+        @plan.suites << Factory.create(:suite)
+      end
+      @plan.suites.each do |suite|
+        suite.test_cases << Factory.create(:test_case)
+      end
+      @plan.save!
+      @plan.test_cases.each do |test_case|
+        @plan.executions << Factory.create(
+          :execution, :plan => @plan, :test_case => test_case
+        )
+      end
+      @plan.save!
+    end
+
+    it "copies suite relationships" do
+      new_plan = @plan.deep_clone
+      new_plan.save!
+      new_plan.id.should_not == @plan.id
+      new_plan.suite_ids.should == @plan.suite_ids 
+    end
+
+    it "does not copy executions" do
+      new_plan = @plan.deep_clone
+      new_plan.save!
+      new_plan.executions.size.should == 0
+    end
+  end
 end

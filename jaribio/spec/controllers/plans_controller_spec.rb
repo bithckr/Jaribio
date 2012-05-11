@@ -193,4 +193,26 @@ describe PlansController do
       plan.closed_at.should be_nil
     end
   end
+
+  describe "POST copy" do
+    before(:each) do
+      @plan = Factory.build(:plan)
+      4.times do
+        @plan.suites << Factory.create(:suite)
+      end
+      @plan.save!
+    end
+
+    it "creates a copy of an existing plan" do
+      expect {
+        post :copy, :id => @plan.id
+      }.to change(Plan, :count).by(1)
+    end
+
+    it "has the same suites as the existing plan" do
+      post :copy, :id => @plan.id
+      new_plan = assigns(:plan)
+      new_plan.suite_ids.sort.should == @plan.suite_ids.sort
+    end
+  end
 end
