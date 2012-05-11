@@ -3,7 +3,7 @@
   <div class="content">
     <h2 class="title">New suite</h2>
     <div class="inner">
-    <%= render 'form' %>
+      <%= render :partial => 'form', :locals => { :disabled => false } %>
     </div>
   </div>
 </div>

@@ -11,6 +11,15 @@ describe SuitesController do
     end
   end
 
+  describe "GET show" do
+    it "assigns the requested suite as @suite" do
+      suite = Factory.create(:suite)
+      get :show, :id => suite.id.to_s
+      assigns(:suite).should eq(suite)
+      assigns(:current_cases).should eq(suite.test_cases)
+    end
+  end
+
   describe "GET new" do
     it "assigns a new suite as @suite" do
       get :new
@@ -23,6 +32,7 @@ describe SuitesController do
       suite = Factory.create(:suite)
       get :edit, :id => suite.id.to_s
       assigns(:suite).should eq(suite)
+      assigns(:current_cases).should eq(suite.test_cases)
     end
   end
 

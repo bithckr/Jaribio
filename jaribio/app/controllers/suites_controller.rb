@@ -11,13 +11,19 @@ class SuitesController < ApplicationController
     respond_with @suites
   end
 
+  def show
+    @suite = Suite.find(params[:id], :include => [:test_cases])
+    @current_cases = @suite.test_cases
+    respond_with @suite
+  end
+
   def new
     @suite = Suite.new
     respond_with @suite
   end
 
   def edit
-    @suite = Suite.find(params[:id])
+    @suite = Suite.find(params[:id], :include => [:test_cases])
     @current_cases = @suite.test_cases
     respond_with @suite
   end

@@ -1,0 +1,9 @@
+<div class="block">
+  <%= render :partial => "partials/navigation", :locals => { :active => nil } %>
+  <div class="content">
+    <div class="title"><%= t('jaribio.actions.viewing', :default => 'Viewing') %> <%= t('jaribio.objects.case', :default => 'Case') %></div>
+    <div class="inner">
+      <%= render :partial => 'form', :locals => { :disabled => true } %>
+    </div>
+  </div>
+</div>

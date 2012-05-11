@@ -24,14 +24,14 @@ describe "TestCases" do
       it "with results does include list of cases" do
         fill_in('q', :with => @test_case.name)
         click_button('Search')
-        page.should have_link('Edit')
+        page.should have_link('View')
         page.should have_button('Delete')
       end
 
       it "with no results does not include list of cases" do
         fill_in('q', :with => 'asdf')
         click_button('Search')
-        page.should have_no_link('Edit')
+        page.should have_no_link('View')
         page.should have_no_button('Delete')
       end
     end
@@ -41,7 +41,7 @@ describe "TestCases" do
         visit test_cases_path
         page.should have_content(@test_case.name)  
         page.should have_content(@test_case.user.email)  
-        page.should have_link('Edit')
+        page.should have_link('View')
         page.should have_link('History')
         page.should have_button('Copy')
         page.should have_button('Delete')
@@ -101,6 +101,37 @@ describe "TestCases" do
     end
   end
 
+  describe "GET /cases/1" do
+    before(:each) do
+      @user = login_any_user
+      @test_case = Factory.build(:test_case)
+      @test_case.suites << Factory.build(:suite)
+      @test_case.save!
+    end
+
+    it_behaves_like "a page with secondary navigation" do
+      let(:path) { test_case_path(@test_case) }
+    end
+
+    describe "form input" do
+      before(:each) do
+        visit test_case_path(@test_case)
+      end
+
+      it "can see 'Name'" do
+        page.should have_field("test_case_name")
+      end
+
+      it "has 'Edit' link" do
+        page.should have_link("Edit")
+      end
+
+      it "has 'Cancel' link" do
+        page.should have_link("Cancel")
+      end
+    end
+  end
+
   describe "POST /cases" do
     before(:each) do
       @user = login_any_user
@@ -133,6 +164,7 @@ describe "TestCases" do
       page.current_url.should eql(url_for(:action => 'index', :controller => 'test_cases'))
       page.should have_content('Successfully updated test case.')
     end
+
     it "keeps original user assigned to test_case" do
       @test_case = Factory.create(:test_case)
       @orig_user = @test_case.user
@@ -146,17 +178,17 @@ describe "TestCases" do
       page.should have_content(@orig_user.email)
     end
 
-      it "uses ajax to add Step", :js => true do
-        @test_case = Factory.create(:test_case)
-        @step = Factory.build(:step)
-        visit url_for_selenium([:edit, @test_case])
-        click_button('Add Step')
-        page.should have_content('Add Test Case Step')
-        fill_in('step_action', :with => @step.action)
-        fill_in('step_results', :with => @step.results)
-        click_button('Create Step')
-        page.should have_content(@step.action)
-        page.should have_content(@step.results)
-      end
+    it "uses ajax to add Step", :js => true do
+      @test_case = Factory.create(:test_case)
+      @step = Factory.build(:step)
+      visit url_for_selenium([:edit, @test_case])
+      click_button('Add Step')
+      page.should have_content('Add Test Case Step')
+      fill_in('step_action', :with => @step.action)
+      fill_in('step_results', :with => @step.results)
+      click_button('Create Step')
+      page.should have_content(@step.action)
+      page.should have_content(@step.results)
+    end
   end
 end

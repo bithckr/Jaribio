@@ -43,5 +43,13 @@ describe PlansController do
       delete("/plans/1/suites/1").should route_to("plans#unassociate", :id => "1", :suite_id => "1")
     end
 
+    it "routes to #close" do
+      post("/plans/1/close").should route_to("plans#close", :id => "1")
+    end
+
+    it "routes to #open" do
+      post("/plans/1/open").should route_to("plans#open", :id => "1")
+    end
+
   end
 end

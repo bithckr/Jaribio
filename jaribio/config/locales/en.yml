@@ -6,9 +6,11 @@ en:
     actions:
       actions: "Actions"
       associate: "Associate"
+      unassociate: "Unassociate"
       view: "View"
       show: "Show"
       edit: "Edit"
+      viewing: "Viewing"
       editing: "Editing"
       destroy: "Delete"
       confirm: "Are you sure?"
@@ -17,6 +19,8 @@ en:
       add_suites: "Add Suites"
       add_cases: "Add Cases"
       history: "History"
+      close: "Close"
+      open: "Open"
     objects:
       case: "Case"
       cases: "Cases"

@@ -1,0 +1,10 @@
+<ul id="suites_test_cases_handler"></ul>
+<script type="text/javascript">
+  $(document).ready( function() {
+    $('#suites_test_cases_handler').tagHandler({
+      assignedTags : [ <% @test_case.suites.each do |suite| %>'<%= suite.name %>', <% end %> ],
+      allowAdd: false,
+      allowEdit: false,
+      autoUpdate: true
+  });
+</script>

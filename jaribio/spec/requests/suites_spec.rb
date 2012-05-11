@@ -24,14 +24,14 @@ describe "Suites" do
       it "with results does include list of suites" do
         fill_in('q', :with => @suite.name)
         click_button('Search')
-        page.should have_link('Edit')
+        page.should have_link('View')
         page.should have_button('Delete')
       end
 
       it "with no results does not include list of suites" do
         fill_in('q', :with => 'asdf')
         click_button('Search')
-        page.should have_no_link('Edit')
+        page.should have_no_link('View')
         page.should have_no_button('Delete')
       end
     end
@@ -44,8 +44,41 @@ describe "Suites" do
       it "of suites" do
         page.should have_content(@suite.name)  
         page.should have_content(@suite.user.email)  
-        page.should have_link('Edit')
+        page.should have_link('View')
         page.should have_button('Delete')
+      end
+    end
+  end
+
+  describe "GET /suites/1" do
+    before(:each) do
+      @user = login_any_user
+      @suite = Factory.build(:suite)
+      4.times do 
+        @suite.test_cases << Factory.build(:test_case)
+      end
+      @suite.save!
+    end
+
+    it_behaves_like "a page with secondary navigation" do
+      let(:path) { suite_path(@suite) }
+    end
+
+    describe "form input" do
+      before(:each) do
+        visit suite_path(@suite)
+      end
+
+      it "can see 'Name'" do
+        page.should have_field("suite_name")
+      end
+
+      it "has 'Edit' link" do
+        page.should have_link("Edit")
+      end
+
+      it "has 'Cancel' link" do
+        page.should have_link("Cancel")
       end
     end
   end
@@ -140,7 +173,7 @@ describe "Suites" do
       page.should have_button('Associate')
     end
   end
-  
+
   describe "POST /suites" do
     before(:each) do
       @user = login_any_user

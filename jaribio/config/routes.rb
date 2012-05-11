@@ -22,6 +22,7 @@ Jaribio::Application.routes.draw do
     member do
       get 'add_suites'
       post 'close'
+      post 'open'
     end
 
     collection do
@@ -33,7 +34,7 @@ Jaribio::Application.routes.draw do
     end
   end
 
-  resources :suites, :except => :show do
+  resources :suites do
     member do
       get 'add_cases'
       post 'sort'

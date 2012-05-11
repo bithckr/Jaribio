@@ -1,15 +1,19 @@
 <td class="last">
-  <% if (item.class == Plan) %>
-    <%= link_to t('jaribio.actions.view', :default => 'View'), item  %>|
-  <% else %>
-    <%= link_to t('jaribio.actions.edit', :default => 'Edit'), url_for([:edit, item])  %>|
-  <% end %>
+  <%= link_to t('jaribio.actions.view', :default => 'View'), item  %>|
+  <!-- <%#= link_to t('jaribio.actions.edit', :default => 'Edit'), url_for([:edit, item])  %>| -->
   <% if (item.class == Suite) %>
     <%= link_to t('jaribio.actions.add_cases', :default => 'Add Cases'), url_for([:add_cases, item]) %>|
   <% elsif (item.class == Plan) %>
-    <% disabled = item.closed_at.nil? ? false : true %>
-    <%= link_to_if item.closed_at.nil?,  t('jaribio.actions.add_suites', :default => 'Add Suites'), url_for([:add_suites, item]) %>|
-    <%= button_to t('jaribio.actions.close', :default => 'Close'), url_for([:close, item]), :confirm => t('jaribio.actions.confirm', :default => 'Are you sure?'), :method => :post, :disabled => disabled %>
+    <% if item.closed_at.nil? %>
+      <%= link_to_if item.closed_at.nil?,  t('jaribio.actions.add_suites', :default => 'Add Suites'), url_for([:add_suites, item]) %>|
+    <% else %>
+      Add Suites|
+    <% end %>
+    <% if item.closed_at.nil? %>
+      <%= button_to t('jaribio.actions.close', :default => 'Close'), url_for([:close, item]), :confirm => t('jaribio.actions.confirm', :default => 'Are you sure?'), :method => :post %>
+    <% else %>
+      <%= button_to t('jaribio.actions.open', :default => 'Open'), url_for([:open, item]), :confirm => t('jaribio.actions.confirm', :default => 'Are you sure?'), :method => :post %>
+    <% end %>
   <% end %>
   <% if (item.class.to_s == 'TestCase') %>
     <%= link_to t('jaribio.action.history', :default => 'History'), url_for([:executions, item]) %>|

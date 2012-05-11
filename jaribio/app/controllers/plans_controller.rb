@@ -13,6 +13,16 @@ class PlansController < ApplicationController
 
   # GET /plans/open
   def open
+    if (params[:id])
+      @plan = Plan.find(params[:id])
+      @plan.closed_at = nil
+      if @plan.save
+        flash[:notice] = "Successfully opened plan."
+      end
+      redirect_to plans_path
+      return
+    end 
+
     plans = Plan.open_plans()
     @plans = plans.order("updated_at").page(params[:page]).per(10)
     respond_with @plans
@@ -93,7 +103,7 @@ class PlansController < ApplicationController
     plan = Plan.find(params[:id])
     suite = Suite.find(params[:suite_id])
     plan.suites << suite
-    
+
     redirect_to add_suites_plan_path(plan)
   end
 
@@ -113,4 +123,5 @@ class PlansController < ApplicationController
     end
     redirect_to plans_path
   end
+
 end

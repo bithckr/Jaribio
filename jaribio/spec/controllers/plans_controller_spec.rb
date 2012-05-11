@@ -174,4 +174,23 @@ describe PlansController do
     end
   end
 
+  describe "POST close" do
+    it "sets closed_at to now" do
+      plan = Factory.create(:plan)
+      plan.closed_at.should be_nil
+      post :close, :id => plan.id.to_s
+      plan.reload
+      plan.closed_at.should_not be_nil
+    end
+  end
+
+  describe "POST open" do
+    it "sets closed_at to nil" do
+      plan = Factory.create(:plan, :closed_at => Time.now)
+      plan.closed_at.should_not be_nil
+      post :open, :id => plan.id.to_s
+      plan.reload
+      plan.closed_at.should be_nil
+    end
+  end
 end

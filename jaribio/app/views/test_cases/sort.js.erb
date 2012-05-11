@@ -1,2 +1,2 @@
 $("div[class='flash']").html("<%= escape_javascript(render(:partial => 'partials/flash', :locals => { :flash => flash })) %>");
-$("#sortable").html("<%= escape_javascript(render(:partial => 'test_cases/step', :collection => @test_case.steps, :as => :step)) %>");
+$("#sortable").html("<%= escape_javascript(render(:partial => 'test_cases/step', :collection => @test_case.steps, :as => :step, :locals => { :disabled => false })) %>");

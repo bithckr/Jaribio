@@ -14,17 +14,17 @@
 
   <div class="group">
     <%= f.label :unique_key, :class => "label" %>
-    <%= f.text_field :unique_key, :class => "text_field" %>
+    <%= f.text_field :unique_key, :class => "text_field", :disabled => disabled %>
     <span class="description">Enter unique key or leave blank to auto-generate.</span>
   </div>
   <div class="group">
     <%= f.label :name, :class => "label" %>
-    <%= f.text_field :name, :class => "text_field" %>
+    <%= f.text_field :name, :class => "text_field", :disabled => disabled %>
     <span class="description">Enter descriptive test case name</span>
   </div>
   <div class="group">
     <%= f.label :automated, :class => "label" %>
-    <%= f.check_box :automated %>
+    <%= f.check_box :automated, :disabled => disabled %>
     <span class="description">Has this test case been automated?</span>
   </div>
   <div class="group">
@@ -33,19 +33,27 @@
       current_suites = @test_case.suites.inject([]) { |r,s| r << s.name }
     %>
     <%= hidden_field_tag 'suites', current_suites.join(',') %>
-    <%= render :partial => "new_tag_handler" %>
+    <% if disabled %>
+      <%= render :partial => "view_tag_handler" %>
+    <% else %>
+      <%= render :partial => "new_tag_handler" %>
+    <% end %>
     <span class="description">Enter names of Suites to which this test case belongs.</span>
   </div>
   <div class="group">
     <%= f.label t('jaribio.objects.pre_step'), :class => "label" %>
-    <%= select_tag "test_case[pre_step_id]", options_from_collection_for_select(@pre_steps, "id", "name", @test_case.pre_step_id), :include_blank => true, :class => "text_field" %>
+    <%= select_tag "test_case[pre_step_id]", options_from_collection_for_select(@pre_steps, "id", "name", @test_case.pre_step_id), :include_blank => true, :disabled => disabled, :class => "text_field" %>
     <div class="description">Select the <%= t('jaribio.objects.pre_step') %> steps for this test case.</div>
   </div>
-  <%= render :partial => "partials/form_buttons" %>
+  <% if disabled %>
+    <%= render :partial => "partials/view_buttons", :locals => { :item => @test_case } %>
+  <% else %>
+    <%= render :partial => "partials/form_buttons" %>
+  <% end %>
 <% end %>
 <% unless @test_case.id.nil? %>
   <h1 class="title">Test Case Steps</h1>
   <div class="inner" id="step_list">
-    <%= render :partial => "step_list" %>
+    <%= render :partial => "step_list", :locals => { :disabled => disabled } %>
   </div>
 <% end %>
