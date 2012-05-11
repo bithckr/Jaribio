@@ -159,4 +159,25 @@ describe TestCasesController do
     end
   end
 
+  describe "POST copy" do
+    before(:each) do
+      @test_case = Factory.build(:test_case)
+      4.times do
+        @test_case.steps << Factory.create(:step)
+      end
+      @test_case.save!
+    end
+
+    it "creates a copy of an existing test case" do
+        expect {
+          post :copy, :id => @test_case.id
+        }.to change(TestCase, :count).by(1)
+    end
+
+    it "creates copies of test case steps" do
+      expect { 
+        post :copy, :id => @test_case.id
+      }.to change(Step, :count).by(@test_case.steps.size)
+    end
+  end
 end

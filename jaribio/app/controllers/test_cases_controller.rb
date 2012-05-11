@@ -14,7 +14,7 @@ class TestCasesController < ApplicationController
     @manual_count = TestCase.count(:conditions => 'automated = 0')
     @total_count  = @auto_count + @manual_count
 
-    @test_cases = cases.order("updated_at").page(params[:page]).per(10)
+    @test_cases = cases.order("updated_at desc").page(params[:page]).per(10)
     respond_with @test_cases
   end
 

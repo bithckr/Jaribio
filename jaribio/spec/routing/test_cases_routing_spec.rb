@@ -35,5 +35,8 @@ describe TestCasesController do
       delete("/cases/1").should route_to("test_cases#destroy", :id => "1")
     end
 
+    it "routes to #copy" do
+      post("/cases/1/copy").should route_to("test_cases#copy", :id => "1")
+    end
   end
 end
