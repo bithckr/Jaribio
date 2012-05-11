@@ -86,12 +86,12 @@ describe "Plans" do
       end
 
       it "clicking 'Close' closes plan" do
-         click_button("Close")
-         @plan.reload
-         @plan.closed_at.should_not be_nil
-         page.should have_content('Successfully closed plan.')
-         page.should_not have_link('Add Suites', :href => add_suites_plan_path(@plan))
-         page.should_not have_link('Close', :href => close_plan_path(@plan))
+        click_button("Close")
+        @plan.reload
+        @plan.closed_at.should_not be_nil
+        page.should have_content('Successfully closed plan.')
+        page.should_not have_link('Add Suites', :href => add_suites_plan_path(@plan))
+        page.should_not have_link('Close', :href => close_plan_path(@plan))
       end
 
       it "clicking 'Copy' clones plan" do
@@ -101,7 +101,7 @@ describe "Plans" do
         click_button("Copy")
         form = find(".inner").find("form")
         form[:id].should =~ /^edit_plan_(\d+)/
-        $1.should_not == @plan.id
+          $1.should_not == @plan.id
         click_link('Cancel')
         page.should have_content(@new_user.email)
       end
@@ -202,7 +202,20 @@ describe "Plans" do
         element[:class].should =~ /selected/
       end
 
-      it "should display the suite names alphabetically"
+      it "should display the suite names alphabetically" do
+        visit plan_path(@plan)
+        # suite list, make a variable for this if used again
+        rows = page.all(:xpath, "//div[@class='inner']/div/div/div/div")
+        rows.should_not be_nil
+        id_list = []
+        rows.each do |row|
+          id = row[:id]
+          if (id =~ /^suite_(\d+)/)
+            id_list << $1.to_i
+          end
+        end
+        id_list.should == @plan.suite_ids
+      end
 
       describe "with cases" do
         before(:each) do
@@ -219,6 +232,7 @@ describe "Plans" do
             page.should have_link(test_case.name)
           end
         end
+        it "should display the test case list in the expected order"
         it "should have a pass and fail radio button for each case" do
           @plan.suites.first.test_cases.each do |test_case|
             within("div#case_" + test_case.id.to_s) do
@@ -234,13 +248,7 @@ describe "Plans" do
             end
           end
         end
-        it "should have a disabled 'Re-Test' button if the case has no status" do
-          @plan.suites.first.test_cases.each do |test_case|
-            within("div#case_" + test_case.id.to_s) do
-              page.find("button")['disabled'].should == 'disabled'
-            end
-          end
-        end
+
         it "should not have a 'Re-Test' button if the plan is closed" do
           @plan.closed_at = Time.now + 1.second
           @plan.save
@@ -251,17 +259,50 @@ describe "Plans" do
             end
           end
         end
-        it "should display plan status" do
-          visit plan_path(@plan)
-          page.should have_xpath("//div[@id='plan_status']")
-          page.should have_xpath("//div[@id='ps_unknowns']")
-          find("#ps_unknowns")['title'].should == "Not executed: 10"
+
+        describe "has no status" do
+          it "should have a disabled 'Re-Test' button" do
+            @plan.suites.first.test_cases.each do |test_case|
+              within("div#case_" + test_case.id.to_s) do
+                page.find("button")['disabled'].should == 'disabled'
+              end
+            end
+          end
+          it "should have enabled pass/fail radio buttons if the case has no status"
         end
-        it "should have enabled pass/fail radio buttons if the case has no status"
-        it "should have an enabled 'Re-Test' button if the case has a status"
-        it "should have disabled pass/fail radio buttons if the case has a status"
-        it "should display the test case list in the expected order"
-      end
+
+        describe "has a status" do
+          before(:each) do
+            @plan.suites.first.test_cases.each do |test_case|
+              @plan.executions << Factory.create(:execution, :plan => @plan, :test_case => test_case)
+            end
+            @plan.save!
+            visit plan_path(@plan)
+          end
+          it "should have an enabled 'Re-Test' button if the case has a status" do
+            @plan.suites.first.test_cases.each do |test_case|
+              within("div#case_" + test_case.id.to_s) do
+                page.find("button")['disabled'].should_not == 'disabled'
+              end
+            end
+          end
+          it "should display plan status" do
+            page.should have_xpath("//div[@id='plan_status']")
+            page.should have_xpath("//div[@id='ps_unknowns']")
+            find("#ps_unknowns")['title'].should == "Not executed: #{@plan.status[3]}"
+          end
+          it "should have disabled pass/fail radio buttons" do
+            @plan.suites.first.test_cases.each do |test_case|
+              within("div#case_" + test_case.id.to_s) do
+                page.all(:xpath, "//input[@type='radio']").each do |input|
+                  input['disabled'].should == 'disabled'
+                end
+              end
+            end
+          end
+
+        end # has a status
+      end  # with cases
 
       describe "without cases" do
         it "should not display a test case list"
