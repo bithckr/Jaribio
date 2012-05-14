@@ -40,4 +40,4 @@ en:
     pagination:  
       previous: "&lt; Previous"
       next: "Next &gt;"
-      truncate: '&ellip;'
+      truncate: '...'
